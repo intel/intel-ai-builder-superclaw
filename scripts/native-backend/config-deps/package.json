@@ -1,0 +1,8 @@
+{
+  "name": "superclaw-native-config-deps",
+  "private": true,
+  "dependencies": {
+    "@opencode-ai/plugin": "1.18.25",
+    "opencode-scheduler": "1.3.0"
+  }
+}

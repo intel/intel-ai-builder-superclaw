@@ -1,0 +1,98 @@
+{
+  "$schema": "./service_cfg.schema.json",
+  "services": [
+    {
+      "name": "llmrouter_manager",
+      "entrypoint": "llmrouter_manager",
+      "proxy_prefix": "/llm-router",
+      "port": 18321,
+      "bind_host": "127.0.0.1",
+      "data_plane": {
+        "enabled": true,
+        "paths": ["/v1/*"]
+      },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "env": {
+        "LRM_LOG_LEVEL": "info",
+        "JOBLIB_MULTIPROCESSING": "0",
+        "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+      },
+      "depends_on": [],
+      "restart_policy": "on-failure",
+      "ready_timeout_s": 60,
+      "shutdown_grace_s": 10
+    },
+    {
+      "name": "privacy_manager",
+      "entrypoint": "protection_service.servicehub_entry",
+      "proxy_prefix": "/data-protection",
+      "port": 18826,
+      "bind_host": "127.0.0.1",
+      "data_plane": {
+        "enabled": true,
+        "paths": ["/v1/*"]
+      },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "depends_on": ["llmrouter_manager"],
+      "restart_policy": "on-failure",
+      "ready_timeout_s": 90,
+      "shutdown_grace_s": 10
+    },
+    {
+      "name": "sandbox_manager",
+      "entrypoint": "sandbox_manager",
+      "proxy_prefix": "/sandbox-manager",
+      "port": 18821,
+      "bind_host": "127.0.0.1",
+      "data_plane": { "enabled": false },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "depends_on": ["llmrouter_manager", "privacy_manager"],
+      "restart_policy": "on-failure",
+      "ready_timeout_s": 30,
+      "shutdown_grace_s": 40
+    },
+    {
+      "name": "tts_manager",
+      "entrypoint": "tts_manager",
+      "proxy_prefix": "/tts-narration",
+      "port": 18827,
+      "bind_host": "127.0.0.1",
+      "data_plane": { "enabled": false },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "env": { "KOKORO_TTS_THREADS": "6" },
+      "depends_on": [],
+      "restart_policy": "on-failure",
+      "startup": "on_demand",
+      "ready_timeout_s": 120,
+      "shutdown_grace_s": 10
+    },
+    {
+      "name": "asr_manager",
+      "entrypoint": "asr_manager",
+      "proxy_prefix": "/speech-to-text",
+      "port": 18829,
+      "bind_host": "127.0.0.1",
+      "data_plane": { "enabled": false },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "depends_on": ["llmrouter_manager"],
+      "restart_policy": "on-failure",
+      "startup": "on_demand",
+      "ready_timeout_s": 120,
+      "shutdown_grace_s": 10
+    },
+    {
+      "name": "mcp_host_manager",
+      "entrypoint": "mcp_host_manager",
+      "proxy_prefix": "/mcp-host",
+      "port": 18831,
+      "bind_host": "127.0.0.1",
+      "data_plane": { "enabled": false },
+      "launch": { "kind": "role", "exe_name": "superclaw-services.exe" },
+      "depends_on": [],
+      "restart_policy": "on-failure",
+      "startup": "on_demand",
+      "ready_timeout_s": 30,
+      "shutdown_grace_s": 10
+    }
+  ]
+}

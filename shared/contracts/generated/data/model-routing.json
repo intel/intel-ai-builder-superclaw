@@ -1,0 +1,67 @@
+{
+  "auto_router_ids": [
+    "llmrouter",
+    "autorouter"
+  ],
+  "cloud_model_prefixes": [
+    "gpt-",
+    "gpt4",
+    "chatgpt",
+    "o1-",
+    "o3-",
+    "claude-",
+    "claude",
+    "gemini-",
+    "palm-",
+    "bard",
+    "command-",
+    "coral-",
+    "deepseek-",
+    "mixtral-",
+    "mistral-large",
+    "mistral-medium"
+  ],
+  "cloud_provider_ids": [
+    "openai",
+    "anthropic",
+    "google",
+    "openrouter",
+    "groq",
+    "together",
+    "fireworks",
+    "mistral",
+    "cohere",
+    "deepseek",
+    "xai",
+    "opencode",
+    "opencode-go"
+  ],
+  "local_base_url_patterns": [
+    "^https?://localhost",
+    "^https?://127\\.",
+    "^https?://0\\.0\\.0\\.0",
+    "^https?://10\\.",
+    "^https?://172\\.(1[6-9]|2[0-9]|3[01])\\.",
+    "^https?://192\\.168\\.",
+    "\\.intel\\.com"
+  ],
+  "local_provider_ids": [
+    "gguf",
+    "ollama",
+    "lmstudio",
+    "llamacpp",
+    "local",
+    "local-llm",
+    "localai",
+    "vllm",
+    "text-generation-webui"
+  ],
+  "superrouter_local_models": [
+    "qwen",
+    "intel",
+    "phi",
+    "mistral-nemo",
+    "llama3",
+    "llama-3"
+  ]
+}

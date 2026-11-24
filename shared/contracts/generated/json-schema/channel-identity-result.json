@@ -1,0 +1,42 @@
+{
+  "$id": "https://different.ai/openwork-contracts/channel-identity-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "applied": {
+      "type": "boolean"
+    },
+    "apply_error": {
+      "enum": [
+        "router_unreachable",
+        "router_rejected"
+      ],
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "slack",
+        "telegram"
+      ],
+      "type": "string"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "identity_id": {
+      "pattern": "^[A-Za-z0-9_.-]{1,48}$",
+      "type": "string"
+    },
+    "persisted": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "channel",
+    "identity_id",
+    "persisted",
+    "applied"
+  ],
+  "title": "ChannelIdentityResult",
+  "type": "object"
+}

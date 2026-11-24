@@ -1,0 +1,171 @@
+{
+  "$id": "https://different.ai/openwork-contracts/app-readiness.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "components": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "active_revision": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "applied_revision": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "instance_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "host_service",
+              "runtime"
+            ],
+            "type": "string"
+          },
+          "last_transition_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "unreachable",
+                  "identity_mismatch",
+                  "probe_timeout",
+                  "probe_pending",
+                  "start_failed",
+                  "not_running",
+                  "native_hdr_restart_budget_exhausted",
+                  "profile_revision_mismatch",
+                  "evidence_stale",
+                  "evidence_unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "startup": {
+            "enum": [
+              "required",
+              "on_demand"
+            ],
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "ready",
+              "starting",
+              "failed",
+              "unknown",
+              "dormant"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "kind",
+          "startup",
+          "state",
+          "instance_id",
+          "reason_code",
+          "observed_at",
+          "last_transition_at",
+          "applied_revision",
+          "active_revision"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "type": "string"
+    },
+    "retry_after_ms": {
+      "anyOf": [
+        {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "enum": [
+        "ready",
+        "starting",
+        "failed",
+        "unknown"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "state",
+    "retry_after_ms",
+    "components",
+    "observed_at"
+  ],
+  "title": "AppReadiness",
+  "type": "object"
+}

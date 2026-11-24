@@ -1,0 +1,74 @@
+{
+  "$id": "https://different.ai/openwork-contracts/workspace-root-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 2,
+      "type": "number"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "enum": [
+              "path_not_canonical_local_windows",
+              "path_is_volume_root",
+              "path_uses_short_name_alias",
+              "root_id_not_derived_from_path",
+              "duplicate_root_id",
+              "duplicate_canonical_path",
+              "member_count_below_bound",
+              "member_count_above_bound",
+              "managed_default_missing",
+              "managed_default_duplicated",
+              "access_mode_inconsistent_with_policy_class",
+              "authorization_inconsistent_with_policy_class",
+              "managed_roots_overlap",
+              "member_overlaps_managed_root",
+              "member_overlaps_member",
+              "member_is_owner_profile_root",
+              "member_under_other_user_profile",
+              "member_under_local_app_data_root",
+              "member_under_program_data_root",
+              "member_under_windows_root",
+              "volume_verdict_non_ntfs",
+              "volume_verdict_removable",
+              "volume_verdict_redirected",
+              "volume_verdict_unknown",
+              "ancestor_reparse_point_observed",
+              "ancestry_verdict_unknown",
+              "descriptor_shape_invalid"
+            ],
+            "type": "string"
+          },
+          "root_id": {
+            "anyOf": [
+              {
+                "pattern": "^wsr_[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "reason",
+          "root_id"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "refusals"
+  ],
+  "title": "WorkspaceRootRefusal",
+  "type": "object"
+}

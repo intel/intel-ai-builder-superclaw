@@ -1,0 +1,43 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-error.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "servicehub_forwarding_required",
+            "runtime_token_invalid",
+            "host_mcp_server_not_found",
+            "approval_not_found",
+            "approval_not_pending",
+            "approval_scope_not_offered",
+            "host_mcp_server_limit",
+            "host_mcp_server_start_failed",
+            "host_browser_not_configured",
+            "host_browser_unavailable",
+            "host_mcp_browser_automation_refused",
+            "host_mcp_call_not_found"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "error"
+  ],
+  "title": "HostMcpError",
+  "type": "object"
+}

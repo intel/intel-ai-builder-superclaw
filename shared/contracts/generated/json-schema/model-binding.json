@@ -1,0 +1,801 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-binding.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "enum": [
+            "llama",
+            "edge"
+          ],
+          "type": "string"
+        },
+        "binding_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilities": {
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "const": true,
+              "type": "boolean"
+            },
+            "vision": {
+              "const": false,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "text",
+            "vision"
+          ],
+          "type": "object"
+        },
+        "chat": {
+          "additionalProperties": false,
+          "properties": {
+            "draft": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "draft_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "draft_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "weights": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "chat_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "chat_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "required": [
+            "model_id",
+            "weights"
+          ],
+          "type": "object"
+        },
+        "compatible_product_profiles": {
+          "items": {
+            "enum": [
+              "lite",
+              "standard",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "credential_ref": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "embedding": {
+          "additionalProperties": false,
+          "properties": {
+            "model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "weights": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "embedding_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "embedding_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "required": [
+            "model_id",
+            "weights"
+          ],
+          "type": "object"
+        },
+        "endpoint_ref": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "launch_spec_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "state": {
+          "const": "ready",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "binding_revision",
+        "bundle_id",
+        "backend",
+        "compatible_product_profiles",
+        "embedding",
+        "endpoint_ref",
+        "launch_spec_sha256",
+        "state",
+        "chat",
+        "capabilities"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "enum": [
+            "llama",
+            "edge"
+          ],
+          "type": "string"
+        },
+        "binding_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capabilities": {
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "const": true,
+              "type": "boolean"
+            },
+            "vision": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "text",
+            "vision"
+          ],
+          "type": "object"
+        },
+        "chat": {
+          "additionalProperties": false,
+          "properties": {
+            "draft": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "draft_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "draft_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "projector": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "vision_projector",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "vision_projector",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "weights": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "chat_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "chat_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "required": [
+            "model_id",
+            "weights",
+            "projector"
+          ],
+          "type": "object"
+        },
+        "compatible_product_profiles": {
+          "items": {
+            "enum": [
+              "lite",
+              "standard",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "credential_ref": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "embedding": {
+          "additionalProperties": false,
+          "properties": {
+            "model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "weights": {
+              "oneOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "embedding_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "sha256": {
+                      "pattern": "^[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "source": {
+                      "const": "packaged",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "asset_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "role": {
+                      "allOf": [
+                        {
+                          "const": "embedding_weights",
+                          "type": "string"
+                        },
+                        {
+                          "enum": [
+                            "chat_weights",
+                            "embedding_weights",
+                            "vision_projector",
+                            "draft_weights"
+                          ],
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "const": "remote",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "asset_id",
+                    "source"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "required": [
+            "model_id",
+            "weights"
+          ],
+          "type": "object"
+        },
+        "endpoint_ref": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "launch_spec_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "state": {
+          "const": "ready",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "binding_revision",
+        "bundle_id",
+        "backend",
+        "compatible_product_profiles",
+        "embedding",
+        "endpoint_ref",
+        "launch_spec_sha256",
+        "state",
+        "chat",
+        "capabilities"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "ModelBinding"
+}

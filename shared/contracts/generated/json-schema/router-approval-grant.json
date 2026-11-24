@@ -1,0 +1,76 @@
+{
+  "$id": "https://different.ai/openwork-contracts/router-approval-grant.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "router.send_new_target"
+      ],
+      "type": "string"
+    },
+    "approval_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    },
+    "audience": {
+      "enum": [
+        "router"
+      ],
+      "type": "string"
+    },
+    "boot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "expires_at_ms": {
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "grant_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    },
+    "issued_at_ms": {
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "request_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "once",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "contract_version",
+    "grant_id",
+    "approval_id",
+    "audience",
+    "boot_id",
+    "action",
+    "request_digest",
+    "scope",
+    "issued_at_ms",
+    "expires_at_ms"
+  ],
+  "title": "RouterApprovalGrant",
+  "type": "object"
+}

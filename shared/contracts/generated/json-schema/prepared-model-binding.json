@@ -1,0 +1,51 @@
+{
+  "$id": "https://different.ai/openwork-contracts/prepared-model-binding.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "compatible_product_profiles": {
+      "items": {
+        "enum": [
+          "lite",
+          "standard",
+          "pro"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "expected_binding_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "prepare_operation_id": {
+      "pattern": "^lrm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "target_bundle_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "prepare_operation_id",
+    "target_bundle_id",
+    "candidate_revision",
+    "expected_binding_revision",
+    "compatible_product_profiles"
+  ],
+  "title": "PreparedModelBinding",
+  "type": "object"
+}

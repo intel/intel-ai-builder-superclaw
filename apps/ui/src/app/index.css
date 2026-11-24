@@ -1,0 +1,828 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@import "../styles/colors.css";
+@import "@fontsource/intel-one-mono/400.css";
+@import "@fontsource/intel-one-mono/500.css";
+@import "@fontsource/intel-one-mono/600.css";
+@import "@fontsource/intel-one-mono/700.css";
+
+@theme{
+  --text-micro: 0.4375rem;     /* 7px  */
+  --text-tiny: 0.625rem;       /* 10px */
+  --text-label: 0.6875rem;     /* 11px */
+  --text-caption: 0.75rem;     /* 12px */
+  --text-body: 0.8125rem;      /* 13px */
+  --text-body-lg: 0.875rem;    /* 14px */
+  --text-body-xl: 1rem;        /* 16px */
+  --text-title: 0.9375rem;     /* 15px */
+  --text-heading: 1.125rem;    /* 18px */
+  --text-heading-lg: 1.25rem;  /* 20px */
+  --text-display: 1.5rem;      /* 24px */
+  --text-display-lg: 1.875rem; /* 30px */
+
+  --leading-compact: 1rem;                  /* 16px */
+  --leading-body: 1.25rem;                  /* 20px */
+  --leading-title: 1.5rem;                  /* 24px */
+  --leading-heading: 1.75rem;               /* 28px */
+  --leading-display: 2rem;                  /* 32px */
+  --leading-display-lg: 2.25rem;            /* 36px */
+
+  --radius-micro: 0.125rem;    /* 2px  */
+  --radius-compact: 0.25rem;   /* 4px  */
+  --radius-subtle: 0.375rem;   /* 6px  */
+  --radius-control: 0.5rem;    /* 8px  */
+  --radius-field: 0.875rem;    /* 14px */
+  --radius-inset: 0.75rem;     /* 12px */
+  --radius-panel: 1.125rem;    /* 18px */
+  --radius-card: 1rem;         /* 16px */
+  --radius-dialog: 1.25rem;    /* 20px */
+  --radius-shell: 1.5rem;      /* 24px */
+  --radius-pill: 9999px;
+}
+
+@layer utilities {
+  :where(.text-tiny, .text-caption) {
+    line-height: var(--leading-compact);
+  }
+
+  :where(.text-label, .text-body, .text-body-lg) {
+    line-height: var(--leading-body);
+  }
+
+  :where(.text-heading, .text-heading-lg) {
+    line-height: var(--leading-heading);
+  }
+
+  :where(.text-display) {
+    line-height: var(--leading-display);
+  }
+
+  :where(.text-display-lg) {
+    line-height: var(--leading-display-lg);
+  }
+}
+
+:root {
+  color-scheme: light;
+  --dls-white: #ffffff;
+  --dls-black: #000000;
+  --dls-surface: #ffffff;
+  --dls-surface-solid: #ffffff;
+  --dls-surface-raised: var(--gray-2);
+  --dls-overlay: var(--dls-white);
+  --dls-scrim: var(--gray-12);
+  --dls-inverse-surface: var(--gray-12);
+  --dls-inverse-text: var(--gray-1);
+  --dls-inverse-hover: var(--gray-11);
+  --dls-sidebar: #f5f8fc;
+  --dls-app-bg: #f0f4f8;
+  --dls-titlebar: #f3f4f6;
+  --dls-border: #d1dce8;
+  --dls-accent: #0068B5;
+  --dls-accent-hover: #004A8F;
+  --dls-accent-rgb: 0 104 181;
+  --dls-accent-gradient: linear-gradient(135deg, #0068B5, #2B95D6);
+  --dls-accent-gradient-hover: linear-gradient(135deg, #004A8F, #0068B5);
+  --dls-titlebar-wordmark-gradient: linear-gradient(to right, #074ec1, #c94d05);
+  --dls-local-model-icon-start: #1e293b;
+  --dls-local-model-icon-end: #334155;
+  --dls-cloud-model-icon-start: #3b82f6;
+  --dls-cloud-model-icon-end: #93c5fd;
+  --dls-provider-slack-brand: #4a154b;
+  --dls-provider-telegram-brand: #229ed9;
+  --dls-pairing-bg: color-mix(in srgb, var(--sky-1) 40%, transparent);
+  --dls-pairing-border: color-mix(in srgb, var(--sky-7) 25%, transparent);
+  --dls-pairing-code-bg: color-mix(in srgb, var(--sky-2) 80%, transparent);
+  --dls-pairing-code-border: color-mix(in srgb, var(--sky-7) 20%, transparent);
+  --dls-pairing-code-text: var(--sky-12);
+  --dls-pairing-inline-bg: color-mix(in srgb, var(--sky-3) 60%, transparent);
+  --dls-slack-brand-pink: #e01e5a;
+  --dls-slack-brand-cyan: #36c5f0;
+  --dls-slack-brand-green: #2eb67d;
+  --dls-slack-brand-yellow: #ecb22e;
+  --dls-gmail-brand-blue: #4285f4;
+  --dls-gmail-brand-green: #34a853;
+  --dls-gmail-brand-yellow: #fbbc04;
+  --dls-gmail-brand-red: #ea4335;
+  --dls-gmail-brand-red-dark: #c5221f;
+  --dls-mask-opaque: #000;
+  --dls-session-selected-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --dls-share-modal-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.45);
+  --dls-token-input-highlight: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --dls-tour-spotlight-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  --dls-command-highlight-rgb: 99 102 241;
+  --dls-command-highlight-rest-border: rgba(255, 255, 255, 0.08);
+  --dls-card-shadow-rest: 0 1px 2px rgba(17, 24, 39, 0.06);
+  --dls-card-shadow-rest-hover: 0 8px 24px rgba(17, 24, 39, 0.08);
+  --dls-card-shadow-grid-hover: 0 4px 16px rgba(17, 24, 39, 0.06);
+  --dls-text-primary: #0a1628;
+  --dls-text-secondary: #4a6a8a;
+  --dls-text-muted: var(--gray-9);
+  --dls-text-subtle: var(--gray-8);
+  --dls-text-low: var(--gray-7);
+  --dls-text-faint: var(--gray-5);
+  --dls-text-soft: var(--gray-4);
+  --dls-hover: #e8eef6;
+  --dls-active: #dce5f0;
+  --dls-shell-shadow: 0 10px 30px rgba(0, 104, 181, 0.06);
+  --dls-card-shadow: 0 8px 24px rgba(0, 104, 181, 0.05);
+  --dls-link: #0068B5;
+  --dls-link-hover: #004A8F;
+  --dls-info: #2563eb;
+  --dls-info-bg: color-mix(in srgb, var(--blue-3) 60%, transparent);
+  --dls-info-bg-subtle: color-mix(in srgb, var(--blue-2) 10%, transparent);
+  --dls-info-border: color-mix(in srgb, var(--blue-7) 40%, transparent);
+  --dls-info-border-subtle: color-mix(in srgb, var(--blue-7) 20%, transparent);
+  --dls-info-text: var(--blue-11);
+  --dls-info-dot: var(--blue-9);
+  --dls-secondary-accent: var(--purple-9);
+  --dls-secondary-accent-bg: color-mix(in srgb, var(--dls-secondary-accent) 10%, transparent);
+  --dls-secondary-accent-text: var(--purple-11);
+  --dls-warm-accent: var(--amber-9);
+
+  --dls-btn-secondary-bg: var(--gray-2);
+  --dls-btn-secondary-text: var(--gray-12);
+  --dls-btn-secondary-hover-bg: var(--gray-3);
+  --dls-btn-ghost-text: var(--gray-12);
+  --dls-btn-ghost-hover-bg: var(--gray-3);
+  --dls-btn-ghost-hover-text: var(--gray-12);
+  --dls-btn-outline-border: var(--gray-6);
+  --dls-btn-outline-text: var(--gray-12);
+  --dls-btn-outline-hover-bg: var(--gray-3);
+  --dls-panel-bg: color-mix(in srgb, var(--gray-2) 30%, transparent);
+  --dls-panel-border: color-mix(in srgb, var(--gray-7) 60%, transparent);
+  --dls-panel-inset-bg: color-mix(in srgb, var(--gray-1) 40%, transparent);
+  --dls-panel-inset-border: color-mix(in srgb, var(--gray-6) 50%, transparent);
+  --dls-panel-input-bg: color-mix(in srgb, var(--gray-1) 60%, transparent);
+  --dls-panel-input-border: color-mix(in srgb, var(--gray-6) 60%, transparent);
+  --dls-panel-hover-bg: color-mix(in srgb, var(--gray-2) 60%, transparent);
+  --dls-panel-badge-bg: color-mix(in srgb, var(--gray-4) 60%, transparent);
+  --dls-panel-badge-border: color-mix(in srgb, var(--gray-7) 50%, transparent);
+  --dls-panel-divider: color-mix(in srgb, var(--gray-6) 40%, transparent);
+  --dls-panel-text: var(--gray-12);
+  --dls-panel-icon: var(--gray-11);
+  --dls-panel-dot: var(--gray-8);
+  --dls-surface-tint: var(--gray-3);
+  --dls-surface-muted: var(--gray-4);
+  --dls-border-soft: var(--gray-4);
+  --dls-border-muted: var(--gray-5);
+  --dls-border-strong: var(--gray-6);
+  --dls-neutral-dot: var(--gray-6);
+  --dls-neutral-active: var(--gray-10);
+  --dls-status-neutral-dot: var(--gray-7);
+  --dls-status-neutral-bg: var(--gray-3);
+  --dls-status-neutral-text: var(--gray-9);
+  --dls-status-neutral-badge-text: var(--gray-11);
+  --dls-status-neutral-ring: var(--gray-6);
+  --dls-status-success-bg: var(--green-3);
+  --dls-status-success-text: var(--green-11);
+  --dls-success-focus-shadow: 0 0 0 1px color-mix(in srgb, var(--dls-success-dot) 20%, transparent);
+  --dls-status-warning-bg: var(--amber-3);
+  --dls-status-warning-text: var(--amber-11);
+  --dls-status-info-bg: var(--blue-3);
+  --dls-status-info-text: var(--blue-11);
+  --dls-status-danger-bg: var(--red-3);
+  --dls-status-danger-text: var(--red-11);
+  /* Full-width bars in the page flow: opaque, so nothing under them shows through. */
+  --dls-infobar-attention-bg: var(--amber-3);
+  --dls-infobar-attention-border: var(--amber-7);
+  --dls-infobar-attention-text: var(--amber-11);
+  --dls-infobar-neutral-bg: var(--blue-3);
+  --dls-infobar-neutral-border: var(--blue-6);
+  --dls-infobar-neutral-text: var(--blue-11);
+  --dls-neutral-overlay: var(--gray-12);
+  --dls-neutral-overlay-border: var(--gray-11);
+  --dls-code-block: var(--gray-12);
+  --dls-code-border: var(--gray-11);
+  --dls-code-inline-bg: var(--gray-2);
+  --dls-selection: var(--indigo-7);
+  --dls-selection-text: var(--indigo-11);
+  --dls-selection-icon: var(--indigo-6);
+  --dls-selection-soft-bg: var(--indigo-2);
+  --dls-workspace-local: var(--amber-7);
+  --dls-workspace-local-text: var(--amber-11);
+  --dls-workspace-remote: var(--sky-7);
+  --dls-workspace-remote-text: var(--sky-11);
+  --dls-workspace-selected: var(--indigo-7);
+  --dls-workspace-selected-text: var(--indigo-11);
+  --dls-workspace-starter: var(--amber-7);
+  --dls-workspace-starter-text: var(--amber-6);
+  --dls-workspace-default: var(--indigo-7);
+  --dls-workspace-default-text: var(--indigo-6);
+  --dls-model-source-local: var(--teal-10);
+  --dls-model-source-cloud: var(--blue-10);
+  --dls-model-source-other: var(--violet-10);
+  --dls-model-local-text: var(--green-11);
+  --dls-model-local-dot: var(--green-9);
+  --dls-model-cloud-dot: var(--blue-9);
+  --dls-diff-added: var(--green-11);
+  --dls-diff-added-bg: var(--green-1);
+  --dls-diff-removed: var(--red-11);
+  --dls-diff-removed-bg: var(--red-1);
+  --dls-diff-hunk: var(--blue-11);
+  --dls-diff-hunk-bg: var(--blue-1);
+  --dls-den-surface-start: var(--sky-3);
+  --dls-den-surface-end: var(--cyan-3);
+  --dls-den-glow-start: var(--sky-6);
+  --dls-den-glow-end: var(--cyan-6);
+  --dls-den-border: var(--sky-7);
+  --dls-den-text: var(--sky-11);
+  --dls-playful-accent: var(--pink-9);
+  --dls-switch-thumb: #ffffff;
+  --dls-switch-thumb-ring: rgba(10, 22, 40, 0.16);
+  --dls-danger-bg: color-mix(in srgb, var(--red-7) 10%, transparent);
+  --dls-danger-border: color-mix(in srgb, var(--red-7) 30%, transparent);
+  --dls-danger-border-strong: color-mix(in srgb, var(--red-7) 40%, transparent);
+  --dls-danger-border-solid: var(--red-9);
+  --dls-danger-text: var(--red-11);
+  --dls-search-highlight-bg: color-mix(in srgb, var(--amber-3) 80%, transparent);
+  --dls-search-highlight-active-bg: var(--amber-8);
+  --dls-search-highlight-active-text: var(--amber-12);
+  --dls-danger-dot: var(--red-9);
+  --dls-warning-bg: color-mix(in srgb, var(--amber-7) 10%, transparent);
+  --dls-warning-bg-strong: color-mix(in srgb, var(--amber-4) 80%, transparent);
+  --dls-warning-border: color-mix(in srgb, var(--amber-7) 30%, transparent);
+  --dls-warning-text: var(--amber-11);
+  --dls-warning-dot: var(--amber-9);
+  --dls-success-bg: color-mix(in srgb, var(--green-7) 10%, transparent);
+  --dls-success-border: color-mix(in srgb, var(--green-7) 20%, transparent);
+  --dls-success-border-solid: var(--green-8);
+  --dls-success-ring: 0 0 0 1px color-mix(in srgb, var(--green-8) 20%, transparent);
+  --dls-success-text: var(--green-11);
+  --dls-success-dot: var(--green-9);
+  --dls-live-dot: var(--amber-9);
+  --dls-recording-text: var(--red-11);
+  --dls-recording-bg: var(--red-3);
+  --dls-recording-hover: var(--red-4);
+  --dls-metric-input: var(--blue-9);
+  --dls-metric-input-bg: color-mix(in srgb, var(--blue-7) 10%, transparent);
+  --dls-metric-output: var(--green-9);
+  --dls-metric-output-bg: color-mix(in srgb, var(--green-7) 10%, transparent);
+  --dls-metric-messages: var(--amber-9);
+  --dls-metric-messages-bg: color-mix(in srgb, var(--amber-7) 10%, transparent);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Glassmorphism: semi-transparent surfaces let the gradient body show through */
+  --dls-surface: rgba(255, 255, 255, 0.05);
+  --dls-surface-solid: #0d1117;
+  --dls-overlay: var(--dls-surface-solid);
+  --dls-sidebar: rgba(255, 255, 255, 0.05);
+  --dls-app-bg: transparent;
+  --dls-dark-body-bg: #0f1a2e;
+  --dls-dark-body-glow-warm: rgba(200, 80, 20, 0.4);
+  --dls-dark-body-glow-warm-soft: rgba(200, 80, 20, 0.1);
+  --dls-dark-body-glow-cool: rgba(15, 52, 96, 1);
+  --dls-dark-body-glow-cool-soft: rgba(22, 33, 62, 0.7);
+  --dls-titlebar: rgba(13, 17, 23, 0.1);
+  --dls-border: rgba(255, 255, 255, 0.1);
+  --dls-accent: #4DA3E0;
+  --dls-accent-hover: #0068B5;
+  --dls-accent-rgb: 77 163 224;
+  --dls-accent-gradient: linear-gradient(135deg, #0068B5, #4DA3E0);
+  --dls-accent-gradient-hover: linear-gradient(135deg, #004A8F, #0068B5);
+  --dls-titlebar-wordmark-gradient: linear-gradient(to right, #93c5fd, #fb923c, #c94d05);
+  --dls-text-primary: #e1e8f0;
+  --dls-text-secondary: #7a9bb5;
+  --dls-search-highlight-bg: color-mix(in srgb, var(--amber-4) 60%, transparent);
+  --dls-search-highlight-active-bg: var(--amber-9);
+  --dls-search-highlight-active-text: var(--amber-1);
+  --dls-status-neutral-bg: color-mix(in srgb, var(--gray-9) 20%, transparent);
+  --dls-status-success-bg: color-mix(in srgb, var(--green-9) 20%, transparent);
+  --dls-status-warning-bg: color-mix(in srgb, var(--amber-9) 20%, transparent);
+  --dls-status-info-bg: color-mix(in srgb, var(--blue-9) 20%, transparent);
+  --dls-status-danger-bg: color-mix(in srgb, var(--red-9) 20%, transparent);
+  --dls-infobar-attention-bg: var(--amber-3);
+  --dls-infobar-attention-border: var(--amber-6);
+  --dls-infobar-attention-text: var(--amber-11);
+  --dls-infobar-neutral-bg: var(--blue-3);
+  --dls-infobar-neutral-border: var(--blue-6);
+  --dls-infobar-neutral-text: var(--blue-11);
+  --dls-status-neutral-ring: color-mix(in srgb, var(--gray-6) 30%, transparent);
+  --dls-model-source-local: var(--teal-10);
+  --dls-model-source-cloud: var(--blue-10);
+  --dls-model-source-other: var(--violet-11);
+  --dls-switch-thumb: #ffffff;
+  --dls-switch-thumb-ring: rgba(0, 0, 0, 0.35);
+  --dls-hover: rgba(255, 255, 255, 0.08);
+  --dls-active: rgba(255, 255, 255, 0.12);
+  --dls-shell-shadow: 0 18px 48px rgba(0, 0, 0, 0.20);
+  --dls-card-shadow: 0 14px 36px rgba(0, 0, 0, 0.15);
+  --dls-link: #7FB8FF;
+  --dls-link-hover: #A8CDFF;
+  --dls-info: #2563eb;
+  --dls-info-bg: color-mix(in srgb, var(--blue-9) 20%, transparent);
+  --dls-info-bg-subtle: color-mix(in srgb, var(--blue-9) 10%, transparent);
+  --dls-info-border: color-mix(in srgb, var(--blue-6) 40%, transparent);
+  --dls-info-border-subtle: color-mix(in srgb, var(--blue-6) 20%, transparent);
+  --dls-info-text: var(--blue-11);
+  --dls-info-dot: var(--blue-9);
+  --dls-secondary-accent-text: var(--purple-11);
+  --dls-warning-bg-strong: color-mix(in srgb, var(--amber-9) 25%, transparent);
+  --dls-recording-text: var(--red-11);
+  --dls-recording-bg: color-mix(in srgb, var(--red-9) 15%, transparent);
+  --dls-recording-hover: color-mix(in srgb, var(--red-9) 25%, transparent);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: var(--openwork-font-size, var(--text-body-xl));
+}
+
+body {
+  margin: 0;
+  font-family:
+    "Intel One Mono",
+    "IBM Plex Sans",
+    Geist,
+    "Avenir Next",
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  color: var(--dls-text-primary);
+  background-color: var(--dls-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dls-modal-backdrop,
+.dls-modal-dim {
+  background-color: color-mix(in srgb, var(--dls-black) 60%, transparent);
+}
+
+.dls-modal-backdrop,
+.dls-modal-blur {
+  backdrop-filter: blur(4px);
+}
+
+.dls-modal-surface {
+  background-color: var(--dls-surface-solid);
+  border-color: var(--dls-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--dls-card-shadow);
+}
+
+/* Dark-mode ambient gradient background — dual radial glow with subtle noise.
+   Uses higher specificity than the Tailwind bg-dls-surface utility so
+   background-color is overridden only for the outermost body element;
+   --dls-surface stays untouched for cards/panels. */
+[data-theme="dark"] body {
+  background-color: var(--dls-dark-body-bg);
+}
+
+/* The texture and glows sit on a fixed layer rather than a
+   `background-attachment: fixed` body background: a fixed-attachment
+   background makes Chromium repaint every scroller on the main thread
+   (the Settings dialog's content lagged behind the wheel). */
+[data-theme="dark"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* Noise grain — adds subtle texture */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23000' fill-opacity='0.05'/%3E%3C/svg%3E"),
+    /* Right: warm radial glow */
+    radial-gradient(circle at 75% 50%, var(--dls-dark-body-glow-warm) 0%, var(--dls-dark-body-glow-warm-soft) 25%, transparent 50%),
+    /* Left: cool blue radial glow */
+    radial-gradient(circle at 25% 50%, var(--dls-dark-body-glow-cool) 0%, var(--dls-dark-body-glow-cool-soft) 30%, transparent 55%);
+}
+
+/* Frost on a pseudo-element, and only on the layout shells. A
+   backdrop-filter on the panel makes it the containing block for
+   position:fixed descendants, so a dialog inside it covers only the panel.
+   Message bubbles are also rounded-shell; blurring each one never shipped
+   (Lightning CSS drops an unprefixed backdrop-filter when the prefixed
+   property follows it, and WebView2 ignores the prefix) and would tax
+   transcript scroll. Write the unprefixed property alone. position is
+   zero-specificity so a sticky or absolute utility still wins. The composer
+   fade opts out. Guard: apps/ui/scripts/dark-shell-backdrop.check.mjs */
+:where([data-theme="dark"] :is(main, aside).rounded-shell) {
+  position: relative;
+}
+
+[data-theme="dark"] :is(main, aside).rounded-shell::before,
+[data-theme="dark"] .sticky:not([data-composer-shell])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+/* Under the Settings dialog the shells sit behind its dim and blur, where their
+   frost does not show, yet the WebView re-blurs every one of them on each frame
+   the dialog draws (a hover, a scroll), which drops it to about 20 fps at full
+   screen. */
+[data-theme="dark"]:has([data-settings-dialog-layer]) :is(main, aside).rounded-shell::before,
+[data-theme="dark"]:has([data-settings-dialog-layer]) .sticky:not([data-composer-shell])::before {
+  backdrop-filter: none;
+}
+
+[data-theme="dark"] [data-composer-shell] {
+  background-color: var(--dls-surface);
+  background-image: none;
+  backdrop-filter: none;
+}
+
+/* Global clickable elements pointer */
+button,
+[role="button"],
+a,
+input[type="submit"],
+input[type="button"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"],
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+@utility animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
+
+@utility type-markdown-body {
+  font-size: var(--text-body-lg);
+  line-height: 1.625;
+  font-weight: 400;
+}
+
+@utility type-markdown-h1 {
+  font-size: var(--text-display);
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+@utility type-markdown-h2 {
+  font-size: var(--text-heading);
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+@utility type-markdown-h3 {
+  font-size: var(--text-title);
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+/* Two call sites already used `scrollbar-hide` as if Tailwind provided it. It
+   does not, and no scrollbar plugin is installed, so the class was a no-op and
+   WebView2 painted a native horizontal scrollbar under the Advanced tab strip.
+   Defining it here rather than adding a plugin keeps it to the one declaration
+   the call sites actually meant. */
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes soft-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@utility animate-soft-pulse {
+  animation: soft-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+mark.search-highlight {
+  border-radius: var(--radius-micro);
+  padding-inline: 0.125rem;
+  background-color: var(--dls-search-highlight-bg);
+  color: currentColor;
+}
+
+[data-theme="dark"] mark.search-highlight {
+  background-color: var(--dls-search-highlight-bg);
+}
+
+mark.search-highlight-active {
+  background-color: var(--dls-search-highlight-active-bg);
+  font-weight: 600;
+  color: var(--dls-search-highlight-active-text);
+}
+
+[data-theme="dark"] mark.search-highlight-active {
+  background-color: var(--dls-search-highlight-active-bg);
+  color: var(--dls-search-highlight-active-text);
+}
+
+@keyframes search-highlight-arrival {
+  from {
+    opacity: 0.7;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .search-highlight-active {
+    animation: search-highlight-arrival 180ms ease-out;
+  }
+
+  .search-panel-motion {
+    transition:
+      opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-panel-motion {
+    transition:
+      opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Highlight animation for just-saved command */
+@keyframes command-highlight {
+  0% {
+    box-shadow: 0 0 0 0 rgb(var(--dls-command-highlight-rgb) / 0.6);
+    border-color: rgb(var(--dls-command-highlight-rgb) / 0.8);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgb(var(--dls-command-highlight-rgb) / 0);
+    border-color: rgb(var(--dls-command-highlight-rgb) / 0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--dls-command-highlight-rgb) / 0);
+    border-color: var(--dls-command-highlight-rest-border);
+  }
+}
+
+.command-just-saved {
+  animation: command-highlight 2s ease-out;
+  border-color: rgb(var(--dls-command-highlight-rgb) / 0.8);
+}
+
+@keyframes edge-server-attention {
+  0% {
+    opacity: 0;
+    transform: scale(0.985);
+    box-shadow:
+      0 0 0 0 rgb(var(--dls-accent-rgb) / 0),
+      0 0 0 0 rgb(var(--dls-accent-rgb) / 0);
+  }
+
+  18% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow:
+      0 0 0 3px rgb(var(--dls-accent-rgb) / 0.62),
+      0 0 34px 10px rgb(var(--dls-accent-rgb) / 0.34);
+  }
+
+  45% {
+    opacity: 0.45;
+    transform: scale(1.018);
+    box-shadow:
+      0 0 0 9px rgb(var(--dls-accent-rgb) / 0.16),
+      0 0 24px 6px rgb(var(--dls-accent-rgb) / 0.18);
+  }
+
+  68% {
+    opacity: 0.95;
+    transform: scale(1.004);
+    box-shadow:
+      0 0 0 3px rgb(var(--dls-accent-rgb) / 0.52),
+      0 0 30px 8px rgb(var(--dls-accent-rgb) / 0.28);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.035);
+    box-shadow:
+      0 0 0 0 rgb(var(--dls-accent-rgb) / 0),
+      0 0 0 0 rgb(var(--dls-accent-rgb) / 0);
+  }
+}
+
+.edge-server-card-attention {
+  position: relative;
+  overflow: visible;
+}
+
+.edge-server-card-attention::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: 20;
+  pointer-events: none;
+  border: 2px solid rgb(var(--dls-accent-rgb) / 0.88);
+  border-radius: var(--radius-dialog);
+  background: rgb(var(--dls-accent-rgb) / 0.055);
+  animation: edge-server-attention 2.6s ease-out both;
+}
+
+/* A setting just opened from the Settings search. Drawn inside the element,
+   so a card that clips its overflow still shows it. */
+@keyframes settings-search-highlight {
+  0% { opacity: 0; }
+  12% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.settings-search-highlight {
+  position: relative;
+}
+
+/* The search moves focus to a card it opens; the card is not a control, so it draws no ring. */
+[data-settings-anchor][tabindex="-1"]:focus {
+  outline: none;
+}
+
+.settings-search-highlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  border: 2px solid rgb(var(--dls-accent-rgb) / 0.8);
+  border-radius: inherit;
+  background: rgb(var(--dls-accent-rgb) / 0.06);
+  animation: settings-search-highlight 2.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-search-highlight::after {
+    animation: none;
+  }
+}
+
+@keyframes progress-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@utility animate-progress-shimmer {
+  animation: progress-shimmer 2s infinite linear;
+}
+
+/* SuperClaw icon animations — orbit spin & core pulse */
+@keyframes sc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sc-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+/* One clockwise quarter-turn per pulse; the mark is 4-fold symmetric, so 90deg
+   lands back on itself and the loop is seamless. */
+@keyframes sc-diamond-pulse {
+
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: rotate(45deg) scale(1.14);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(90deg) scale(1);
+    opacity: 0.55;
+  }
+}
+
+.sc-diamond {
+  /* fill-box keeps each nested diamond scaling about its own centre, not the SVG origin */
+  transform-box: fill-box;
+  transform-origin: center;
+  /* Forced regardless of prefers-reduced-motion: this is a functional busy
+     indicator, and OS/RDP-level reduced-motion (e.g. RDP experience settings)
+     otherwise freezes it with no visual replacement. */
+  animation: sc-diamond-pulse 1.5s ease-in-out infinite !important;
+}
+
+/* ── Error boundary (backlog §B4) ─────────────────────────────────────────
+  Fallback shown when a render throw is contained instead of white-screening
+  the app. Semantic DLS roles keep its colors theme-aware. */
+.app-error-boundary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--dls-danger-border);
+  border-radius: var(--radius-card);
+  background: var(--dls-danger-bg);
+  color: var(--dls-text-primary);
+}
+
+.app-error-boundary--root {
+  height: 100vh;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--dls-app-bg);
+}
+
+.app-error-boundary__title {
+  font-size: var(--text-title);
+  font-weight: 700;
+  color: var(--dls-danger-text);
+}
+
+.app-error-boundary__message {
+  font-family: "Intel One Mono", ui-monospace, monospace;
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--dls-text-secondary);
+  max-width: 70ch;
+  overflow-wrap: anywhere;
+}
+
+.app-error-boundary__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.app-error-boundary__btn {
+  padding: 6px 14px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--dls-text-primary);
+  background: var(--dls-surface-solid);
+  border: 1px solid var(--dls-border);
+  border-radius: var(--radius-control);
+}
+
+.app-error-boundary__btn:hover {
+  background: var(--dls-hover);
+  border-color: var(--dls-accent);
+  color: var(--dls-accent);
+}

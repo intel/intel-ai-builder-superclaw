@@ -1,0 +1,3846 @@
+{
+  "contract_version": 1,
+  "descriptor": {
+    "contract_version": 1,
+    "managed_root_policies": [
+      {
+        "managed_root_scope": "config_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "relative_path": "agents",
+            "tier": "channel"
+          }
+        ],
+        "tier_subtree_dacls": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "bootstrap"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "file_tool"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "network_connector"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "channel"
+          }
+        ]
+      },
+      {
+        "managed_root_scope": "data_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "relative_path": "inbox",
+            "tier": "channel"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_READ_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "relative_path": "outbox",
+            "tier": "channel"
+          }
+        ],
+        "tier_subtree_dacls": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "bootstrap"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "file_tool"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "network_connector"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "channel"
+          }
+        ]
+      },
+      {
+        "managed_root_scope": "logs_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_WRITE_DATA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "bootstrap"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_WRITE_DATA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "file_tool"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_WRITE_DATA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "network_connector"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_WRITE_DATA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_ATTRIBUTES",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "channel"
+          }
+        ]
+      },
+      {
+        "managed_root_scope": "temp_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "bootstrap"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "file_tool"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "network_connector"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "tier": "channel"
+          }
+        ]
+      },
+      {
+        "managed_root_scope": "backend_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      },
+      {
+        "managed_root_scope": "payload_container_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      },
+      {
+        "managed_root_scope": "temp_container_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      },
+      {
+        "managed_root_scope": "payload_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "sandbox_tier_bootstrap",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "sandbox_tier_network_connector",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "sandbox_tier_channel",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      },
+      {
+        "managed_root_scope": "protected_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      },
+      {
+        "managed_root_scope": "isolation_root",
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_DELETE_CHILD",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        },
+        "tier_openings": [],
+        "tier_subtree_dacls": []
+      }
+    ],
+    "policy_version": 9,
+    "profile_ancestor_grants": [
+      {
+        "added_ace": {
+          "ace_kind": "allow",
+          "inheritance": "this_object_only",
+          "principal": "sandbox_tier_file_tool",
+          "rights": [
+            "FILE_READ_ATTRIBUTES"
+          ]
+        },
+        "profile_relative_path": "AppData"
+      },
+      {
+        "added_ace": {
+          "ace_kind": "allow",
+          "inheritance": "this_object_only",
+          "principal": "sandbox_tier_file_tool",
+          "rights": [
+            "FILE_READ_ATTRIBUTES"
+          ]
+        },
+        "profile_relative_path": "AppData/Local"
+      },
+      {
+        "added_ace": {
+          "ace_kind": "allow",
+          "inheritance": "this_object_only",
+          "principal": "sandbox_tier_file_tool",
+          "rights": [
+            "FILE_READ_ATTRIBUTES"
+          ]
+        },
+        "profile_relative_path": "AppData/Local/SuperClaw"
+      }
+    ],
+    "workspace_root_policies": [
+      {
+        "policy_class": "managed_default",
+        "protected_placeholders": [
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "placeholder_kind": "empty_directory",
+            "placeholder_role": "protected_mask",
+            "relative_path": "sensitive"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_DELETE_CHILD",
+                    "DELETE",
+                    "WRITE_DAC",
+                    "WRITE_OWNER"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_DELETE_CHILD",
+                    "DELETE",
+                    "WRITE_DAC",
+                    "WRITE_OWNER"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_DELETE_CHILD",
+                    "DELETE",
+                    "WRITE_DAC",
+                    "WRITE_OWNER"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_DELETE_CHILD",
+                    "DELETE",
+                    "WRITE_DAC",
+                    "WRITE_OWNER"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "children_only",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "placeholder_kind": "empty_directory",
+            "placeholder_role": "guard_ancestor",
+            "relative_path": "data_protection_workspace"
+          },
+          {
+            "dacl": {
+              "aces": [
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_bootstrap",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_file_tool",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_network_connector",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "deny",
+                  "inheritance": "this_object_and_children",
+                  "principal": "sandbox_tier_channel",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_DELETE_CHILD",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "host_user",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "local_system",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                },
+                {
+                  "ace_kind": "allow",
+                  "inheritance": "this_object_and_children",
+                  "principal": "administrators",
+                  "rights": [
+                    "FILE_READ_DATA",
+                    "FILE_WRITE_DATA",
+                    "FILE_APPEND_DATA",
+                    "FILE_READ_EA",
+                    "FILE_WRITE_EA",
+                    "FILE_EXECUTE",
+                    "FILE_READ_ATTRIBUTES",
+                    "FILE_WRITE_ATTRIBUTES",
+                    "DELETE",
+                    "READ_CONTROL",
+                    "WRITE_DAC",
+                    "WRITE_OWNER",
+                    "SYNCHRONIZE"
+                  ]
+                }
+              ],
+              "dacl_protected": true
+            },
+            "placeholder_kind": "empty_directory",
+            "placeholder_role": "protected_mask",
+            "relative_path": "data_protection_workspace/mask_registries"
+          }
+        ],
+        "revocation_record_required": false,
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "children_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        }
+      },
+      {
+        "policy_class": "user_granted_rw",
+        "protected_placeholders": [],
+        "revocation_record_required": true,
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "children_only",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        }
+      },
+      {
+        "policy_class": "user_granted_ro",
+        "protected_placeholders": [],
+        "revocation_record_required": true,
+        "root_dacl": {
+          "aces": [
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "host_user",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "local_system",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "administrators",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_WRITE_DATA",
+                "FILE_APPEND_DATA",
+                "FILE_READ_EA",
+                "FILE_WRITE_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "FILE_WRITE_ATTRIBUTES",
+                "DELETE",
+                "READ_CONTROL",
+                "WRITE_DAC",
+                "WRITE_OWNER",
+                "SYNCHRONIZE"
+              ]
+            },
+            {
+              "ace_kind": "allow",
+              "inheritance": "this_object_and_children",
+              "principal": "sandbox_tier_file_tool",
+              "rights": [
+                "FILE_READ_DATA",
+                "FILE_READ_EA",
+                "FILE_EXECUTE",
+                "FILE_READ_ATTRIBUTES",
+                "READ_CONTROL",
+                "SYNCHRONIZE"
+              ]
+            }
+          ],
+          "dacl_protected": true
+        }
+      }
+    ]
+  },
+  "rules": {
+    "descriptor_digest": "6aebf02b7f9c15e366a019292debe332df46745ec0e4a6c1812022d4d87d016f",
+    "owner_sid_pattern": "^S-1-(?:\\d+-)+\\d+$",
+    "planner_refusal_reasons": [
+      "descriptor_shape_invalid",
+      "descriptor_not_the_shipped_policy",
+      "root_set_shape_invalid",
+      "root_set_member_count_above_bound",
+      "root_set_managed_default_not_unique",
+      "root_set_root_id_duplicated",
+      "root_set_policy_class_unknown",
+      "owner_sid_shape_invalid"
+    ],
+    "principal_tier": {
+      "administrators": null,
+      "host_user": null,
+      "local_system": null,
+      "sandbox_tier_bootstrap": "bootstrap",
+      "sandbox_tier_channel": "channel",
+      "sandbox_tier_file_tool": "file_tool",
+      "sandbox_tier_network_connector": "network_connector"
+    },
+    "recovery_minimum_rights": [
+      "FILE_READ_DATA",
+      "FILE_EXECUTE",
+      "FILE_READ_ATTRIBUTES",
+      "DELETE",
+      "READ_CONTROL",
+      "WRITE_DAC",
+      "WRITE_OWNER"
+    ],
+    "recovery_principals": [
+      "host_user",
+      "local_system",
+      "administrators"
+    ],
+    "write_conferring_rights": [
+      "FILE_WRITE_DATA",
+      "FILE_APPEND_DATA",
+      "FILE_WRITE_EA",
+      "FILE_WRITE_ATTRIBUTES",
+      "FILE_DELETE_CHILD",
+      "DELETE",
+      "WRITE_DAC",
+      "WRITE_OWNER"
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "$id": "https://different.ai/openwork-contracts/config-patch-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "opencode": {
+      "additionalProperties": false,
+      "properties": {
+        "mcp": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "environment": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "timeout": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "type": {
+                    "const": "local",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "command"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "headers": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "oauth": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "clientId": {
+                            "type": "string"
+                          },
+                          "clientSecret": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "const": false,
+                        "type": "boolean"
+                      }
+                    ]
+                  },
+                  "timeout": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "type": {
+                    "const": "remote",
+                    "type": "string"
+                  },
+                  "url": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "url"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$",
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "openwork": {
+      "additionalProperties": false,
+      "properties": {
+        "reload": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "auto": {
+                  "type": "boolean"
+                },
+                "resume": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workspace": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "ConfigPatchRequest",
+  "type": "object"
+}

@@ -1,0 +1,16 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-auth-callback-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "ok"
+  ],
+  "title": "McpServerAuthCallbackResponse",
+  "type": "object"
+}

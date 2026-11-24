@@ -1,0 +1,165 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-allowlist.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "categories": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "carrier": {
+            "enum": [
+              "egress_proxy_shell",
+              "egress_proxy_channel",
+              "connector"
+            ],
+            "type": "string"
+          },
+          "hosts": {
+            "const": "caller_chosen",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "const": "draft",
+            "type": "string"
+          },
+          "surfaces": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "tier": {
+            "enum": [
+              "file_tool",
+              "channel",
+              "network_connector"
+            ],
+            "type": "string"
+          },
+          "unlisted": {
+            "enum": [
+              "refuse",
+              "approval"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "tier",
+          "carrier",
+          "surfaces",
+          "status",
+          "reason",
+          "hosts",
+          "unlisted"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "entries": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "carrier": {
+            "enum": [
+              "egress_proxy_shell",
+              "egress_proxy_channel",
+              "connector"
+            ],
+            "type": "string"
+          },
+          "hosts": {
+            "items": {
+              "pattern": "^(?:\\*\\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "ports": {
+            "items": {
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "observed_in_audit",
+              "required_by_inventory",
+              "product_decision"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "const": "draft",
+            "type": "string"
+          },
+          "surfaces": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "tier": {
+            "enum": [
+              "file_tool",
+              "channel",
+              "network_connector"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "tier",
+          "carrier",
+          "surfaces",
+          "status",
+          "reason",
+          "hosts",
+          "ports",
+          "source"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "entries",
+    "categories"
+  ],
+  "title": "EgressAllowlist",
+  "type": "object"
+}

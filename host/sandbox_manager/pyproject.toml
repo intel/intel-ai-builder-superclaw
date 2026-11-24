@@ -1,0 +1,84 @@
+[project]
+name = "sandbox-manager"
+version = "2.0.0"
+description = "SuperClaw Sandbox Manager: Windows-native sandbox backend provisioning and lifecycle orchestration (Windows-only)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.8",
+    "httpx>=0.27",
+    "anyio>=4.4",
+    "loguru>=0.6",
+    "superclaw-host-observability",
+    "superclaw-contracts",
+    "sandbox-policy",
+    # Ed25519 signing of egress approval grants (EG1-7, D5). Pinned to the version the Connector payload's lock resolves.
+    "cryptography==50.0.0",
+    # (CVE — quadratic-time querystring-parsing DoS in python-multipart's
+    # urlencoded parser). See docs/design/2026-05-07_security_dependabot_triage.md.
+    "python-multipart>=0.0.31",
+    # native-backend.zip's members are zstd frames. The installer build packs them through this
+    # project's environment, so the packer and the reader resolve the same locked version.
+    "zstandard>=0.25.0",
+    "wmi>=1.5.1; sys_platform == 'win32'",
+    "pywin32>=306; sys_platform == 'win32'",
+]
+
+[project.scripts]
+sandbox-manager = "sandbox_manager.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sandbox_manager"]
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.20.0",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-mock>=3.14",
+]
+
+[tool.uv]
+package = true
+# Pin the transitive `starlette` up to the patched release for Dependabot
+# alert #257 (request.form() DoS for application/x-www-form-urlencoded).
+# starlette is pulled in via fastapi; constrain it here so `uv lock` cannot
+# regress it below the fix.
+constraint-dependencies = ["starlette>=1.3.1", "setuptools>=84.1.0"]
+
+[tool.uv.sources]
+superclaw-host-observability = { workspace = true }
+superclaw-contracts = { workspace = true }
+sandbox-policy = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-q --strict-markers -m 'not integration and not windows_only and not gpu'"
+markers = [
+    "integration: marks tests that require a live sandbox-manager process",
+    # Selected by the sandbox-manager-windows job in unit-test-native-windows.yml. The wording
+    # names only the host and the one thing it must NOT have; it's not a full statement of what
+    # each case needs. Some cases also need a volume that supports reparse points, one needs
+    # SeCreateSymbolicLinkPrivilege, and two need a free drive letter for `subst` - none of
+    # those three are in a marker (the CI job gates on the volume and reads pytest's skip
+    # reasons for the other two; see tests/README.md).
+    #
+    # "SeBackupPrivilege not enabled" - stated as the privilege, not as "not elevated", because
+    # the two differ and CI runners are elevated with the privilege disabled. #2027's ACL cases
+    # assert a deny ACE as a precondition via FILE_FLAG_BACKUP_SEMANTICS opens, which an
+    # *enabled* backup privilege bypasses; measured 160/3/0 with it absent vs 159 passed/4
+    # FAILED with it enabled. Don't tighten this to "not elevated" without re-measuring - that
+    # would refuse every runner this repo has for a state not known to break anything.
+    "windows_only: requires a real Windows host with SeBackupPrivilege not enabled",
+    "gpu: requires a GPU",
+    "regression: regression tests for Windows paths, symlinks, and edge cases",
+]

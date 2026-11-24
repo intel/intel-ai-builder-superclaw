@@ -1,0 +1,117 @@
+# protection-service example config
+# Copy to config.yaml and edit for local standalone runs.
+# Run with: protection-service --config config.yaml
+# Or:       python -m protection_service --config config.yaml
+#
+# Main routes:
+#   File:   /v1/file/redact, /v1/file/detect, /v1/file/detect_and_redact
+#   Text:   /v1/text/redact, /v1/text/categories, /v1/text/custom-level
+#   Shared: /v1/restore, /health
+
+server:
+  host: 127.0.0.1
+  port: 18400
+
+# Bearer auth for standalone mode. Disabled by default.
+auth:
+  enabled: false
+  token_env: PROTECTION_API_TOKEN
+
+# File redaction output and retention.
+redact:
+  max_inline_bytes: 5_000_000        # 5 MB cap for return_mode=inline
+  # Registry JSON larger than this is returned as a file path in auto mode.
+  # Per request: registry_return_mode = auto | inline | path.
+  max_inline_registry_bytes: 1_000_000   # 1 MB
+  default_ttl_seconds: 300           # path-mode files (masked + registry) auto-delete after this
+  max_ttl_seconds: 3600              # client cannot request longer than this
+  # redacts_dir: C:\ProgramData\PiiService\redacts   # uncomment to override
+  # Allowed source roots. Omitted = current user's SuperClawProjects folder.
+  # Empty list disables containment checks; avoid unless explicitly needed.
+  # source_roots:
+  #   - C:\Users\<you>\SuperClawProjects
+
+# Text sanitizer. Set enabled=false to disable ML startup cost;
+# /v1/text/redact will return 503.
+sanitize:
+  enabled: true
+
+  # Inference device. AUTO prefers Intel GPU/NPU, then CPU.
+  # Strict options: INTEL_GPU, INTEL_NPU, CPU, DIRECTML, COREML, CUDA.
+  # Aliases accepted: GPU/AUTO:GPU,CPU -> AUTO, NPU -> INTEL_NPU, DML -> DIRECTML.
+  device: "AUTO"
+
+  # Replace amounts with magnitude placeholders, e.g. <FINANCIAL_THOUSANDS_1>.
+  # Exact values still stay in the registry for restore. Per-request override exists.
+  bucketize_financial: false
+
+  # Monetary amount handling: mask | off | bucketize.
+  # Identifiers such as cards, IBANs, accounts, and tax IDs are always masked.
+  fin_amount_mode: "mask"
+
+  # Use NER to help file column detection. Per request: use_ner, ner_scope.
+  detect_use_ner: true
+
+  # Use NER inside free-form text cells/documents. Per request: free_text_use_ner.
+  redact_use_ner: true
+
+  # spaCy fallback for PERSON/ORG detection.
+  use_spacy: true
+
+  # Text pipeline only: run spaCy only on English text.
+  text_spacy_english_only: true
+
+  # File free-text tuning. These settings do not affect /v1/text/redact.
+
+  # File pipeline only: run spaCy only on English text.
+  redact_spacy_english_only: true
+
+  # File pipeline only: gazetteer for known CITY/COUNTRY names in English text.
+  redact_geo_gazetteer: true
+
+  # File pipeline only: accept phone-like values after anchors such as phone/tel/fax.
+  redact_phone_anchor_boost: false
+
+  # File pipeline only: drop likely boilerplate ORG spans. Off = recall-first.
+  redact_org_boilerplate_guard: false
+  # Extra boilerplate substrings used when the guard is enabled.
+  # redact_org_boilerplate_terms: []
+
+  # Minimum NER confidence for free-text soft entities. 0.0 = model default.
+  redact_ner_min_confidence: 0.0
+
+  # File pipeline only: mask the NER model's OTHER_PII catch-all. Off by default
+  # because it fires on values as small as a single gender character.
+  redact_ner_other_pii: false
+
+  # Optional SQLite L2 cache for NER results. L1 memory cache is always enabled.
+  # persistent_cache: false
+  # cache_dir: "./.cache"                 # holds inference_cache.sqlite
+  # persistent_cache_max_entries: 100000  # rows kept per L2 namespace (LRU)
+  # L2 row TTL in seconds. 0 = no TTL; rows still expire by LRU/model change.
+  # persistent_cache_ttl_seconds: 86400
+
+  # Idle TTL for /v1/text/redact session_id state.
+  session_ttl_seconds: 14400         # 4 hours
+
+  # Per-session entity cap. Eviction never resets placeholder counters.
+  # session_evict_policy: fifo (oldest) or lru (least recently reused).
+  # max_entities_per_session: 5000
+  # session_evict_policy: "fifo"
+
+  # Max new entities in one /v1/text/redact call. Over budget returns HTTP 413.
+  # max_entities_per_request: 5000
+
+  # Custom corporate terms to redact: term -> category.
+  custom_terms: {}
+
+  # Optional model path override. The model is downloaded per user; a
+  # relative path resolves against the per-user models dir first
+  # (%LOCALAPPDATA%\SuperClaw\privacy_manager\models).
+  # ner_model_path:       "./models/pplx-pii-masking-ov-int8"
+  # OpenVINO kernel cache. Default: %LOCALAPPDATA%\SuperClaw\privacy_manager\ov_cache;
+  # a relative path resolves against the exe. Unwritable = no cache.
+  # ov_cache_dir:         "./.ov_cache"
+
+logging:
+  level: INFO

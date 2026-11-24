@@ -1,0 +1,98 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-server-list.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "servers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_when_locked": {
+            "type": "boolean"
+          },
+          "always_grants": {
+            "items": {
+              "maxLength": 512,
+              "minLength": 1,
+              "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "approval_mode": {
+            "enum": [
+              "prompt",
+              "auto"
+            ],
+            "type": "string"
+          },
+          "command": {
+            "items": {
+              "maxLength": 4096,
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "environment_keys": {
+            "items": {
+              "pattern": "^[^=]+$",
+              "type": "string"
+            },
+            "maxItems": 64,
+            "type": "array"
+          },
+          "error_code": {
+            "enum": [
+              "invalid_request",
+              "servicehub_forwarding_required",
+              "runtime_token_invalid",
+              "host_mcp_server_not_found",
+              "approval_not_found",
+              "approval_not_pending",
+              "approval_scope_not_offered",
+              "host_mcp_server_limit",
+              "host_mcp_server_start_failed",
+              "host_browser_not_configured",
+              "host_browser_unavailable",
+              "host_mcp_browser_automation_refused",
+              "host_mcp_call_not_found"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "stopped",
+              "starting",
+              "running",
+              "failed"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "command",
+          "environment_keys",
+          "approval_mode",
+          "allow_when_locked",
+          "state",
+          "always_grants"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    }
+  },
+  "required": [
+    "servers"
+  ],
+  "title": "HostMcpServerList",
+  "type": "object"
+}

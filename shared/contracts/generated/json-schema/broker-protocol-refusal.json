@@ -1,0 +1,57 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-protocol-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "forbidden_executable_path",
+              "forbidden_command_line",
+              "forbidden_shell",
+              "forbidden_free_env",
+              "unknown_field",
+              "unsupported_contract_version",
+              "manifest_version_unknown",
+              "manifest_digest_mismatch",
+              "launch_role_unknown",
+              "placeholder_not_declared",
+              "placeholder_missing",
+              "placeholder_duplicate",
+              "path_not_canonical",
+              "path_placeholder_escape",
+              "workspace_root_id_required",
+              "workspace_root_id_forbidden",
+              "scalar_out_of_range",
+              "request_shape_invalid"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "refusals"
+  ],
+  "title": "BrokerProtocolRefusal",
+  "type": "object"
+}

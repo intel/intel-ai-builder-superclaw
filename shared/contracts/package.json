@@ -1,0 +1,51 @@
+{
+  "name": "@different-ai/openwork-contracts",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./runtime-status": "./dist/runtime-status.js",
+    "./model-routing": "./dist/model-routing.js",
+    "./skill-package": "./dist/skill-package.js",
+    "./capability": "./dist/capability/index.js",
+    "./feedback-ingest": "./dist/feedback-ingest.js",
+    "./config-patch": "./dist/config-patch.js",
+    "./mcp": "./dist/mcp.js",
+    "./sandbox-manager-host-api": "./dist/sandbox-manager-host-api.js",
+    "./host-mcp-api": "./dist/host-mcp-api.js",
+    "./egress-approval-grant": "./dist/egress-approval-grant.js",
+    "./egress-allowlist": "./dist/egress-allowlist.js",
+    "./router-approval": "./dist/router-approval.js",
+    "./egress-proxy-approval": "./dist/egress-proxy-approval.js",
+    "./sandbox-manager-channel-messaging": "./dist/sandbox-manager-channel-messaging.js",
+    "./data/model-routing.json": "./generated/data/model-routing.json",
+    "./data/agent-runtime-descriptors.json": "./generated/data/agent-runtime-descriptors.json",
+    "./data/acl-policy-descriptor.json": "./generated/data/acl-policy-descriptor.json",
+    "./data/egress-policy-descriptor.json": "./generated/data/egress-policy-descriptor.json",
+    "./data/isolation-reporting.json": "./generated/data/isolation-reporting.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:ci": "tsc -p tsconfig.json --noEmit && vitest run",
+    "gen": "tsx scripts/gen.mjs",
+    "product-profiles:check": "tsx scripts/check-product-profiles.mjs",
+    "product-profiles:parity": "node scripts/check-product-profile-parity.mjs"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.2.1",
+    "zod": "4.6.6"
+  },
+  "overrides": {
+    "tinypool": "2.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.4",
+    "vitest": "^4.1.12"
+  }
+}

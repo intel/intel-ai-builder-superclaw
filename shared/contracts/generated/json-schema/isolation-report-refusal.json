@@ -1,0 +1,81 @@
+{
+  "$id": "https://different.ai/openwork-contracts/isolation-report-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 3,
+      "type": "number"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "policy_category": {
+            "anyOf": [
+              {
+                "enum": [
+                  "identity",
+                  "filesystem",
+                  "egress"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "enum": [
+              "report_shape_invalid",
+              "level_requires_attestation_pass",
+              "attestation_coverage_missing_policy_category",
+              "level_requires_closed_egress_boundary",
+              "level_requires_file_policy_version",
+              "level_requires_egress_policy_version",
+              "egress_version_label_disagrees_with_boundary_state",
+              "egress_version_label_shape_invalid",
+              "egress_enforced_tiers_disagree_with_boundary_state",
+              "egress_readback_instant_disagrees_with_verdict",
+              "egress_drift_requires_warning",
+              "egress_drift_warning_disagrees_with_readback",
+              "token_shape_requires_hardening_warning",
+              "hardening_warning_disagrees_with_token_shape",
+              "attestation_pass_without_probe_evidence",
+              "attestation_coverage_claimed_without_pass",
+              "probe_set_id_shape_invalid",
+              "attestation_not_passing_requires_warning",
+              "attestation_warning_disagrees_with_verdict",
+              "level_not_established_requires_warning",
+              "not_established_warning_disagrees_with_level",
+              "not_established_reason_disagrees_with_report",
+              "workspace_root_classes_disagree_with_count",
+              "workspace_root_count_above_bound",
+              "egress_coverage_claimed_without_closed_boundary",
+              "filesystem_coverage_claimed_without_workspace_root_evidence",
+              "tier_evidence_tier_repeated",
+              "identity_coverage_claimed_without_tier_identity_evidence",
+              "filesystem_coverage_claimed_without_acl_readback",
+              "level_requires_tier_job_evidence"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "policy_category"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "refusals"
+  ],
+  "title": "IsolationReportRefusal",
+  "type": "object"
+}

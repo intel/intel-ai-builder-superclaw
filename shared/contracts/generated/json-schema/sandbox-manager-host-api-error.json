@@ -1,0 +1,73 @@
+{
+  "$id": "https://different.ai/openwork-contracts/sandbox-manager-host-api-error.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "invalid_tavily_api_key",
+            "tavily_api_key_store_unavailable",
+            "servicehub_forwarding_required",
+            "approval_not_found",
+            "approval_not_pending",
+            "egress_approvals_unavailable",
+            "approval_delivery_failed",
+            "invalid_channel_identity",
+            "invalid_channel_token",
+            "channel_credentials_unavailable",
+            "channel_config_unreadable",
+            "channel_legacy_slack_config",
+            "slack_credentials_rejected",
+            "slack_verification_unavailable",
+            "channel_router_unreachable",
+            "channel_router_rejected",
+            "slack_sender_env_managed",
+            "slack_configuration_token_rejected",
+            "slack_app_not_created",
+            "slack_unreachable",
+            "slack_install_port_unavailable",
+            "slack_install_not_ready",
+            "channel_identity_not_found",
+            "slack_app_not_finished"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "invalid",
+            "unreachable"
+          ],
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "bot",
+            "app"
+          ],
+          "type": "string"
+        },
+        "slack_error": {
+          "pattern": "^[a-z_]{1,64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "error"
+  ],
+  "title": "SandboxManagerHostApiError",
+  "type": "object"
+}

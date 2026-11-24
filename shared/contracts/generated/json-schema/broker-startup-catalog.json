@@ -1,0 +1,118 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-startup-catalog.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "entries": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "executable_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "identity_id": {
+            "pattern": "^ibid:[a-z_]+$",
+            "type": "string"
+          },
+          "launch_role": {
+            "enum": [
+              "supervisor_executable",
+              "token_service_executable",
+              "runtime_executable",
+              "connector_executable",
+              "connector_service",
+              "egress_proxy",
+              "hdr_sidecar",
+              "shell_executable",
+              "test_fixed_sleep_child"
+            ],
+            "type": "string"
+          },
+          "path_placeholders": {
+            "items": {
+              "enum": [
+                "payload_root",
+                "workspace_root",
+                "state_config_root",
+                "state_data_root",
+                "state_logs_root",
+                "state_temp_root",
+                "state_protected_root",
+                "isolation_root"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "policy_id": {
+            "pattern": "^acl:v[0-9]+$",
+            "type": "string"
+          },
+          "scalar_placeholders": {
+            "items": {
+              "enum": [
+                "loopback_host",
+                "supervisor_port",
+                "runtime_port",
+                "router_health_port",
+                "connector_port",
+                "egress_proxy_shell_port",
+                "egress_proxy_channel_port",
+                "hdr_port",
+                "llmrouter_port",
+                "hdr_api_token",
+                "hdr_ready_token",
+                "hdr_enabled",
+                "host_token",
+                "host_token_sha256",
+                "openwork_token",
+                "router_control_token",
+                "router_scoped_token",
+                "lrm_api_key",
+                "privacy_api_key",
+                "runtime_password",
+                "intent_classifier_token",
+                "runtime_deployment_b64",
+                "runtime_desired_fingerprint",
+                "runtime_instance_id",
+                "runtime_launch_attempt_id",
+                "local_proxy_url",
+                "local_proxy_bypass"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "launch_role",
+          "executable_sha256",
+          "identity_id",
+          "policy_id",
+          "path_placeholders",
+          "scalar_placeholders"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "manifest_version": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "contract_version",
+    "manifest_version",
+    "entries"
+  ],
+  "title": "BrokerStartupCatalog",
+  "type": "object"
+}

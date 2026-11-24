@@ -1,0 +1,222 @@
+/** English-language strings for the identities domain. Merged in en.ts. */
+export default {
+  "identities.not_set": "Not set",
+  "identities.status_unavailable": "Unavailable",
+  "identities.status_unknown": "Unknown",
+  "identities.status_running": "Running",
+  "identities.status_offline": "Offline",
+  "identities.just_now": "Just now",
+  "identities.worker_scope_unavailable": "Worker scope unavailable.",
+  "identities.created_default_agent_file":
+    "Created default messaging agent file.",
+  "identities.saved_messaging_behavior": "Saved messaging behavior.",
+  "identities.file_changed_remotely":
+    "File changed remotely. Reload and save again.",
+  "identities.dispatched": "Dispatched",
+  "identities.messages_suffix": "messages.",
+  "identities.worker_scope_unavailable_reconnect":
+    "Worker scope unavailable. Reconnect using a worker URL or switch to a known worker.",
+  "identities.telegram_identities_unavailable":
+    "Telegram identities unavailable.",
+  "identities.slack_identities_unavailable": "Slack identities unavailable.",
+  "identities.reconnect_failed":
+    "Reconnect failed. Check SuperClaw URL/token and try again.",
+  "identities.reconnected_refreshing":
+    "Reconnected. Refreshing worker state...",
+  "identities.reconnected": "Reconnected.",
+  "identities.saved": "Saved",
+  "identities.saved_pending_apply": "Saved (pending apply).",
+  "identities.failed_to_save": "Failed to save.",
+  "identities.failed_to_delete": "Failed to delete.",
+  "identities.host_service_unavailable": "The host service is not connected, so channel settings cannot be saved yet.",
+  "identities.apply_router_unreachable": "Saved, but the channel service is not running; it will pick this up when it starts.",
+  "identities.apply_router_rejected": "Saved, but the running channel service did not apply it yet.",
+  "identities.could_not_copy_pairing_code":
+    "Could not copy pairing code. Copy it manually.",
+  "identities.connections_title": "Connections",
+  "identities.services_title": "Services",
+  "identities.repair_and_reconnect": "Repair & reconnect",
+  "identities.refresh": "Refresh",
+  "identities.connect_to_openwork_server": "Connect to a SuperClaw server",
+  "identities.identities_available_when_connected":
+    "Identities are available when you are connected to a SuperClaw host",
+  "identities.workspace_id_required_prefix":
+    "Workspace ID is required to manage identities. Reconnect with a workspace URL (for example:",
+  "identities.workspace_id_required_suffix":
+    ") or select a workspace mapped on this host.",
+  "identities.tab_general": "General",
+  "identities.tab_advanced": "Advanced",
+  "identities.worker_online": "Worker online",
+  "identities.worker_unavailable": "Worker unavailable",
+  "identities.worker_offline": "Worker offline",
+  "identities.pill_channels": "Channels",
+  "identities.connected_lower": "connected",
+  "identities.pill_messages_today": "Messages today",
+  "identities.pill_last_activity": "Last activity",
+  "identities.available_channels": "Available channels",
+  "identities.connected_badge": "Connected",
+  "identities.slack_card_description":
+    "Your worker appears as a bot in Slack channels. Team members can message it directly or mention it in threads.",
+  "identities.enabled": "Enabled",
+  "identities.disabled": "Disabled",
+  "identities.running": "Running",
+  "identities.stopped": "Stopped",
+  "identities.disconnect": "Disconnect",
+  "identities.summary_status": "Status",
+  "identities.active": "Active",
+  "identities.summary_identities": "Identities",
+  "identities.configured_lower": "configured",
+  "identities.summary_channel": "Channel",
+  "identities.on": "On",
+  "identities.off": "Off",
+  "identities.slack_senders_title": "Who can message this bot",
+  "identities.slack_senders_hint":
+    "The bot only answers people you approve. Anyone else who messages it is told to ask you, and shows up here.",
+  "identities.slack_senders_empty": "No one is approved yet. Send the bot a message in Slack, then approve yourself here.",
+  "identities.slack_sender_pending": "Waiting for approval",
+  "identities.slack_sender_last_message": "last message",
+  "identities.slack_sender_allow": "Allow",
+  "identities.slack_sender_approved": "Approved",
+  "identities.slack_sender_from_env": "Approved by SLACK_ALLOWED_USERS",
+  "identities.slack_sender_remove": "Remove",
+  "identities.app_token": "App token",
+  "identities.slack_invalid_bot_token": "Invalid bot token",
+  "identities.slack_invalid_app_token": "Invalid app token",
+  "identities.slack_network_unreachable":
+    "Cannot reach Slack \u2014 no network connection. The tokens were not verified and nothing was saved.",
+  "identities.connecting": "Connecting...",
+  "identities.connect_slack": "Connect Slack",
+  "identities.slack_install_step_config_token":
+    "1. On Slack's Your Apps page, under Your App Configuration Tokens, generate a token for your workspace and paste the access token here. It is used once and not saved.",
+  "identities.slack_install_open_slack": "Open Slack",
+  "identities.slack_install_waiting":
+    "2. Approve the install in the browser tab that opened. This page updates when Slack sends you back.",
+  "identities.slack_install_reopen": "Open the install page again",
+  "identities.slack_install_cancel": "Cancel",
+  "identities.slack_install_step_app_token":
+    "3. Slack approved the install. On the app's Socket Mode page (in its settings sidebar), turn on Enable Socket Mode, give the token any name, click Generate, and paste the xapp- token here.",
+  "identities.slack_install_open_app": "Open Socket Mode settings",
+  "identities.slack_install_finish": "Finish connecting",
+  "identities.slack_install_done": "Slack is connected.",
+  "identities.slack_install_denied": "The install was not approved in Slack. Start again to retry.",
+  "identities.slack_install_expired":
+    "Slack did not send you back in time. If your workspace needs an admin to approve new apps, ask them to approve SuperClaw, then start again.",
+  "identities.slack_install_exchange_failed": "Slack did not complete the install. Start again to retry.",
+  "identities.slack_disconnected": "Slack connection removed.",
+  "identities.slack_disconnected_pending_apply": "Slack connection removed (pending apply).",
+  "identities.slack_install_disconnect_note":
+    "Switching the bot off keeps the connection. Removing it leaves the SuperClaw app in your Slack workspace; connecting again replaces it, or you can delete it in Slack.",
+  "identities.slack_remove": "Remove",
+  "identities.slack_switch_label": "Slack bot on or off",
+  "identities.slack_switched_on": "The Slack bot is on.",
+  "identities.slack_switched_off": "The Slack bot is off. Its connection is kept.",
+  "identities.slack_switch_rejected": "Slack no longer accepts this connection. Remove it and connect Slack again.",
+  "identities.private": "Private",
+  "identities.public": "Public",
+  "identities.telegram_token_placeholder":
+    "Paste Telegram bot token from @BotFather",
+  "identities.private_pairing_code": "Private pairing code",
+  "identities.pairing_instruction":
+    "In Telegram, open the chat that should control this worker and send",
+  "identities.copy_code": "Copy code",
+  "identities.message_routing": "Message routing",
+  "identities.message_routing_description":
+    "Control which conversations go to which workspace folder. Messages are routed to the worker's default folder unless you set up rules here.",
+  "identities.default_routing": "Default routing",
+  "identities.all_channels": "All channels",
+  "identities.advanced_dir_prefix": "Advanced: reply with",
+  "identities.advanced_dir_suffix":
+    "in Slack/Telegram to override the directory for a specific chat (limited to this workspace root).",
+  "identities.messaging_agent_behavior": "Messaging agent behavior",
+  "identities.messaging_agent_behavior_prefix":
+    "One file per workspace. Add optional first line",
+  "identities.messaging_agent_behavior_suffix":
+    "to route via a specific OpenCode agent.",
+  "identities.active_scope_workspace": "Active scope: workspace",
+  "identities.status_label": "status:",
+  "identities.loaded": "loaded",
+  "identities.missing": "missing",
+  "identities.selected_agent_label": "selected agent:",
+  "identities.none_parenthetical": "(none)",
+  "identities.loading_agent_file": "Loading agent file…",
+  "identities.agent_file_not_found":
+    "Agent file not found in this workspace yet.",
+  "identities.agent_textarea_placeholder":
+    "Add messaging behavior instructions for opencodeRouter here...",
+  "identities.reload": "Reload",
+  "identities.create_default_file": "Create default file",
+  "identities.saving": "Saving...",
+  "identities.save_behavior": "Save behavior",
+  "identities.unsaved_changes": "Unsaved changes",
+  "identities.send_test_message": "Send test message",
+  "identities.send_test_message_description":
+    "Validate outbound wiring. Use a peer ID for direct send, or leave peer ID empty to fan out by bindings in a directory.",
+  "identities.channel_label": "Channel",
+  "identities.peer_id_optional": "Peer ID (optional)",
+  "identities.peer_id_placeholder_telegram":
+    "Telegram chat id (e.g. 123456789)",
+  "identities.peer_id_placeholder_slack":
+    "Slack peer id (e.g. D12345678|thread_ts)",
+  "identities.directory_optional": "Directory (optional)",
+  "identities.auto_bind_peer": "Auto-bind peer to directory on direct send",
+  "identities.message_label": "Message",
+  "identities.test_message_placeholder": "Test message content",
+  "identities.sending": "Sending...",
+  "identities.seconds_ago_suffix": "s ago",
+  "identities.minutes_ago_suffix": "m ago",
+  "identities.hours_ago_suffix": "h ago",
+  "identities.days_ago_suffix": "d ago",
+  "identities.slack_title": "Slack",
+  // Other words the Settings search finds the setting by, comma-separated.
+  "identities.slack_title_keywords": "Slack bot, messaging, chat channel, team chat",
+
+  "connections.title": "Accounts",
+  "connections.name_slack": "Slack",
+  "connections.name_telegram": "Telegram",
+  "connections.name_github": "GitHub",
+  "connections.name_tavily": "Tavily web search",
+  "connections.name_gmail": "Gmail",
+  "connections.status_label": "Status",
+  "connections.status_connected": "Connected",
+  "connections.status_paused": "Paused",
+  "connections.status_not_connected": "Not connected",
+  "connections.status_attention": "Needs attention",
+  "connections.status_unavailable": "Unavailable",
+  "connections.status_loading": "Checking…",
+  "connections.open_setup": "Open setup for",
+  "connections.toggle_label": "Turn on or off:",
+  "connections.switch_failed": "The change did not go through.",
+  "connections.github_unavailable": "GitHub cannot be reached yet.",
+  "connections.github_paused_note":
+    "GitHub is paused. Your sign-in is kept; turn GitHub back on in the list to use it again. Pausing stops normal use, but the kept sign-in stays where the agent's tools can still read it.",
+  "connections.gmail_paused_note":
+    "Gmail is paused. Your authorization is kept; turn Gmail back on in the list to use it again. Pausing stops normal use, but the kept authorization stays where the agent's tools can still read it.",
+  "connections.github_clear_title": "Remove the GitHub sign-in?",
+  "connections.github_clear_message":
+    "SuperClaw signs out of GitHub and forgets the sign-in, so you will need to sign in again. To stop using GitHub for now, turn it off instead.",
+  "connections.tavily_clear_title": "Remove the Tavily key?",
+  "connections.tavily_clear_message":
+    "SuperClaw forgets the key, and web search falls back to DuckDuckGo. To stop using Tavily for now, turn it off instead.",
+  "connections.slack_remove_title": "Remove the Slack connection?",
+  "connections.slack_remove_message":
+    "SuperClaw forgets the Slack tokens. The SuperClaw app stays in your Slack workspace; connecting again replaces it. To stop the bot for now, turn Slack off instead.",
+  "connections.telegram_disconnect_title": "Disconnect the Telegram bot?",
+  "connections.telegram_disconnect_message":
+    "SuperClaw forgets the bot token and its pairing. To stop the bot for now, turn Telegram off instead.",
+  "connections.telegram_intro": "Chat with SuperClaw from Telegram through a bot you create.",
+  "connections.telegram_step_create": "In Telegram, open @BotFather, send /newbot and follow its steps.",
+  "connections.telegram_open_botfather": "Open @BotFather",
+  "connections.telegram_step_token": "Paste the token @BotFather gives you.",
+  "connections.telegram_step_access": "Choose who can use the bot.",
+  "connections.telegram_public_hint": "The first chat that messages the bot is linked to it.",
+  "connections.telegram_private_hint": "A chat has to send a pairing code before the bot does anything.",
+  "connections.telegram_connect": "Connect bot",
+  "connections.telegram_open_bot": "Open in Telegram",
+  "connections.telegram_bot_fallback_name": "Telegram bot",
+  "connections.telegram_not_running": "Not running",
+  "connections.telegram_paused_note":
+    "The bot is paused. Its token and pairing are kept; turn Telegram back on in the list to use it again.",
+  "connections.telegram_replace_note": "To use a different bot, disconnect this one first.",
+
+  // ==================== Token Usage ====================
+} as const;

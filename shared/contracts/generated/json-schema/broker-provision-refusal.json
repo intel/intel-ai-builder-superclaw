@@ -1,0 +1,33 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-provision-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "op": {
+      "const": "refused",
+      "type": "string"
+    },
+    "reason": {
+      "enum": [
+        "owner_binding_invalid",
+        "path_set_shape_invalid",
+        "plan_shape_invalid",
+        "coverage_bound_exceeded",
+        "reparse_point_in_path",
+        "managed_path_refused",
+        "descriptor_not_the_shipped_policy",
+        "managed_root_not_authorized",
+        "provision_precondition_missing",
+        "win32_permission_denied",
+        "tier_identity_provision_failed"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "op",
+    "reason"
+  ],
+  "title": "BrokerProvisionRefusal",
+  "type": "object"
+}

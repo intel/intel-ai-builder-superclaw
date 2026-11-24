@@ -1,0 +1,23 @@
+{
+  "capability_contract_version": 1,
+  "product_profile_id": "standard",
+  "product_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "profile_revision": 8,
+  "descriptor": {
+    "schema_version": 1,
+    "profile": "standard",
+    "display_name": "Standard",
+    "description": "Standard packaged Product Profile",
+    "required_sidecars": ["intent-classifier"],
+    "feature_flags": {
+      "intent_classifier": true,
+      "local_tts": false,
+      "local_vision": false,
+      "hybrid_coding_agent": true,
+      "hybrid_deep_research_agent": false,
+      "email_agent": true,
+      "skills_ui": true,
+      "agent_authoring": true
+    }
+  }
+}

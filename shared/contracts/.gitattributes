@@ -1,0 +1,7 @@
+# The contract sources and all generated bindings are normalized to LF on every
+# platform. The drift gate (`pnpm contracts:gen && git diff --exit-code`) runs on
+# Linux CI; pinning eol=lf keeps a Windows checkout/regenerate byte-identical so
+# the gate can't fail on line endings alone.
+* text eol=lf
+*.png binary
+*.pkl binary

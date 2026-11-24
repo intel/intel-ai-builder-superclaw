@@ -1,0 +1,26 @@
+{
+  "default": {
+    "voice": "af_heart",
+    "lang": "a",
+    "keywords": ["默认", "default"],
+    "description": "American English female (Kokoro af_heart)"
+  },
+  "english": {
+    "voice": "af_heart",
+    "lang": "a",
+    "keywords": ["英文", "英语", "english", "en", "美式", "american"],
+    "description": "American English female (Kokoro af_heart)"
+  },
+  "english-male": {
+    "voice": "am_michael",
+    "lang": "a",
+    "keywords": ["英文男", "english-male"],
+    "description": "American English male (Kokoro am_michael)"
+  },
+  "british": {
+    "voice": "bf_emma",
+    "lang": "b",
+    "keywords": ["英式", "british", "uk", "英国"],
+    "description": "British English female (Kokoro bf_emma)"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "$id": "https://different.ai/openwork-contracts/product-profile-runtime-status.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "profile": {
+          "enum": [
+            "lite",
+            "standard",
+            "pro"
+          ],
+          "type": "string"
+        },
+        "state": {
+          "const": "ready",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "state",
+        "profile"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "profile": {
+          "anyOf": [
+            {
+              "enum": [
+                "lite",
+                "standard",
+                "pro"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "const": "applying",
+          "type": "string"
+        },
+        "target_profile": {
+          "enum": [
+            "lite",
+            "standard",
+            "pro"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "state",
+        "profile",
+        "target_profile"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "error": {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "type": "object"
+        },
+        "profile": {
+          "anyOf": [
+            {
+              "enum": [
+                "lite",
+                "standard",
+                "pro"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "const": "failed",
+          "type": "string"
+        },
+        "target_profile": {
+          "enum": [
+            "lite",
+            "standard",
+            "pro"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "state",
+        "profile",
+        "target_profile",
+        "error"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "ProductProfileRuntimeStatus"
+}

@@ -1,0 +1,124 @@
+{
+  "_doc": [
+    "Bundled copy of pipeline_config.json for the LangGraph sidecar. Field",
+    "names match the upstream SuperClaw file (superclaw-config/.opencode/pipeline_config.json)",
+    "so the two are mutually convertible. Override at deploy time via",
+    "HYBRID_DR_PIPELINE_CONFIG_PATH env var."
+  ],
+  "_schema_version": "1",
+  "stages_skeleton": [
+    "input_local",
+    "input_web",
+    "plan",
+    "section_write",
+    "fill",
+    "conclusion",
+    "fill_conclusion",
+    "assemble",
+    "polish"
+  ],
+  "task_classes": {
+    "deep_research": {
+      "_description": "Wild free-form research prompt.",
+      "report_shape": {
+        "max_sections": 2,
+        "expected_length_words": "150-250"
+      },
+      "candidates": {
+        "section_write": 2,
+        "conclusion": 2
+      },
+      "retries": {
+        "input_local": 2,
+        "input_web": 1,
+        "plan": 2,
+        "section_write": 3,
+        "fill": 1,
+        "conclusion": 1,
+        "assemble": 0,
+        "polish": 0
+      },
+      "concurrency": {
+        "stage1_local_workers": 5,
+        "stage2_web_workers": 5,
+        "stage4_writer_workers": 4,
+        "stage4_reviewer_workers": 4
+      },
+      "skip": {
+        "input_local": false,
+        "input_web": false,
+        "fill_conclusion": false,
+        "polish": false
+      },
+      "total_budget_sec": 3600
+    },
+    "ten_task": {
+      "_description": "Structured ten_task / W## / B## benchmark.",
+      "report_shape": {
+        "max_sections": 2,
+        "expected_length_words": "150-250"
+      },
+      "candidates": {
+        "section_write": 2,
+        "conclusion": 2
+      },
+      "retries": {
+        "input_local": 2,
+        "input_web": 1,
+        "plan": 2,
+        "section_write": 3,
+        "fill": 1,
+        "conclusion": 1,
+        "assemble": 0,
+        "polish": 0
+      },
+      "concurrency": {
+        "stage1_local_workers": 5,
+        "stage2_web_workers": 5,
+        "stage4_writer_workers": 4,
+        "stage4_reviewer_workers": 4
+      },
+      "skip": {
+        "input_local": false,
+        "input_web": false,
+        "fill_conclusion": false,
+        "polish": true
+      },
+      "total_budget_sec": 3600
+    },
+    "officeqa": {
+      "_description": "Treasury Bulletin numeric Q&A. 1 short section.",
+      "report_shape": {
+        "max_sections": 1,
+        "expected_length_words": "200-500"
+      },
+      "candidates": {
+        "section_write": 2,
+        "conclusion": 2
+      },
+      "retries": {
+        "input_local": 2,
+        "input_web": 1,
+        "plan": 2,
+        "section_write": 3,
+        "fill": 1,
+        "conclusion": 1,
+        "assemble": 0,
+        "polish": 0
+      },
+      "concurrency": {
+        "stage1_local_workers": 5,
+        "stage2_web_workers": 5,
+        "stage4_writer_workers": 4,
+        "stage4_reviewer_workers": 4
+      },
+      "skip": {
+        "input_local": false,
+        "input_web": false,
+        "fill_conclusion": false,
+        "polish": true
+      },
+      "total_budget_sec": 3600
+    }
+  }
+}

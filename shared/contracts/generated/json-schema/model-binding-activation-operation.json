@@ -1,0 +1,450 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-binding-activation-operation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "operation_id": {
+          "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "type": "string"
+        },
+        "progress": {
+          "additionalProperties": false,
+          "properties": {
+            "lrm_prepare_operation_id": {
+              "pattern": "^lrm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            "pct": {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "pct"
+          ],
+          "type": "object"
+        },
+        "stage": {
+          "enum": [
+            "preparing",
+            "activating",
+            "aligning_runtime"
+          ],
+          "type": "string"
+        },
+        "status": {
+          "const": "applying",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "operation_id",
+        "stage"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "download_confirmation_required",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "bundle_candidate_changed",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "idempotency_conflict",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "model_binding_activation_in_progress",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "actual_bundle_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "code": {
+                  "const": "lrm_bundle_revision_conflict",
+                  "type": "string"
+                },
+                "expected_bundle_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "expected_bundle_revision",
+                "actual_bundle_revision"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "actual_bundle_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "actual_profile_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "code": {
+                  "const": "runtime_alignment_conflict",
+                  "type": "string"
+                },
+                "expected_bundle_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "expected_profile_revision": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "expected_profile_revision",
+                "actual_profile_revision"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "safe_error",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "reason_code": {
+                  "enum": [
+                    "url_unreachable",
+                    "invalid_api_key",
+                    "model_not_found",
+                    "bundle_incomplete"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "feature_not_ready",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "recovery_required",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "connect_intent_required",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "primary_bundle_prepare_in_progress",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "preparation_recovery_required",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "pending_bundle_recovery_required",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "preparation_identity_mismatch",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "disconnect_not_available",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "message"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "const": "runtime_provision_failed",
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "reason": {
+                  "enum": [
+                    "broker_not_found",
+                    "launcher_not_found",
+                    "launch_refused",
+                    "owner_sid_unavailable",
+                    "tier_identity_missing",
+                    "provision_refused",
+                    "provision_elevation_failed",
+                    "provision_connect_timeout",
+                    "provision_frame_timeout",
+                    "provision_broker_exited",
+                    "provision_required",
+                    "provision_elevation_declined",
+                    "provision_pipe_refused"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "reason",
+                "message"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "operation_id": {
+          "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "status": {
+          "const": "failed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "operation_id",
+        "error",
+        "retryable"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "operation_id": {
+          "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "type": "string"
+        },
+        "runtime_transition_required": {
+          "type": "boolean"
+        },
+        "status": {
+          "const": "succeeded",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "status",
+        "operation_id",
+        "runtime_transition_required"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "ModelBindingActivationOperation"
+}

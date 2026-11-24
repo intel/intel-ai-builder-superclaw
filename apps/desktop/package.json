@@ -1,0 +1,19 @@
+{
+  "name": "@different-ai/openwork",
+  "private": true,
+  "version": "0.11.169",
+  "opencodeVersion": "1.18.25",
+  "opencodeRouterVersion": "0.11.169",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env OPENWORK_DEV_MODE=1 tauri dev --config src-tauri/tauri.dev.conf.json --config \"{\\\"build\\\":{\\\"devUrl\\\":\\\"http://localhost:5173\\\"}}\"",
+    "build": "tauri build",
+    "build:debug": "cross-env BUILD_DEBUG=1 tauri build --debug",
+    "prepare:sidecar": "node ./scripts/prepare-sidecar.mjs"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "cross-env": "^10.1.0"
+  },
+  "packageManager": "pnpm@10.34.3"
+}

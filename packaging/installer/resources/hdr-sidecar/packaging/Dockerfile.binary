@@ -1,0 +1,48 @@
+FROM ubuntu:24.04 AS builder
+
+ARG HTTP_PROXY=""
+ARG HTTPS_PROXY=""
+ARG NO_PROXY="localhost,127.0.0.1"
+ARG http_proxy=""
+ARG https_proxy=""
+ARG no_proxy="localhost,127.0.0.1"
+
+# BuildKit's implicit ARG->ENV forwarding for these predefined proxy names is
+# not reliable across all buildx/WSL Docker versions; set them explicitly so
+# `curl` and `uv sync` below always see the proxy regardless of build args.
+ENV HTTP_PROXY=$HTTP_PROXY \
+    HTTPS_PROXY=$HTTPS_PROXY \
+    NO_PROXY=$NO_PROXY \
+    http_proxy=$http_proxy \
+    https_proxy=$https_proxy \
+    no_proxy=$no_proxy
+
+ENV PIP_DEFAULT_TIMEOUT=300
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl python3 python3-venv python3-pip libpython3.12 binutils \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSLk https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
+
+WORKDIR /src
+COPY pyproject.toml uv.lock README.md ./
+COPY src/ src/
+COPY hybrid_dr_sidecar.spec ./
+
+RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
+    uv sync --extra dev --frozen
+
+RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
+    uv run pyinstaller --distpath /build/dist --workpath /build/work --noconfirm hybrid_dr_sidecar.spec
+
+RUN test -x /build/dist/hybrid-dr-sidecar/hybrid-dr-sidecar \
+    && test ! -d /build/dist/hybrid-dr-sidecar/tests \
+    && ! find /build/dist/hybrid-dr-sidecar -path '*/hybrid_dr_orchestrator/*.py' -print -quit | grep -q .
+
+FROM scratch AS artifact
+COPY --from=builder /build/dist/hybrid-dr-sidecar /hybrid-dr-sidecar

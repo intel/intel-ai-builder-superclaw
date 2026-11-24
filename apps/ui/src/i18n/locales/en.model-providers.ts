@@ -1,0 +1,206 @@
+/** English-language strings for the model-providers domain. Merged in en.ts. */
+export default {
+  "model.not_configured": "Not configured",
+  "model.cloud_unavailable": "Cloud model unavailable.",
+  "model.add_provider": "+ Add Provider",
+  "model.select_provider": "Select provider",
+  "model.select_model": "Select model",
+  "model.loading_models": "Loading models…",
+  "model.load_models_failed": "Couldn't load model list",
+  "model.no_models": "No models available",
+  "model.test_model_unavailable":
+    "This model can't be used for chat with this provider. Pick a different model.",
+  "model.local_label": "Local",
+  "model.cloud_label": "Cloud",
+  "local.section_title": "Local",
+  "local.provider_label": "Local provider",
+  "model.cloud_provider": "Cloud provider",
+  "local.provider_edge": "Edge server",
+  "local.provider_llama": "llama.cpp",
+  "local.currently_using": "In use",
+  "local.status_unreachable": "not reachable",
+  "local.status_not_ready": "not ready",
+  "local.status_not_serving": "not in use",
+  "local.select_provider": "Select…",
+  "local.minimal_capability_title": "Limited by your device's hardware",
+  "local.minimal_capability_body_line1":
+    "Your device can only run the smallest local model, some capabilities are limited.",
+  "local.minimal_capability_body_line2":
+    "Connect an Edge server for full capability.",
+  "local.minimal_capability_connect_edge": "Connect Edge server",
+  "model.cloud_saved": "Cloud model saved. Connection successful.",
+  "model.cloud_selected_click_connect": "Model selected, click Connect to save.",
+  "model.perf_weight_section": "Routing balance",
+  "model.perf_weight_title": "Quality vs. cost balance",
+  "model.perf_weight_cost": "Lower Cost / local",
+  "model.perf_weight_quality": "Higher Quality / cloud",
+  "model.perf_weight_save_failed": "Failed to save the quality/cost balance.",
+  "model.local_ctx_section": "Local context size (experimental)",
+  "model.local_ctx_title": "Context size",
+  "model.local_ctx_description":
+    "Applying restarts the model (30-60s cold load).",
+  "model.local_ctx_placeholder": "e.g. 65536",
+  "model.local_ctx_apply": "Apply & restart",
+  "model.local_ctx_restarting": "Restarting…",
+  "model.local_ctx_restarting_message":
+    "Restarting local model — please wait 30-60 seconds.",
+  "model.local_ctx_reset": "Reset",
+  "model.local_ctx_reset_title":
+    "Clear the override and use the shipped default context size (may be reduced by hardware limits).",
+  "model.local_ctx_applied_prefix": "In use:",
+  "model.local_ctx_source_env": "env override",
+  "model.local_ctx_source_store": "custom override",
+  "model.local_ctx_source_registry": "default",
+  "model.local_ctx_source_booster": "hardware limit",
+  "model.local_ctx_source_unknown": "unknown",
+  "model.local_ctx_invalid_range":
+    "Enter a positive integer between 1024 and 262144, or leave blank to reset.",
+  "model.local_ctx_save_failed": "Failed to apply the context size.",
+  "local.llama_ineligible": "This machine can't run on-device models.",
+  "local.model_label": "Model",
+  "local.select_model": "Select a model",
+  "local.warning_below_default_benchmark_limited_testing":
+    "Experimental: this model scores below the recommended default in our benchmarks and has had limited testing.",
+  "local.downloaded_tag": "downloaded",
+  "local.download_start": "Download & start",
+  "local.starting": "Starting…",
+  "local.cancel": "Cancel",
+  "local.cancelled": "Cancelled",
+  "local.download_failed": "Download failed. Please try again.",
+  "local.delete_failed": "Failed to delete model.",
+  "local.delete_active_error": "This model is in use and can't be deleted.",
+  "local.state_connected": "Connected",
+  "local.connect_local_model": "Connect local model",
+  "local.connecting": "Connecting…",
+  "local.disconnect": "Disconnect",
+  "local.disconnect_failed": "Failed to disconnect.",
+  "local.provider_switch_failed": "Failed to switch local provider.",
+  "local.overall_progress": "Overall progress",
+  "local.current_task": "Current task",
+  "local.task_downloading": "Downloading",
+  "local.task_launching": "Launching model servers…",
+  "local.task_preparing": "Preparing…",
+  "local.file_complete": "Complete",
+  "local.file_pending": "Waiting",
+  "local.delete_confirm_title": "Delete local model?",
+  "local.delete_confirm_message":
+    "This removes the downloaded model file from this device and cannot be undone. Delete it?",
+  "model.remove_provider": "Remove provider",
+  "model.remove_provider_named": "Remove provider: {provider}",
+  "model.remove_provider_confirm_title": "Remove provider?",
+  "model.remove_provider_confirm_removed": "{provider} and its model {model} will be removed.",
+  "model.remove_provider_confirm_removed_no_model": "{provider} will be removed.",
+  "model.remove_provider_confirm_sign_in": "To use {provider} again, you must sign in again. Continue?",
+  "model.provider_in_use": "In use",
+  "model.disconnect_failed_title": "Can’t disconnect provider",
+  "model.disconnect_clear_model_hint":
+    "This provider’s model is still in use. Connect a model from another provider first, then remove this provider.",
+  "model.connect_provider_start":
+    "Connect a cloud provider to get started with Auto Route.",
+  "model.toast_auto_needs_both":
+    "Auto Route needs both a local and a cloud model configured. Set them up in Settings.",
+  "model.toast_auto_needs_cloud":
+    "Auto Route needs a cloud model configured to send. Add one in Settings.",
+  "model.toast_auto_needs_local":
+    "Auto Route needs a local model configured to send. Set up the edge model in Settings.",
+  "model.toast_cloud_needs_config":
+    "Cloud model is not configured yet. Add one in Settings before sending.",
+  "model.toast_local_needs_config":
+    "Local model is not configured yet (edge server unavailable). Set it up in Settings before sending.",
+
+  // ==================== Edge Model Settings ====================
+  "edge.connection_key": "Connection Key",
+  "edge.model_name": "Model Name",
+  "edge.connect_apply": "Connect & Apply",
+
+  // ==================== Workspace Switching ====================
+  "edge.startup_title": "Edge Server Configuration",
+  "edge.startup_subtitle":
+    "Connect an Edge Server to continue using SuperClaw.",
+  "edge.close_app": "Close SuperClaw",
+  "edge.reconnecting": "Reconnecting to Edge Server…",
+  "edge.saving_config": "Saving configuration…",
+  "edge.server_url": "Server URL",
+  "edge.server_url_placeholder": "edge server url",
+  "edge.connection_key_placeholder": "Connection key required",
+  "edge.hide_key": "Hide key",
+  "edge.show_key": "Show key",
+  "edge.bypass_proxy_label":
+    "This server is on an intranet — bypass HTTP proxy",
+  "edge.card_title": "Edge Server",
+  "edge.card_subtitle": "Connect to a remote edge server for model inference.",
+  "edge.test_connection_for_models": "Test Connection to load models",
+  "edge.test_connection_succeeded":
+    "Test connection successful. Press Connect to use this Edge server.",
+  "edge.no_served_models": "This server serves no supported model.",
+  "edge.checking_status": "Checking edge server status…",
+  "edge.key_enter_placeholder": "Enter connection key",
+  "edge.bypass_proxy_card_label": "Bypass HTTP proxy (intranet server)",
+  "edge.disconnect": "Disconnect",
+  "edge.disconnect_confirm_title": "Disconnect Edge Server?",
+  "edge.disconnect_confirm_message":
+    "SuperClaw will stop using this Edge server and remove its saved settings. Only Cloud models will be available until you connect a server again.",
+  "edge.disconnect_unavailable": "This Edge server can't be disconnected on this device.",
+  "edge.disconnected": "Edge disconnected.",
+  "edge.saved_not_verified": "The new Edge settings were saved but could not be verified.",
+
+  // ==================== Provider Auth Modal ====================
+  "provider_auth.title": "Connect providers",
+  "provider_auth.subtitle": "Sign in to services you want SuperClaw to use.",
+  "provider_auth.loading": "Loading providers...",
+  "provider_auth.search_label": "Search",
+  "provider_auth.search_placeholder": "Filter providers by name or ID",
+  "provider_auth.no_match": "No providers match your search.",
+  "provider_auth.none_available": "No providers available.",
+  "provider_auth.keyboard_hint": "Arrow keys to navigate, Enter to select.",
+  "provider_auth.connect_label": "Connect",
+  "provider_auth.method_subtitle": "Choose how you\u2019d like to connect.",
+  "provider_auth.back": "Back",
+  "provider_auth.oauth_button": "Continue with OAuth",
+  "provider_auth.api_key_button": "Use API key",
+  "provider_auth.api_subtitle": "Paste your API key to connect.",
+  "provider_auth.api_key_label": "API key",
+  "provider_auth.keys_stored_locally": "Keys are stored locally.",
+  "provider_auth.saving": "Saving...",
+  "provider_auth.save_key": "Save key",
+  "provider_auth.oauth_code_subtitle":
+    "Finish OAuth by pasting the authorization code.",
+  "provider_auth.oauth_code_instruction":
+    "Complete sign-in in your browser, then paste the code here.",
+  "provider_auth.auth_code_label": "Authorization code",
+  "provider_auth.paste_code_placeholder": "Paste code",
+  "provider_auth.open_browser_again": "Open browser again",
+  "provider_auth.verifying": "Verifying...",
+  "provider_auth.complete_connection": "Complete connection",
+  "provider_auth.oauth_auto_subtitle": "Waiting for browser confirmation.",
+  "provider_auth.oauth_auto_instruction":
+    "Sign in in the browser tab we just opened. We will complete the connection automatically.",
+  "provider_auth.confirmation_code_label": "Confirmation code",
+  "provider_auth.checking_status":
+    "Checking connection status automatically...",
+  "provider_auth.window_closes_note":
+    "This window will close once the provider is connected.",
+  "provider_auth.submitting_api_key": "Saving API key...",
+  "provider_auth.submitting_oauth_code": "Verifying authorization code...",
+  "provider_auth.submitting_oauth_auto": "Waiting for OAuth confirmation...",
+  "provider_auth.submitting_opening": "Opening authentication...",
+  "provider_auth.submitting_oauth_device":
+    "Waiting for device authorization...",
+  "provider_auth.oauth_device_subtitle": "Authorize this device to connect.",
+  "provider_auth.device_step_open":
+    "We opened your browser. If it didn\u2019t open, go to",
+  "provider_auth.device_open_link": "the device login page",
+  "provider_auth.device_step_code": "Enter this device code:",
+  "provider_auth.device_copy_code": "Copy code",
+  "provider_auth.device_step_authorize": "Approve access for SuperClaw.",
+  "provider_auth.device_expires_in": "Expires in",
+  "provider_auth.device_expired": "Code expired \u2014 close and retry.",
+
+  // Other words the Settings search finds each setting by, comma-separated.
+  "local.section_title_keywords": "local model, on-device, llama, edge server, offline, GPU, NPU",
+  "model.cloud_label_keywords": "cloud model, model providers, API key, OpenAI, Anthropic, OpenRouter, provider",
+  "model.perf_weight_section_keywords": "quality, cost, balance, cheaper, routing preference",
+  "model.local_ctx_title_keywords": "context window, context length, tokens",
+
+  // ==================== Files Cleanup  ====================
+} as const;

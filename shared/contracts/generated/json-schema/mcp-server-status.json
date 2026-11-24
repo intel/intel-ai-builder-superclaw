@@ -1,0 +1,29 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-status.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "connected",
+        "disabled",
+        "failed",
+        "needs_auth",
+        "needs_client_registration",
+        "connecting"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "title": "McpServerStatus",
+  "type": "object"
+}

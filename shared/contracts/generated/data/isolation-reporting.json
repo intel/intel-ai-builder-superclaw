@@ -1,0 +1,200 @@
+{
+  "contract_version": 3,
+  "fail_closed_reports": {
+    "native": {
+      "backend_mode": "native",
+      "contract_version": 3,
+      "isolation_attestation": {
+        "covered_policy_categories": [],
+        "last_pass_at": null,
+        "probe_set_id": null,
+        "verdict": "stale"
+      },
+      "isolation_egress_policy_version": null,
+      "isolation_level": "not_established",
+      "isolation_policy_version": null,
+      "isolation_tier_evidence": [],
+      "isolation_token_shape": "unknown",
+      "isolation_warnings": [
+        {
+          "code": "isolation_level_not_established",
+          "reason": "native_isolation_not_applied"
+        },
+        {
+          "code": "token_hardening_unverified",
+          "token_shape": "unknown"
+        },
+        {
+          "code": "policy_attestation_not_passing",
+          "verdict": "stale"
+        }
+      ],
+      "isolation_workspace_root_classes": [],
+      "isolation_workspace_root_count": 0
+    }
+  },
+  "rules": {
+    "cross_field_rules_continue_after": [
+      "above_bound",
+      "below_bound",
+      "malformed"
+    ],
+    "discriminated_union_fields": {
+      "isolation_warnings": "code"
+    },
+    "egress_boundary_closed_state": "primary_enforcing",
+    "egress_boundary_posture": {
+      "declared_permissive_no_rules": "permissive",
+      "primary_enforcing": "enforcing",
+      "primary_logging_only": "permissive",
+      "primary_rules_do_not_cover_every_tier": "enforcing",
+      "removed_by_uninstall": "permissive",
+      "supplementary_only_not_a_boundary": "permissive"
+    },
+    "egress_enforced_tier_coverage": {
+      "declared_permissive_no_rules": "no_tier",
+      "primary_enforcing": "every_tier",
+      "primary_logging_only": "no_tier",
+      "primary_rules_do_not_cover_every_tier": "some_tiers",
+      "removed_by_uninstall": "no_tier",
+      "supplementary_only_not_a_boundary": "no_tier"
+    },
+    "egress_readback_facts": {
+      "drifted": {
+        "confirms_plan": false,
+        "ran": true,
+        "requires_drift_warning": true
+      },
+      "matches_plan": {
+        "confirms_plan": true,
+        "ran": true,
+        "requires_drift_warning": false
+      },
+      "not_read": {
+        "confirms_plan": false,
+        "ran": false,
+        "requires_drift_warning": false
+      }
+    },
+    "egress_version_label_pattern": "^v[1-9][0-9]*\\/(?:permissive|enforcing)$",
+    "field_local_refusal_reasons": {
+      "isolation_egress_policy_version": [
+        "egress_version_label_disagrees_with_boundary_state",
+        "egress_enforced_tiers_disagree_with_boundary_state",
+        "egress_readback_instant_disagrees_with_verdict"
+      ]
+    },
+    "installed_release_levels": [
+      "user",
+      "user_open_egress"
+    ],
+    "instant_pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+    "level_facts": {
+      "minimal": {
+        "attested_policy_categories": [],
+        "dev_environment_only": true,
+        "requires_attestation_pass": false,
+        "requires_closed_egress_boundary": false,
+        "requires_policy_versions": false,
+        "requires_tier_job_evidence": false
+      },
+      "not_established": {
+        "attested_policy_categories": [],
+        "dev_environment_only": false,
+        "requires_attestation_pass": false,
+        "requires_closed_egress_boundary": false,
+        "requires_policy_versions": false,
+        "requires_tier_job_evidence": false
+      },
+      "restricted": {
+        "attested_policy_categories": [],
+        "dev_environment_only": true,
+        "requires_attestation_pass": false,
+        "requires_closed_egress_boundary": false,
+        "requires_policy_versions": false,
+        "requires_tier_job_evidence": false
+      },
+      "user": {
+        "attested_policy_categories": [
+          "identity",
+          "filesystem",
+          "egress"
+        ],
+        "dev_environment_only": false,
+        "requires_attestation_pass": true,
+        "requires_closed_egress_boundary": true,
+        "requires_policy_versions": true,
+        "requires_tier_job_evidence": true
+      },
+      "user_open_egress": {
+        "attested_policy_categories": [
+          "identity",
+          "filesystem"
+        ],
+        "dev_environment_only": false,
+        "requires_attestation_pass": true,
+        "requires_closed_egress_boundary": false,
+        "requires_policy_versions": true,
+        "requires_tier_job_evidence": true
+      }
+    },
+    "probe_set_id_pattern": "^pst_[0-9a-f]{64}$",
+    "shape_issue_kinds": [
+      "wrong_type",
+      "above_bound",
+      "below_bound",
+      "malformed",
+      "not_a_member",
+      "unknown_field"
+    ],
+    "shape_issue_reasons": {
+      "isolation_workspace_root_count": {
+        "kinds": [
+          "above_bound"
+        ],
+        "reason": "workspace_root_count_above_bound"
+      },
+      "probe_set_id": {
+        "kinds": [
+          "wrong_type",
+          "malformed"
+        ],
+        "reason": "probe_set_id_shape_invalid"
+      },
+      "version_label": {
+        "kinds": [
+          "wrong_type",
+          "malformed"
+        ],
+        "reason": "egress_version_label_shape_invalid"
+      }
+    },
+    "tiers_requiring_launch_evidence": [
+      "bootstrap",
+      "file_tool"
+    ],
+    "token_shape_facts": {
+      "restricted_all_access": {
+        "requires_hardening_warning": false,
+        "restricting_sid_present": true
+      },
+      "unknown": {
+        "requires_hardening_warning": true,
+        "restricting_sid_present": false
+      },
+      "unrestricted_hardened": {
+        "requires_hardening_warning": true,
+        "restricting_sid_present": false
+      },
+      "write_restricted_logon": {
+        "requires_hardening_warning": false,
+        "restricting_sid_present": true
+      },
+      "write_restricted_synthetic": {
+        "requires_hardening_warning": false,
+        "restricting_sid_present": true
+      }
+    },
+    "workspace_root_count_max": 8
+  }
+}

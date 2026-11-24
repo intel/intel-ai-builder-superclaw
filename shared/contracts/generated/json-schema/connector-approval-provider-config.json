@@ -1,0 +1,26 @@
+{
+  "$id": "https://different.ai/openwork-contracts/connector-approval-provider-config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "admin_secret": {
+      "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+      "type": "string"
+    },
+    "approval_public_key": {
+      "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+      "type": "string"
+    },
+    "boot_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "approval_public_key",
+    "boot_id",
+    "admin_secret"
+  ],
+  "title": "ConnectorApprovalProviderConfig",
+  "type": "object"
+}

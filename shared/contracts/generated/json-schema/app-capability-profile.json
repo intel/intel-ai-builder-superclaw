@@ -1,0 +1,267 @@
+{
+  "$id": "https://different.ai/openwork-contracts/app-capability-profile.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "descriptor": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "display_name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "feature_flags": {
+              "additionalProperties": false,
+              "properties": {
+                "agent_authoring": {
+                  "type": "boolean"
+                },
+                "email_agent": {
+                  "type": "boolean"
+                },
+                "host_browser": {
+                  "type": "boolean"
+                },
+                "hybrid_coding_agent": {
+                  "type": "boolean"
+                },
+                "hybrid_deep_research_agent": {
+                  "type": "boolean"
+                },
+                "intent_classifier": {
+                  "type": "boolean"
+                },
+                "local_tts": {
+                  "type": "boolean"
+                },
+                "local_vision": {
+                  "type": "boolean"
+                },
+                "mcp_host_execution": {
+                  "type": "boolean"
+                },
+                "mcp_local_command": {
+                  "type": "boolean"
+                },
+                "mcp_tool_permissions": {
+                  "type": "boolean"
+                },
+                "skills_ui": {
+                  "type": "boolean"
+                },
+                "voice_input": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "intent_classifier",
+                "local_tts",
+                "local_vision",
+                "hybrid_coding_agent",
+                "hybrid_deep_research_agent",
+                "email_agent",
+                "skills_ui",
+                "agent_authoring"
+              ],
+              "type": "object"
+            },
+            "profile": {
+              "enum": [
+                "lite",
+                "standard",
+                "pro"
+              ],
+              "type": "string"
+            },
+            "required_sidecars": {
+              "items": {
+                "enum": [
+                  "intent-classifier",
+                  "hdr-sidecar"
+                ],
+                "type": "string"
+              },
+              "maxItems": 2,
+              "type": "array"
+            },
+            "schema_version": {
+              "const": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "schema_version",
+            "profile",
+            "display_name",
+            "description",
+            "required_sidecars",
+            "feature_flags"
+          ],
+          "type": "object"
+        },
+        "lifecycle_state": {
+          "const": "active",
+          "type": "string"
+        },
+        "primary_bundle": {
+          "additionalProperties": false,
+          "properties": {
+            "backend": {
+              "enum": [
+                "llama",
+                "edge"
+              ],
+              "type": "string"
+            },
+            "bundle_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "bundle_revision": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "capability_contract_version": {
+              "maximum": 9007199254740991,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "capability_grade": {
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "type": "string"
+            },
+            "chat_model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "embedding_model_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "registry_version": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "state": {
+              "enum": [
+                "unavailable",
+                "provisioning",
+                "ready",
+                "error"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "backend",
+            "bundle_id",
+            "chat_model_id",
+            "embedding_model_id",
+            "capability_grade",
+            "capability_contract_version",
+            "registry_version",
+            "bundle_revision",
+            "state"
+          ],
+          "type": "object"
+        },
+        "product_profile_digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "product_profile_id": {
+          "enum": [
+            "lite",
+            "standard",
+            "pro"
+          ],
+          "type": "string"
+        },
+        "profile_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resolution_source": {
+          "enum": [
+            "hardware_ceiling",
+            "primary_bundle"
+          ],
+          "type": "string"
+        },
+        "resolved_at": {
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lifecycle_state",
+        "product_profile_id",
+        "product_profile_digest",
+        "descriptor",
+        "resolution_source",
+        "profile_revision",
+        "resolved_at",
+        "reasons"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "capability_contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "lifecycle_state": {
+          "enum": [
+            "error",
+            "recovery_required"
+          ],
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "recovery_code": {
+          "enum": [
+            "hardware_capability_unknown",
+            "hardware_unsupported",
+            "profile_incompatible",
+            "saga_recovery_required"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "lifecycle_state",
+        "capability_contract_version",
+        "reasons",
+        "recovery_code"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "AppCapabilityProfile"
+}

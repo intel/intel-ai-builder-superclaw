@@ -1,0 +1,112 @@
+# ============================================================
+#  LatentFactorRouter — Training Configuration
+# ============================================================
+#
+# DATA LOADING
+# ------------
+# LatentFactorRouter embeds ALL data first, classifies intents, then
+# performs a stratified 80/20 split internally.
+# It supplies one unified file via the custom "routing_data_all" key.
+# ============================================================
+
+data_path:
+  # --- Primary: single unified pool ---
+  routing_data_all: "/opt/llmrouter/data/example_data.jsonl"
+  
+
+  routing_data_train: ""
+  routing_data_test: ""
+
+  llm_data: "/opt/llmrouter/data/default_llm.json"
+  new_model_eval_data: ""
+
+model_path:
+  save_model_path: ""
+  load_model_path: "/opt/llmrouter/saved_models/latent_factor/latent_factor_artefacts.pkl"
+  eval_results_path: ""
+
+# ── Metric weights ─────────────────────────────────────────────────────────
+metric:
+  weights:
+    performance: 0.95
+    # cost: 0.2 (computed as 1 - performance)
+
+# ── Embedding service ──────────────────────────────────────────────────────
+embedding:
+  base_url: ${LRM_EMBEDDING_API_BASE}
+  api_key: ${LRM_EMBEDDING_API_KEY}
+  model_name: ${LRM_EMBEDDING_MODEL}
+  cache_dir: ".cache/embeddings"
+  batch_size: 1
+  max_tokens: 32768
+  truncate_buffer: 0.9
+
+  # ── PCA-based embedding reduction ────────────────────────────────────
+  enable_pca: true 
+  pca_n_components: 0.99
+  pca_model_path: "/opt/llmrouter/saved_models/latent_factor/pca_model.pkl"
+
+# ── Dataset identity ────────────────────────────────────────────────────────
+dataset:
+  name: "all_3models"
+
+# ── Intent classifier ──────────────────────────────────────────────────────
+intent_classifier:
+  enabled: true
+  classes_path: null
+
+# ── Latent Factor Model ────────────────────────────────────────────────────
+latent_factor:
+  latent_dim: 32
+  alpha: 1.0
+  n_folds: 5
+  probe_size: null  # null = auto-find optimal K, or set explicit int like 50
+  probe_method: "kmeans"  # "kmeans" or "d_optimal"
+  seed: 333 
+  train_val_ratio: 0.9
+
+  # Optimal K finding configuration (used when probe_size is null)
+  optimal_k:
+    min_k: 5
+    max_k: 50
+    method: "elbow"  # "silhouette", "elbow", "gap", or "combined" (voting)
+
+  # Separate alpha regularization for performance vs cost matrices
+  # If not set, uses alpha value above for both
+  # alpha_P_range: [0.001, 0.01, 0.1, 1.0, 10.0]
+  # alpha_C_range: [0.001, 0.01, 0.1, 1.0, 10.0]
+
+  # Normalize accuracy targets (recommended for continuous performance metrics)
+  normalize_acc: true
+
+  # Residual boosting — two-stage prediction:
+  #   Stage 1: Linear latent factor model
+  #   Stage 2: Gradient boosting on residuals
+  enable_residual_boost: false
+  boost_rounds: 100
+  boost_max_depth: 3
+  boost_lr: 0.1
+  boost_min_samples_leaf: 20
+
+  # Embedding augmentation for better generalization
+  embed_augment: false
+  embed_noise_std: 0.01
+
+# ── Routing ───────────────────────────────────────────────────────────────
+routing:
+  top_k: 1
+  excluded_models: []
+  min_accuracy_threshold: 0.0
+  budget_limit: null
+
+# ── Verbose Evaluation ───────────────────────────────────────────────────
+verbose:
+  enabled: true  # Set to true to enable per-query predicted vs ground truth comparison
+
+# ── Logging ──────────────────────────────────────────────────────────────
+logging:
+  level: "DEBUG"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# ── Performance ───────────────────────────────────────────────────────────
+performance:
+  max_workers: 4

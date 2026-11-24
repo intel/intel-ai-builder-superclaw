@@ -1,0 +1,20 @@
+{
+  "_comment": "INTERNAL — describes the models the LatentFactorRouter was trained on. Operators should NOT edit this file; it ships with the trained artefact and changes only when the training pool changes. Operator-facing configuration lives in integrations/opencode/upstreams.json (the `local` block) where users declare the model their host is ACTUALLY running.",
+  "_schema": "v1",
+
+  "locals": [
+    {"label": "Qwen3.5-4B",        "size_b": 4,  "family": "qwen"},
+    {"label": "Qwen3.5-9B",        "size_b": 9,  "family": "qwen"},
+    {"label": "qwen3.6-35b",       "size_b": 35, "family": "qwen"},
+    {"label": "qwen3-coder-next",  "size_b": 80, "family": "qwen"}
+  ],
+
+  "excluded_clouds": [],
+
+  "capability_scaling": {
+    "_comment": "Power-law scaling applied to the mapped local's predicted performance when the user's deployed model is SMALLER than the smallest trained label. scale = (user_size_b / mapped_size_b) ** alpha. Transformer benchmark accuracy scales roughly as size^0.2..0.4 in the small regime; 0.3 is a defensible default. Crank alpha higher to push small-model deployments to cloud more aggressively.",
+    "alpha": 0.3,
+    "_cross_family_comment": "Multiplicative discount when the operator's local model is a DIFFERENT family than this (qwen) pool. Mapping is still SIZE-BASED and stays LOCAL (never force-cloud — that loses the local-token benefit); this only mildly discounts the mapped label's predicted performance to reflect that size-only capability transfer across families is lossier. 1.0 = ignore family entirely.",
+    "cross_family_scale": 0.9
+  }
+}

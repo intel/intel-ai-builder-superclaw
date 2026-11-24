@@ -1,0 +1,16 @@
+{
+  "$id": "https://different.ai/openwork-contracts/tavily-api-key-save-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "api_key": {
+      "pattern": "^[\\x21-\\x7e]{1,256}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "api_key"
+  ],
+  "title": "TavilyApiKeySaveRequest",
+  "type": "object"
+}

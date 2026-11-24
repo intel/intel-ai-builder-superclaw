@@ -1,0 +1,95 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-status.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "active_calls": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "call_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "computer_use": {
+            "type": "boolean"
+          },
+          "resume_in_ms": {
+            "anyOf": [
+              {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "server": {
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "awaiting_approval",
+              "running",
+              "waiting_for_user"
+            ],
+            "type": "string"
+          },
+          "tool": {
+            "maxLength": 512,
+            "minLength": 1,
+            "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "call_id",
+          "server",
+          "tool",
+          "state",
+          "resume_in_ms",
+          "computer_use"
+        ],
+        "type": "object"
+      },
+      "maxItems": 16,
+      "type": "array"
+    },
+    "browser_active": {
+      "type": "boolean"
+    },
+    "browser_configured": {
+      "type": "boolean"
+    },
+    "paused": {
+      "type": "boolean"
+    },
+    "running_count": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "server_count": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "session_locked": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "server_count",
+    "running_count",
+    "browser_configured",
+    "browser_active",
+    "session_locked",
+    "paused",
+    "active_calls"
+  ],
+  "title": "HostMcpStatus",
+  "type": "object"
+}

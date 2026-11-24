@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["vite/client"],
+    // `~/x` -> `src/x`, so an import survives either file moving.
+    //
+    // No `baseUrl` (TS 4.4+ allows this): `baseUrl` would also resolve bare
+    // specifiers against it, letting a missing dependency silently match a local
+    // folder instead of failing.
+    //
+    // Three files must agree. `tsc` and `bun test` both read this one (Bun
+    // honours tsconfig `paths`); Vite reads `vite.config.ts`; the workspace-files
+    // panel lane reads `vitest.workspace-files-panel.config.ts`. `tsconfig.test.json`
+    // inherits this mapping, and `vite.config.test.ts` is a Bun config despite
+    // the name and needs nothing.
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "vite.config.ts"],
+  // Tests use `bun:test`, whose types conflict with the DOM `fetch` type
+  // (bun-types' fetch lacks `preconnect`). Tests are typechecked separately
+  // via `tsconfig.test.json` so the app code keeps clean DOM types.
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

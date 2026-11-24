@@ -1,0 +1,117 @@
+{
+  "$id": "https://different.ai/openwork-contracts/runtime-supervisor-ready.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "components": {
+      "additionalProperties": false,
+      "properties": {
+        "opencode": {
+          "type": "boolean"
+        },
+        "openwork": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "opencode",
+        "openwork"
+      ],
+      "type": "object"
+    },
+    "deployment_id": {
+      "pattern": "^runtime-deployment-[0-9a-f]{32}$",
+      "type": "string"
+    },
+    "desired_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "hybrid_dr": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "healthy",
+            "absent"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "intent_classifier": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "enabled",
+            "bypass"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "type": "object"
+    },
+    "launch_attempt_id": {
+      "pattern": "^runtime-attempt-[0-9a-f]{32}$",
+      "type": "string"
+    },
+    "product_profile_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "product_profile_id": {
+      "enum": [
+        "lite",
+        "standard",
+        "pro"
+      ],
+      "type": "string"
+    },
+    "profile_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "runtime_instance_id": {
+      "pattern": "^runtime-instance-[0-9a-f]{32}$",
+      "type": "string"
+    },
+    "runtime_ready": {
+      "const": true,
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "status": {
+      "const": "ready",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "deployment_id",
+    "desired_fingerprint",
+    "runtime_instance_id",
+    "launch_attempt_id",
+    "product_profile_id",
+    "product_profile_digest",
+    "profile_revision",
+    "status",
+    "runtime_ready",
+    "components",
+    "intent_classifier",
+    "hybrid_dr"
+  ],
+  "title": "RuntimeSupervisorReady",
+  "type": "object"
+}

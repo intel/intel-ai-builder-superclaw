@@ -1,0 +1,306 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-tier-launch-started.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "event": {
+      "const": "tier_launch_started",
+      "type": "string"
+    },
+    "evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "acl_readback": {
+          "additionalProperties": false,
+          "properties": {
+            "checked_at": {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+              "type": "string"
+            },
+            "descriptor_digest": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "roots_checked": {
+              "items": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "payload_root",
+                      "state_config_root",
+                      "state_data_root",
+                      "state_logs_root",
+                      "state_temp_root",
+                      "state_protected_root",
+                      "isolation_root"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "pattern": "^wsr_[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                ]
+              },
+              "maxItems": 15,
+              "minItems": 1,
+              "type": "array"
+            },
+            "source": {
+              "const": "owner_kernel",
+              "type": "string"
+            },
+            "verdict": {
+              "const": "matches_descriptor",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source",
+            "verdict",
+            "descriptor_digest",
+            "roots_checked",
+            "checked_at"
+          ],
+          "type": "object"
+        },
+        "identity": {
+          "additionalProperties": false,
+          "properties": {
+            "runner_token_read_through": {
+              "const": "retained_process_handle",
+              "type": "string"
+            },
+            "source": {
+              "const": "owner_kernel",
+              "type": "string"
+            },
+            "tier_sid_resolved_by": {
+              "const": "lookup_account_name_local_sam_user",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source",
+            "runner_token_read_through",
+            "tier_sid_resolved_by"
+          ],
+          "type": "object"
+        },
+        "job": {
+          "additionalProperties": false,
+          "properties": {
+            "active_processes_at_ready": {
+              "maximum": 64,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "limits": {
+              "additionalProperties": false,
+              "properties": {
+                "active_processes": {
+                  "maximum": 64,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "cpu_rate": {
+                  "maximum": 10000,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "job_memory_bytes": {
+                  "maximum": 8589934592,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "process_memory_bytes": {
+                  "maximum": 8589934592,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "ui_restrictions": {
+                  "maximum": 255,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "active_processes",
+                "process_memory_bytes",
+                "job_memory_bytes",
+                "cpu_rate",
+                "ui_restrictions"
+              ],
+              "type": "object"
+            },
+            "limits_read_back_match": {
+              "const": true,
+              "type": "boolean"
+            },
+            "membership_verified_before_resume": {
+              "const": true,
+              "type": "boolean"
+            },
+            "profile": {
+              "enum": [
+                "bootstrap_tier",
+                "file_tool_tier",
+                "connector_tier",
+                "channel_tier"
+              ],
+              "type": "string"
+            },
+            "source": {
+              "const": "tier_reported",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source",
+            "profile",
+            "membership_verified_before_resume",
+            "limits_read_back_match",
+            "active_processes_at_ready",
+            "limits"
+          ],
+          "type": "object"
+        },
+        "token_facts": {
+          "additionalProperties": false,
+          "properties": {
+            "administrators": {
+              "enum": [
+                "absent",
+                "deny_only",
+                "present_disabled",
+                "present_enabled"
+              ],
+              "type": "string"
+            },
+            "elevation_type": {
+              "enum": [
+                "default",
+                "full",
+                "limited"
+              ],
+              "type": "string"
+            },
+            "integrity_level": {
+              "enum": [
+                "untrusted",
+                "low",
+                "medium",
+                "medium_plus",
+                "high",
+                "system",
+                "protected_process",
+                "other"
+              ],
+              "type": "string"
+            },
+            "privileges": {
+              "items": {
+                "pattern": "^Se[A-Za-z]+Privilege$",
+                "type": "string"
+              },
+              "maxItems": 64,
+              "type": "array"
+            },
+            "restricted_sid_count": {
+              "maximum": 64,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "role_token": {
+              "const": "same_as_runner_by_construction",
+              "type": "string"
+            },
+            "source": {
+              "const": "owner_kernel",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source",
+            "integrity_level",
+            "restricted_sid_count",
+            "administrators",
+            "privileges",
+            "elevation_type",
+            "role_token"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "identity",
+        "token_facts",
+        "acl_readback",
+        "job"
+      ],
+      "type": "object"
+    },
+    "launch_path": {
+      "const": "tier_logon",
+      "type": "string"
+    },
+    "launch_role": {
+      "enum": [
+        "supervisor_executable",
+        "token_service_executable",
+        "runtime_executable",
+        "connector_executable",
+        "connector_service",
+        "egress_proxy",
+        "hdr_sidecar",
+        "shell_executable",
+        "test_fixed_sleep_child"
+      ],
+      "type": "string"
+    },
+    "owner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "role_pid": {
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "runner_pid": {
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "runner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "tier": {
+      "enum": [
+        "bootstrap",
+        "file_tool",
+        "network_connector",
+        "channel"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "event",
+    "launch_path",
+    "tier",
+    "owner_sid",
+    "runner_sid",
+    "launch_role",
+    "runner_pid",
+    "role_pid"
+  ],
+  "title": "BrokerTierLaunchStarted",
+  "type": "object"
+}

@@ -1,0 +1,46 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-connector-client-config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boot_id": {
+      "pattern": "^boot-[0-9a-f]{32}$",
+      "type": "string"
+    },
+    "caller_key_b64": {
+      "pattern": "^[A-Za-z0-9+/]{43}=$",
+      "type": "string"
+    },
+    "caller_key_id": {
+      "pattern": "^caller_[0-9a-f]{16}$",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": 2,
+      "type": "number"
+    },
+    "endpoint": {
+      "pattern": "^http:\\/\\/127\\.0\\.0\\.1:\\d{4,5}\\/v1\\/connector$",
+      "type": "string"
+    },
+    "response_key_b64": {
+      "pattern": "^[A-Za-z0-9+/]{43}=$",
+      "type": "string"
+    },
+    "response_key_id": {
+      "pattern": "^response_[0-9a-f]{16}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "endpoint",
+    "boot_id",
+    "caller_key_id",
+    "caller_key_b64",
+    "response_key_id",
+    "response_key_b64"
+  ],
+  "title": "BrokerConnectorClientConfig",
+  "type": "object"
+}

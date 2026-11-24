@@ -1,0 +1,143 @@
+/** Chinese-language strings for the security domain. Merged in zh.ts. */
+export default {
+  "consent.telemetry_restart_title": "重启后生效",
+  "consent.telemetry_restart_body": "你的遥测偏好将在本地运行时重启后生效。",
+  "consent.telemetry_restart_action": "立即重启",
+  "consent.telemetry_restart_failed_title": "无法重启本地服务",
+  "consent.telemetry_restart_failed_body":
+    "遥测偏好已保存，但无法安全停止本地运行时。已取消重启。",
+  "consent.telemetry_save_failed_title": "无法保存遥测偏好",
+  "consent.telemetry_save_failed_body": "更改未生效。请重试后再重启。",
+
+  // ==================== MCP (Extensions) ====================
+  "security.section": "文件保护",
+  "security.section_description":
+    "检测结果可能并不完全准确。",
+  "security.supported_files_label": "支持的文件类型:",
+  "security.supported_files_value":
+    "CSV、Excel (.xlsx)、Parquet、TXT、Markdown (.md)、HTML、Word (.docx)",
+  "security.supported_agents_label": "支持的智能体:",
+  "security.supported_agents_value": "默认智能体、混合编程助手",
+  "security.mode_title": "文件保护模式",
+  "security.mode_on": "开启",
+  "security.mode_off": "关闭",
+  "security.mode_none": "关闭",
+  "security.mode_deterministic": "快速",
+  "security.mode_hybrid": "平衡",
+  "security.mode_llm": "彻底",
+  "security.mode_none_description":
+    "无保护 — 文件将不做处理直接交给智能体。",
+  "security.mode_deterministic_description":
+    "快速的规则脱敏（不依赖 LLM）。适合结构化的表格数据。",
+  "security.mode_hybrid_description":
+    "文件保护已开启 — 文件会在云端处理前进行保护和脱敏。",
+  "security.mode_llm_description":
+    "LLM 审核每个文件以获得最准确的保护。速度较慢，但更适合敏感或非结构化内容。",
+  "security.threshold_title": "混合回退阈值",
+  "security.threshold_apply": "应用",
+  "security.threshold_description":
+    "在混合模式下,如果任一检测到的列置信度低于此值,请求将回退到 LLM 管道。默认 0.75,取值范围 0.0 – 1.0。",
+  "security.threshold_invalid": "阈值必须是 [0.0, 1.0] 范围内的数字。",
+  "security.applied_prefix": "当前使用:",
+  "security.source_env": "环境变量覆盖",
+  "security.source_store": "自定义",
+  "security.save_failed": "保存安全设置失败。",
+  "security.model_download_consent_title": "下载隐私保护模型并启用？",
+  "security.model_download_consent_body":
+    "文件保护需要本地隐私模型。模型只需下载一次，并保留在此设备上。",
+  "security.model_download_downloading_title": "正在下载隐私保护模型",
+  "security.model_download_downloading_body":
+    "正在此设备上下载并验证模型。",
+  "security.model_download_ready_title": "隐私保护模型已就绪",
+  "security.model_download_ready_body":
+    "模型已就绪，文件保护现已启用。",
+  "security.model_download_failed_title": "无法准备隐私保护模型",
+  "security.model_download_models_heading": "文件保护使用的模型",
+  "security.model_download_pii_model": "PII 实体识别（PPLX）",
+  "security.model_download_name": "文件保护模型",
+  "security.model_download_estimate": "约 536 MB",
+  "security.model_download_confirm": "确认",
+  "security.model_download_cancel": "取消",
+  "security.model_download_in_progress": "正在准备模型…",
+  "security.model_download_ready_hint": "已就绪",
+  "security.model_download_status_failed": "无法检查隐私模型状态。",
+  "security.model_download_try_later": "无法准备隐私模型。请稍后重新开启文件保护以重试。",
+  "security.model_download_unavailable": "隐私模型不可用。",
+  "security.model_download_unverified_models":
+    "无法验证已配置的隐私模型。文件保护仍处于关闭状态。",
+  "security.sensitive_folder_title": "敏感文件夹",
+  "security.sensitive_folder_choose": "选择文件",
+  "security.sensitive_folder_click": "或点击此处选择文件",
+  "security.sensitive_folder_open": "打开文件夹",
+  "security.sensitive_folder_description":
+    "仅保存在本机，不会发送到云端。",
+  "security.sensitive_folder_description_lite":
+    "开启保护并经您允许后，敏感信息会先在本机脱敏，云端模型只能看到脱敏后的内容。关闭保护或拒绝授权时，文件将未经脱敏发送到云端。",
+  "security.sensitive_folder_drop": "将敏感文件拖放到这里",
+  "security.sensitive_folder_importing": "正在添加文件...",
+  "security.sensitive_folder_desktop_only":
+    "敏感文件导入功能仅在已安装的桌面应用中可用。",
+  "security.sensitive_folder_drop_unavailable":
+    "当前环境请使用“选择文件”来添加文件。",
+  "security.sensitive_folder_import_failed": "添加敏感文件失败。",
+  "security.sensitive_folder_import_success": "已成功将\"{name}\"添加到敏感文件夹。",
+  "security.sensitive_folder_list_title": "敏感文件夹中的文件",
+  "security.sensitive_folder_empty": "暂无文件",
+  "security.sensitive_folder_view_all": "在文件夹中查看更多",
+  "security.sensitive_folder_remove_failed": "删除文件失败。",
+
+  // ==================== Egress approvals ====================
+  "egress_approval.title": "允许这个请求吗？",
+  "egress_approval.action.connector.fetch_result": "SuperClaw 想打开一个不在搜索结果里的网页。",
+  "egress_approval.action.connector.mcp_call": "SuperClaw 想调用远程 MCP 服务上的一个工具。",
+  "egress_approval.action.connector.gmail_send": "SuperClaw 想发一封邮件。",
+  "egress_approval.action.proxy.connect_domain": "一个命令想连接一个不在允许列表里的域名。",
+  "egress_approval.action.proxy.connect_unlisted": "智能体运行的一个命令想连接一个不在 SuperClaw 允许列表里的网站。",
+  "egress_approval.action.router.send_new_target": "SuperClaw 想往一个新的会话发消息。",
+  "egress_approval.target.connector.fetch_result": "网址",
+  "egress_approval.target.connector.mcp_call": "工具",
+  "egress_approval.target.connector.gmail_send": "邮件",
+  "egress_approval.target.proxy.connect_domain": "域名",
+  "egress_approval.target.proxy.connect_unlisted": "网站",
+  "egress_approval.target.router.send_new_target": "会话",
+  "egress_approval.caller": "发起方",
+  "egress_approval.caller.shell": "命令",
+  "egress_approval.caller.channel": "消息渠道",
+  "egress_approval.caller.agent": "智能体",
+  "egress_approval.audience": "执行方",
+  "egress_approval.audience.connector": "联网服务",
+  "egress_approval.audience.egress_proxy": "出网代理",
+  "egress_approval.audience.router": "消息路由",
+  "egress_approval.requested_at": "请求时间",
+  "egress_approval.expires_in": "剩余时间",
+  "egress_approval.seconds": "{seconds} 秒",
+  "egress_approval.id": "审批编号",
+  "egress_approval.waiting": "共有 {count} 个请求在等。",
+  "egress_approval.shortened": "（已缩短）",
+  "egress_approval.maybe_lost": "该请求已结束。您之前的回答可能没有送达。",
+  "egress_approval.allow": "允许",
+  "egress_approval.deny": "拒绝",
+  "egress_approval.allow_once": "仅允许这一次",
+  "egress_approval.allow_all_for_chat": "允许此会话中的所有网站",
+  "egress_approval.chat": "会话",
+  "egress_approval.chat_scope_note":
+    "“此会话”会一直保持允许，直到你在输入框旁将其关闭。无论你怎么选，SuperClaw 都不会打开本地网络或本机上的地址。",
+  "egress_approval.unknown_chat_note": "SuperClaw 无法确定这个请求属于哪个会话，所以只能允许这一次。",
+  "egress_approval.proxy.allow_all_for_chat": "在 SuperClaw 重启前允许所有未列出的网站",
+  "egress_approval.proxy.chat_scope_note":
+    "这适用于所有会话中的命令，不只是当前会话，直到 SuperClaw 重启。这只是为了方便，不是安全边界。私有网络和本机上的地址不会因此被允许。",
+  "chat_web_access.chip_label": "网页：{choice}",
+  "chat_web_access.chip_unknown": "网页",
+  "chat_web_access.read_failed": "无法读取此设置。请选择一项。",
+  "chat_web_access.menu_title": "网页访问如何审批？",
+  "chat_web_access.ask": "请求批准",
+  "chat_web_access.allowed": "此会话允许",
+  "chat_web_access.allowed_detail": "无需询问即可打开公开网页",
+  "chat_web_access.allow_failed": "未能允许。仍会请求批准，请重试。",
+  "chat_web_access.ask_failed": "未能关闭。仍为允许，请重试。",
+
+  // 设置搜索用来找到各项设置的其他词，用逗号分隔。
+  "security.section_keywords": "文件保护, 隐私, 受保护文件, 敏感文件, 机密, 脱敏",
+  "security.mode_title_keywords": "脱敏, 遮蔽, 保护文件",
+  "security.sensitive_folder_title_keywords": "敏感文件, 机密, 私密文件, 仅本地",
+} as const;

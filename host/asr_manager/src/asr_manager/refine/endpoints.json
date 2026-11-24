@@ -1,0 +1,73 @@
+{
+  "$schema": "./endpoints.schema.json",
+  "$comment": [
+    "Measured upstream-endpoint preferences for the dictation clean-up call.",
+    "",
+    "WHAT THIS FILE IS. One OpenRouter model id is served by many upstream",
+    "endpoints and OpenRouter picks one per request, so without a preference every",
+    "dictation is a lottery over the whole spread below. This file records a",
+    "measurement and names the order to prefer. It is DATA, not code, for one",
+    "reason: it goes stale. The pool moves under a model id (on this same id",
+    "AtlasCloud now answers HTTP 400 and DeepInfra 404), so the order is a",
+    "preference that is never a requirement, and unknown names are skipped.",
+    "",
+    "THIS FILE IS OPTIONAL. Delete it, point DICTATION_REFINE_ENDPOINTS at a",
+    "missing path, or ship a build without it: refine still works. The loader",
+    "falls back to an empty order, which means OpenRouter's own price/uptime",
+    "balancing. What does NOT depend on this file is the reasoning-violator",
+    "denylist -- that lives in providers.py, because it is a correctness and cost",
+    "guard rather than a latency preference, and losing it to a missing data file",
+    "would quietly quadruple the bill.",
+    "",
+    "HOW THE ORDER WAS CHOSEN. Latency medians support 'CoreWeave-class vs Novita'",
+    "(a ~16x spread) and 'these three ignore the off switch'. They do NOT support",
+    "fine ordering within the fast group -- those ranges overlap too heavily for a",
+    "user to tell apart. So within the fast group the tie is broken on cost, which",
+    "is measured off token counts rather than a median: CoreWeave first (fastest",
+    "and second-cheapest, nothing to trade), then GMICloud (cheapest, speed",
+    "indistinguishable from ModelRun), then ModelRun.",
+    "",
+    "HOW TO RE-MEASURE. Same build, same Product Profile, medians over repeats on",
+    "one machine; record wall seconds, TTFT, tok/s, completion tokens, and whether",
+    "reasoning:{enabled:false} was honoured. Replace 'measured' below and bump",
+    "measured_on. Do not edit 'order' without replacing the table that justifies it."
+  ],
+  "version": 1,
+  "measured_on": "2026-09-28",
+  "models": {
+    "minimax/minimax-m3": {
+      "provider": "openrouter",
+      "order": ["CoreWeave", "GMICloud", "ModelRun"],
+      "allow_fallbacks": true,
+      "$comment": [
+        "SambaNova and Mara are deliberately absent from 'order': slowest of the",
+        "group that honours the off switch AND dearest (~5x GMICloud). Absent from",
+        "'order' does not mean excluded -- allow_fallbacks can still land there if",
+        "everything above is down, which is the right trade against no text at all."
+      ],
+      "measured": [
+        { "endpoint": "CoreWeave",  "quant": "fp4", "wall_s": 0.97, "wall_s_range": [0.80, 1.36],  "ttft_s": 0.49, "tok_per_s": 333, "completion_tokens": 157, "usd_per_1000_dictations": 0.25, "honours_reasoning_off": true },
+        { "endpoint": "ModelRun",   "quant": "fp4", "wall_s": 1.17, "wall_s_range": [0.83, 2.46],  "ttft_s": 0.55, "tok_per_s": 291, "completion_tokens": 159, "usd_per_1000_dictations": 0.71, "honours_reasoning_off": true },
+        { "endpoint": "GMICloud",   "quant": "fp8", "wall_s": 1.36, "wall_s_range": [1.12, 1.42],  "ttft_s": 0.77, "tok_per_s": 295, "completion_tokens": 162, "usd_per_1000_dictations": 0.21, "honours_reasoning_off": true },
+        { "endpoint": "SambaNova",  "quant": null,  "wall_s": 1.72, "wall_s_range": [1.53, 1.91],  "ttft_s": 1.05, "tok_per_s": 236, "completion_tokens": 158, "usd_per_1000_dictations": 1.12, "honours_reasoning_off": true },
+        { "endpoint": "Mara",       "quant": null,  "wall_s": 1.98, "wall_s_range": [1.88, 7.37],  "ttft_s": 1.05, "tok_per_s": 171, "completion_tokens": 158, "usd_per_1000_dictations": 1.12, "honours_reasoning_off": true },
+        { "endpoint": "Parasail",   "quant": "fp8", "wall_s": 2.70, "wall_s_range": [2.06, 7.22],  "ttft_s": 0.41, "tok_per_s": 221, "completion_tokens": 595, "usd_per_1000_dictations": 0.84, "honours_reasoning_off": false },
+        { "endpoint": "Together",   "quant": null,  "wall_s": 3.50, "wall_s_range": [3.50, 3.54],  "ttft_s": 0.69, "tok_per_s": 228, "completion_tokens": 650, "usd_per_1000_dictations": 0.88, "honours_reasoning_off": false },
+        { "endpoint": "Minimax",    "quant": "fp8", "wall_s": 3.67, "wall_s_range": [3.55, 4.36],  "ttft_s": 1.59, "tok_per_s": 76,  "completion_tokens": 161, "usd_per_1000_dictations": 0.29, "honours_reasoning_off": true },
+        { "endpoint": "StreamLake", "quant": "fp8", "wall_s": 4.16, "wall_s_range": [4.11, 14.9],  "ttft_s": 2.89, "tok_per_s": 80,  "completion_tokens": 158, "usd_per_1000_dictations": 0.28, "honours_reasoning_off": true },
+        { "endpoint": "Venice",     "quant": "fp8", "wall_s": 8.32, "wall_s_range": [6.89, 14.6],  "ttft_s": 1.48, "tok_per_s": 21,  "completion_tokens": 158, "usd_per_1000_dictations": 0.28, "honours_reasoning_off": true },
+        { "endpoint": "Novita",     "quant": "fp8", "wall_s": 16.06, "wall_s_range": [4.75, 23.0], "ttft_s": 3.84, "tok_per_s": 68,  "completion_tokens": 837, "usd_per_1000_dictations": 1.30, "honours_reasoning_off": false }
+      ],
+      "measurement_limits": [
+        "One machine, one network, one time of day. Supports the ~16x spread and the off-switch finding; not the fine ordering inside the fast group.",
+        "The two fastest are fp4. Clean-up QUALITY per quantisation is UNMEASURED, so this order buys latency with an unmeasured precision trade.",
+        "usd_per_1000_dictations is list price applied to tokens really spent, for a ~138-visible-word dictation. It is why the three off-switch violators cost 3-5x on the same list price.",
+        "Measured on minimax/minimax-m3 only. For any other model id these names are a preference its pool may not contain."
+      ],
+      "naming_caveat": [
+        "OpenRouter documents order/ignore/only as taking provider SLUGS, but these are the provider_name DISPLAY strings reported by /endpoints -- which are what the study confirmed working in 'order'. A slug is not the lowercased name (AtlasCloud -> atlas-cloud/fp8, not atlascloud).",
+        "If that ever diverges, the client drops the provider block and retries once at default routing rather than failing the dictation."
+      ]
+    }
+  }
+}

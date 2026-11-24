@@ -1,0 +1,92 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-tool-list-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "const": "ready",
+          "type": "string"
+        },
+        "tools": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "allowed": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              },
+              "key": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key",
+              "allowed"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "tools"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "const": "not_connected",
+          "type": "string"
+        },
+        "tools": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "allowed": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              },
+              "key": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key",
+              "allowed"
+            ],
+            "type": "object"
+          },
+          "maxItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "tools"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "McpToolListResponse"
+}

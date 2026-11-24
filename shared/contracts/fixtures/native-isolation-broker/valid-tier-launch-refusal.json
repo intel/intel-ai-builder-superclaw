@@ -1,0 +1,14 @@
+{
+  "contract_version": 1,
+  "event": "tier_launch_refused",
+  "tier": "bootstrap",
+  "owner_sid": "S-1-5-21-100-200-300-1001",
+  "account_name": "SCBBZUMXK5U6MIU7VEA4",
+  "refusals": [
+    {
+      "reason": "seclogon_unavailable",
+      "detail": "the Secondary Logon service (seclogon) is not running (current state 1)",
+      "remedy": "start the Secondary Logon service and leave its start type at Manual (`sc.exe config seclogon start= demand` then `sc.exe start seclogon`), then start again"
+    }
+  ]
+}

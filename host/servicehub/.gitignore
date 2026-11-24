@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# local smoke-test evidence (runtime logs, ready markers) — not source
+.smoke-logs/
+
+# local dev service config variant used by local smoke scripts — not committed
+service_cfg.dev.json

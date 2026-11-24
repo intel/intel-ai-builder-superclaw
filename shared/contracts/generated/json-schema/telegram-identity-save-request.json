@@ -1,0 +1,36 @@
+{
+  "$id": "https://different.ai/openwork-contracts/telegram-identity-save-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "access": {
+      "enum": [
+        "public",
+        "private"
+      ],
+      "type": "string"
+    },
+    "directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "pairing_code_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "token": {
+      "pattern": "^[\\x21-\\x7e]{1,512}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "token"
+  ],
+  "title": "TelegramIdentitySaveRequest",
+  "type": "object"
+}

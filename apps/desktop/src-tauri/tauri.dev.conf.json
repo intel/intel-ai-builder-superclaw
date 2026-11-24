@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "SuperClaw",
+  "identifier": "com.aibuilder.superclaw.dev",
+  "bundle": {
+    "icon": [
+      "icons/dev/32x32.png",
+      "icons/dev/128x128.png",
+      "icons/dev/128x128@2x.png",
+      "icons/icon-dev.icns"
+    ],
+    "macOS": {
+      "bundleName": "SuperClaw",
+      "infoPlist": "./Info.dev.plist"
+    }
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "SuperClaw",
+        "width": 1280,
+        "height": 820,
+        "resizable": true,
+        "decorations": false,
+        "visible": false,
+        "additionalBrowserArgs": "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,msSpeechRecognitionServiceUseCetoService --autoplay-policy=no-user-gesture-required"
+      }
+    ]
+  },
+  "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": [
+          "SuperClaw"
+        ]
+      }
+    }
+  }
+}

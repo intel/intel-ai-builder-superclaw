@@ -1,0 +1,363 @@
+{
+  "$id": "https://different.ai/openwork-contracts/primary-bundle.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bundle_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "cloud_only_product_profile_id": {
+      "const": "lite",
+      "type": "string"
+    },
+    "edge_model_selection_fingerprint": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "hardware": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_brand": {
+          "type": "string"
+        },
+        "detection_errors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "gpu_names": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mem_speed_mts": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "total_ram_gb": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cpu_brand",
+        "gpu_names",
+        "total_ram_gb",
+        "mem_speed_mts",
+        "detection_errors"
+      ],
+      "type": "object"
+    },
+    "hardware_capability_ceiling": {
+      "additionalProperties": false,
+      "properties": {
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capability_grade": {
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bundle_id",
+        "capability_grade"
+      ],
+      "type": "object"
+    },
+    "model_candidate_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+      "type": "string"
+    },
+    "pending_bundle": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "enum": [
+            "llama",
+            "edge"
+          ],
+          "type": "string"
+        },
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capability_contract_version": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "capability_grade": {
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "type": "string"
+        },
+        "chat_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "embedding_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "registry_version": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "preparing",
+            "prepared",
+            "error"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "backend",
+        "bundle_id",
+        "chat_model_id",
+        "embedding_model_id",
+        "capability_grade",
+        "capability_contract_version",
+        "registry_version",
+        "state"
+      ],
+      "type": "object"
+    },
+    "primary_bundle": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "enum": [
+            "llama",
+            "edge"
+          ],
+          "type": "string"
+        },
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "bundle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "capability_contract_version": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "capability_grade": {
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "type": "string"
+        },
+        "chat_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "embedding_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "registry_version": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "unavailable",
+            "provisioning",
+            "ready",
+            "error"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "backend",
+        "bundle_id",
+        "chat_model_id",
+        "embedding_model_id",
+        "capability_grade",
+        "capability_contract_version",
+        "registry_version",
+        "bundle_revision",
+        "state"
+      ],
+      "type": "object"
+    },
+    "primary_edge_config_matches": {
+      "type": "boolean"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "recommended_bundle_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "supported_bundle_ids": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "supported_bundles": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "assets": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "asset_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "cached_and_verified": {
+                  "type": "boolean"
+                },
+                "download_bytes": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "label": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "role": {
+                  "enum": [
+                    "chat",
+                    "embedding"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "asset_id",
+                "label",
+                "role",
+                "download_bytes",
+                "cached_and_verified"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "backend": {
+            "enum": [
+              "llama",
+              "edge"
+            ],
+            "type": "string"
+          },
+          "bundle_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "capability_grade": {
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "chat_model_label": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "display_name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "download_block_reason": {
+            "type": "string"
+          },
+          "download_feasibility": {
+            "enum": [
+              "ready",
+              "insufficient_disk",
+              "probe_unknown"
+            ],
+            "type": "string"
+          },
+          "embedding_model_label": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fully_cached_and_verified": {
+            "type": "boolean"
+          },
+          "model_warnings": {
+            "items": {
+              "enum": [
+                "below_default_benchmark_limited_testing"
+              ],
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "required_free_bytes": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "total_download_bytes": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "bundle_id",
+          "backend",
+          "display_name",
+          "capability_grade",
+          "chat_model_label",
+          "embedding_model_label",
+          "assets",
+          "total_download_bytes",
+          "required_free_bytes",
+          "fully_cached_and_verified",
+          "download_feasibility"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "model_candidate_revision",
+    "supported_bundle_ids",
+    "supported_bundles",
+    "hardware",
+    "observed_at",
+    "reasons"
+  ],
+  "title": "PrimaryBundleCapability",
+  "type": "object"
+}

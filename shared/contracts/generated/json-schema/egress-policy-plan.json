@@ -1,0 +1,625 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-policy-plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boundary_state": {
+      "enum": [
+        "primary_enforcing",
+        "declared_permissive_no_rules",
+        "primary_rules_do_not_cover_every_tier",
+        "primary_logging_only",
+        "supplementary_only_not_a_boundary",
+        "removed_by_uninstall"
+      ],
+      "type": "string"
+    },
+    "contract_version": {
+      "const": 4,
+      "type": "number"
+    },
+    "covered_tiers": {
+      "items": {
+        "enum": [
+          "bootstrap",
+          "file_tool",
+          "network_connector",
+          "channel"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "install_sublayer": {
+      "type": "boolean"
+    },
+    "intent": {
+      "enum": [
+        "install",
+        "repair",
+        "uninstall"
+      ],
+      "type": "string"
+    },
+    "mode": {
+      "anyOf": [
+        {
+          "enum": [
+            "log_only",
+            "enforce"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "policy_version": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "policy_version_label": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "preconditions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action_kind": {
+            "const": "verify_precondition",
+            "type": "string"
+          },
+          "precondition": {
+            "enum": [
+              "base_filtering_engine_running",
+              "dynamic_port_range_known",
+              "declared_ports_outside_dynamic_port_range",
+              "sublayer_weight_uncontested"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_kind",
+          "precondition"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "primary_rules": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "account_sid": {
+            "pattern": "^S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "action": {
+            "const": "block",
+            "type": "string"
+          },
+          "action_kind": {
+            "const": "create_or_replace",
+            "type": "string"
+          },
+          "address_ranges": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "address_family": {
+                  "enum": [
+                    "ipv4",
+                    "ipv6"
+                  ],
+                  "type": "string"
+                },
+                "first": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "last": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "address_family",
+                "first",
+                "last"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "authority": {
+            "const": "primary",
+            "type": "string"
+          },
+          "blocked_tcp_port_ranges": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "first": {
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "last": {
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "first",
+                "last"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "blocked_udp_port_ranges": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "first": {
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "last": {
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "first",
+                "last"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "filters": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "layer": {
+                  "enum": [
+                    "ale_auth_connect_v4",
+                    "ale_auth_connect_v6",
+                    "ale_resource_assignment_v4",
+                    "ale_resource_assignment_v6"
+                  ],
+                  "type": "string"
+                },
+                "match": {
+                  "enum": [
+                    "loopback_flag",
+                    "loopback_address",
+                    "non_loopback",
+                    "any_address",
+                    "internal_address",
+                    "upstream_address"
+                  ],
+                  "type": "string"
+                },
+                "transport": {
+                  "enum": [
+                    "tcp",
+                    "udp",
+                    "other_protocols",
+                    "unsplit"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "layer",
+                "match",
+                "transport"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "match_mode": {
+            "enum": [
+              "every_port",
+              "block_complement_of_allowed_ports"
+            ],
+            "type": "string"
+          },
+          "mechanism": {
+            "const": "wfp",
+            "type": "string"
+          },
+          "object_key": {
+            "pattern": "^openwork-egress\\.[a-z_]+\\.[a-z_]+\\.[a-z_]+\\.S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "protocol": {
+            "const": "any",
+            "type": "string"
+          },
+          "rule_class": {
+            "enum": [
+              "external_outbound_block",
+              "loopback_non_allowlisted_block",
+              "internal_outbound_block"
+            ],
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_kind",
+          "object_key",
+          "authority",
+          "mechanism",
+          "rule_class",
+          "tier",
+          "account_sid",
+          "action",
+          "protocol",
+          "address_ranges",
+          "match_mode",
+          "blocked_tcp_port_ranges",
+          "blocked_udp_port_ranges",
+          "filters"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "removals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "account_sid": {
+            "pattern": "^S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "action_kind": {
+            "const": "remove_owned_object",
+            "type": "string"
+          },
+          "mechanism": {
+            "enum": [
+              "wfp"
+            ],
+            "type": "string"
+          },
+          "object_key": {
+            "pattern": "^openwork-egress\\.[a-z_]+\\.[a-z_]+\\.[a-z_]+\\.S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "rule_class": {
+            "enum": [
+              "external_outbound_block",
+              "loopback_non_allowlisted_block",
+              "internal_outbound_block",
+              "icmp_connect_block",
+              "icmp_resource_assignment_block",
+              "name_resolution_port_block",
+              "file_sharing_port_block",
+              "upstream_proxy_permit"
+            ],
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_kind",
+          "object_key",
+          "mechanism",
+          "rule_class",
+          "tier",
+          "account_sid"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "supplementary_filters": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "account_sid": {
+            "pattern": "^S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "action": {
+            "const": "block",
+            "type": "string"
+          },
+          "action_kind": {
+            "const": "create_or_replace",
+            "type": "string"
+          },
+          "authority": {
+            "const": "supplementary",
+            "type": "string"
+          },
+          "blocked_ports": {
+            "items": {
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "filter_class": {
+            "enum": [
+              "icmp_connect_block",
+              "icmp_resource_assignment_block",
+              "name_resolution_port_block",
+              "file_sharing_port_block"
+            ],
+            "type": "string"
+          },
+          "filters": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "layer": {
+                  "enum": [
+                    "ale_auth_connect_v4",
+                    "ale_auth_connect_v6",
+                    "ale_resource_assignment_v4",
+                    "ale_resource_assignment_v6"
+                  ],
+                  "type": "string"
+                },
+                "match": {
+                  "enum": [
+                    "loopback_flag",
+                    "loopback_address",
+                    "non_loopback",
+                    "any_address",
+                    "internal_address",
+                    "upstream_address"
+                  ],
+                  "type": "string"
+                },
+                "transport": {
+                  "enum": [
+                    "tcp",
+                    "udp",
+                    "other_protocols",
+                    "unsplit"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "layer",
+                "match",
+                "transport"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "mechanism": {
+            "const": "wfp",
+            "type": "string"
+          },
+          "object_key": {
+            "pattern": "^openwork-egress\\.[a-z_]+\\.[a-z_]+\\.[a-z_]+\\.S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "protocols": {
+            "items": {
+              "enum": [
+                "any",
+                "tcp",
+                "udp",
+                "icmpv4",
+                "icmpv6"
+              ],
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_kind",
+          "object_key",
+          "authority",
+          "mechanism",
+          "filter_class",
+          "tier",
+          "account_sid",
+          "action",
+          "protocols",
+          "blocked_ports",
+          "filters"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "uncovered_tiers": {
+      "items": {
+        "enum": [
+          "bootstrap",
+          "file_tool",
+          "network_connector",
+          "channel"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "upstream_permits": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "account_sid": {
+            "pattern": "^S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "action": {
+            "const": "permit",
+            "type": "string"
+          },
+          "action_kind": {
+            "const": "create_or_replace",
+            "type": "string"
+          },
+          "additional_ports": {
+            "items": {
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "maxItems": 7,
+            "type": "array"
+          },
+          "addresses": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "type": "array"
+          },
+          "filters": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "layer": {
+                  "enum": [
+                    "ale_auth_connect_v4",
+                    "ale_auth_connect_v6",
+                    "ale_resource_assignment_v4",
+                    "ale_resource_assignment_v6"
+                  ],
+                  "type": "string"
+                },
+                "match": {
+                  "enum": [
+                    "loopback_flag",
+                    "loopback_address",
+                    "non_loopback",
+                    "any_address",
+                    "internal_address",
+                    "upstream_address"
+                  ],
+                  "type": "string"
+                },
+                "transport": {
+                  "enum": [
+                    "tcp",
+                    "udp",
+                    "other_protocols",
+                    "unsplit"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "layer",
+                "match",
+                "transport"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "object_key": {
+            "pattern": "^openwork-egress\\.[a-z_]+\\.[a-z_]+\\.[a-z_]+\\.S-1-(?:\\d+-)+\\d+$",
+            "type": "string"
+          },
+          "port": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "protocol": {
+            "const": "tcp",
+            "type": "string"
+          },
+          "tier": {
+            "const": "network_connector",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_kind",
+          "object_key",
+          "tier",
+          "account_sid",
+          "action",
+          "protocol",
+          "addresses",
+          "port",
+          "additional_ports",
+          "filters"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "policy_version",
+    "policy_version_label",
+    "intent",
+    "owner_sid",
+    "boundary_state",
+    "mode",
+    "covered_tiers",
+    "uncovered_tiers",
+    "preconditions",
+    "primary_rules",
+    "supplementary_filters",
+    "upstream_permits",
+    "removals",
+    "install_sublayer"
+  ],
+  "title": "EgressPolicyPlan",
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-error-body.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "details": {},
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "message"
+  ],
+  "title": "McpErrorBody",
+  "type": "object"
+}

@@ -1,0 +1,102 @@
+{
+  "about": "Golden MAC vectors for Connector IPC v2, derived from sandbox_manager/connector.py (_canonical_json and _mac_payload). hmac_key_byte is the one byte the 32-byte key repeats.",
+  "hmac_key_byte": 7,
+  "vectors": [
+    {
+      "name": "fetch_result_success",
+      "message": {
+        "contract_version": 2,
+        "direction": "response",
+        "caller_key_id": "caller_0123456789abcdef",
+        "response_key_id": "response_0123456789abcdef",
+        "boot_id": "boot-1",
+        "session_id": "session-1",
+        "request_id": "request-1",
+        "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "deadline_ms": 1800000000000,
+        "auth_tag": "0000000000000000000000000000000000000000000000000000000000000000",
+        "operation": "fetch_result",
+        "body": {
+          "url": "https://example.com/article",
+          "content_type": null,
+          "text": "Line \"one\"\n\tback\\slash \u0001 \u001f \u007f \u00e9 \u754c \u2028 \ud83d\ude00 end",
+          "truncated": true,
+          "redirects": 2,
+          "error": null
+        }
+      },
+      "body_canonical_json": "{\"content_type\":null,\"error\":null,\"redirects\":2,\"text\":\"Line \\\"one\\\"\\n\\tback\\\\slash \\u0001 \\u001f \u007f \u00e9 \u754c \u2028 \ud83d\ude00 end\",\"truncated\":true,\"url\":\"https://example.com/article\"}",
+      "body_sha256": "7cb89c3cb40f75a43d4c4c564905077345ec188c9ab30b7986071bb99f202025",
+      "mac_payload_hex": "00000001320000000c66657463685f726573756c7400000008726573706f6e73650000001763616c6c65725f3031323334353637383961626364656600000006626f6f742d310000000973657373696f6e2d3100000009726571756573742d310000002b6161616161616161616161616161616161616161616161616161616161616161616161616161616161616100000019726573706f6e73655f30313233343536373839616263646566000001a3185c50007cb89c3cb40f75a43d4c4c564905077345ec188c9ab30b7986071bb99f202025",
+      "hmac_sha256": "0265b6f5ff08862d0c956a6e4c6d5ada78fead62b4d718e47a02bb34ebef9c97"
+    },
+    {
+      "name": "fetch_result_approval_failure",
+      "message": {
+        "contract_version": 2,
+        "direction": "response",
+        "caller_key_id": "caller_0123456789abcdef",
+        "response_key_id": "response_0123456789abcdef",
+        "boot_id": "boot-1",
+        "session_id": "session-1",
+        "request_id": "request-1",
+        "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "deadline_ms": 1800000000000,
+        "auth_tag": "0000000000000000000000000000000000000000000000000000000000000000",
+        "operation": "fetch_result",
+        "body": {
+          "error": {
+            "code": "approval_required",
+            "retryable": false,
+            "approval_id": "approval-1"
+          },
+          "http_status": null
+        }
+      },
+      "body_canonical_json": "{\"error\":{\"approval_id\":\"approval-1\",\"code\":\"approval_required\",\"retryable\":false},\"http_status\":null}",
+      "body_sha256": "dc8ae7c1113103331e7ab4dbec327795998c84a4dae067daaf42a8ee5142bd2f",
+      "mac_payload_hex": "00000001320000000c66657463685f726573756c7400000008726573706f6e73650000001763616c6c65725f3031323334353637383961626364656600000006626f6f742d310000000973657373696f6e2d3100000009726571756573742d310000002b6161616161616161616161616161616161616161616161616161616161616161616161616161616161616100000019726573706f6e73655f30313233343536373839616263646566000001a3185c5000dc8ae7c1113103331e7ab4dbec327795998c84a4dae067daaf42a8ee5142bd2f",
+      "hmac_sha256": "3c86feedd1655570084d12dcf1588536cf942d6a5e76618f1768a1d7cbd931fa"
+    },
+    {
+      "name": "search_success",
+      "message": {
+        "contract_version": 2,
+        "direction": "response",
+        "caller_key_id": "caller_0123456789abcdef",
+        "response_key_id": "response_0123456789abcdef",
+        "boot_id": "boot-1",
+        "session_id": "session-1",
+        "request_id": "request-1",
+        "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "deadline_ms": 1800000000000,
+        "auth_tag": "0000000000000000000000000000000000000000000000000000000000000000",
+        "operation": "search",
+        "body": {
+          "provider": "tavily",
+          "results": [
+            {
+              "title": "Line \"one\"\n\tback\\slash \u0001 \u001f \u007f \u00e9 \u754c \u2028 \ud83d\ude00 end",
+              "url": "https://example.com/article",
+              "content": "\u6a21\u578b\u53d1\u5e03 \ud83d\ude80",
+              "score_percent": 87,
+              "source_type": null
+            }
+          ],
+          "display": {
+            "query": "Intel native AI",
+            "original_query": "Intel native AI",
+            "as_of": "2026-10-05",
+            "query_normalized": false,
+            "failure_message": null
+          },
+          "error": null
+        }
+      },
+      "body_canonical_json": "{\"display\":{\"as_of\":\"2026-10-05\",\"failure_message\":null,\"original_query\":\"Intel native AI\",\"query\":\"Intel native AI\",\"query_normalized\":false},\"error\":null,\"provider\":\"tavily\",\"results\":[{\"content\":\"\u6a21\u578b\u53d1\u5e03 \ud83d\ude80\",\"score_percent\":87,\"source_type\":null,\"title\":\"Line \\\"one\\\"\\n\\tback\\\\slash \\u0001 \\u001f \u007f \u00e9 \u754c \u2028 \ud83d\ude00 end\",\"url\":\"https://example.com/article\"}]}",
+      "body_sha256": "308c9d158a4b092e6b17ec5d4ceae21f89f502532d5bf7d6fba15f4dfc5b039b",
+      "mac_payload_hex": "00000001320000000673656172636800000008726573706f6e73650000001763616c6c65725f3031323334353637383961626364656600000006626f6f742d310000000973657373696f6e2d3100000009726571756573742d310000002b6161616161616161616161616161616161616161616161616161616161616161616161616161616161616100000019726573706f6e73655f30313233343536373839616263646566000001a3185c5000308c9d158a4b092e6b17ec5d4ceae21f89f502532d5bf7d6fba15f4dfc5b039b",
+      "hmac_sha256": "5bd9baaa39914930bf1c0964ad39f8d3cb6bc59ad606b58c3190ef6ec1a61fdb"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$id": "https://different.ai/openwork-contracts/primary-bundle-abort-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "correlation_operation_id": {
+      "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "expected_bundle_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "idempotency_key": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prepare_operation_id": {
+      "pattern": "^lrm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "target_bundle_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "correlation_operation_id",
+    "target_bundle_id",
+    "expected_bundle_revision",
+    "idempotency_key",
+    "prepare_operation_id"
+  ],
+  "title": "PrimaryBundleAbortRequest",
+  "type": "object"
+}

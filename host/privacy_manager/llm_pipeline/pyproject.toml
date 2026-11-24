@@ -1,0 +1,67 @@
+[project]
+name = "llm-pipeline"
+version = "0.1.0"
+description = "SuperClaw LLM Pipeline: PII Projtected File sidecar dataset file inspection and masking service."
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "httpx>=0.27",
+    "pandas>=1.3",
+    "openpyxl>=3.1",
+    "pydantic>=2.0",
+    "superclaw-host-observability",
+    # data_protection (vendored DPS) runtime deps. The DPS tree has no live
+    # pyproject (only dps-pyproject.toml.reference), so its deps must be
+    # declared by whichever workspace member's exe hosts it. privacy_manager
+    # bundles both llm_pipeline AND data_protection into one onedir,
+    # so this list carries the union.
+    "beautifulsoup4>=4.12",      # HTML masking (file_protection.documents)
+    "python-docx>=1.1",          # .docx masking + assert_xml_parsers_hardened()
+    "pyarrow>=14.0",             # .parquet backend
+    "pyyaml>=6.0",               # protection_service.config yaml loader
+    "python-multipart>=0.0.9",   # multipart upload endpoints
+    "spacy>=3.7.0",              # NER fallback
+    "transformers>=4.35.0",      # AutoTokenizer only
+    "tokenizers>=0.15",
+    "onnxruntime>=1.17",         # CPU inference baseline
+    "openvino>=2025.0",          # OV IR path (Intel iGPU/NPU)
+    "numpy>=1.21.0",
+    "loguru>=0.6",                # utils/logger.py structured logging
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=0.24", "pytest-mock>=3.14"]
+
+[project.scripts]
+llm-pipeline = "llm_pipeline.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+"llm_pipeline" = "."
+
+[tool.setuptools]
+packages = [
+    "llm_pipeline",
+    "llm_pipeline.api",
+    "llm_pipeline.src",
+    "llm_pipeline.src.clients",
+    "llm_pipeline.src.pipeline",
+    "llm_pipeline.src.prompts",
+    "llm_pipeline.src.schemas",
+    "llm_pipeline.src.tools",
+    "llm_pipeline.utils",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["windows_only: requires a real Windows host (NTFS junctions)"]
+
+[tool.uv.sources]
+superclaw-host-observability = { workspace = true }

@@ -1,0 +1,247 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "experimental": {
+    "subagent_depth": 5
+  },
+  "agent": {
+    "build": {
+      "description": "Software engineering agent. Solves bugs, adds features, refactors, explains, and tests code. Runs scripts and git operations. Also analyzes masked files delegated by protected-file-agent.",
+      "mode": "all",
+      "model": "llmrouter/cloud-model",
+      "permission": {
+        "_email_helpers_*": "deny",
+        "confirm_file_protection": "ask",
+        "email_reply": "deny",
+        "email_send": "deny",
+        "external_directory": {
+          "*": "deny",
+          "/run/superclaw/runtime/*/opencode/agent/*": "allow",
+          "/tmp/*": "allow",
+          "/workspace/data_protection_workspace/mask_registries/**": "deny",
+          "/workspace/sensitive/**": "deny",
+          "*/channel/inbox/*": "allow"
+        },
+        "local_dr_*": "deny",
+        "local_sensitive_read": "deny",
+        "run_email_*": "deny",
+        "run_protected_file_pipeline": "deny",
+        "schedule_meeting": "deny",
+        "skill": {
+          "*": "allow",
+          "customize-opencode": "deny",
+          "email": "deny",
+          "protected-file-*": "deny"
+        },
+        "task": {
+          "*": "allow",
+          "local-file-agent": "allow",
+          "protected-file-agent": "allow"
+        }
+      },
+      "prompt": "{file:./prompts/coding.txt}",
+      "steps": 100
+    },
+    "email-agent": {
+      "description": "An agent specialized in email and calendar actions. It can list, search, summarize, and prioritize emails, send and reply to emails, schedule meetings, manage calendar events, create daily plans, and track action items.",
+      "mode": "all",
+      "permission": {
+        "*": "deny",
+        "doom_loop": "allow",
+        "email_reply": "ask",
+        "email_send": "ask",
+        "run_email_pipeline": "allow",
+        "schedule_meeting": "ask",
+        "skill": {
+          "email": "allow"
+        }
+      },
+      "prompt": "{file:./prompts/email_agent.txt}",
+      "steps": 30
+    },
+    "hybrid-deep-research": {
+      "description": "Runs Hybrid Deep Research through the LangGraph sidecar.",
+      "mode": "primary",
+      "model": "llmrouter/cloud-model",
+      "permission": {
+        "*": "deny",
+        "hybrid_dr_post_polish_processor": "allow",
+        "skill": {
+          "*": "deny"
+        },
+        "task": {
+          "*": "deny"
+        }
+      },
+      "prompt": "{file:./prompts/hybrid-dr-sidecar-primary.txt}",
+      "steps": 6
+    },
+    "local-file-agent": {
+      "description": "An agent specialized answer questions related to local files. Use this agent to extract information from PDF, CSV, MD, DOCX, XLSX, and PPTX files. Must pass absolute file paths to this agent.",
+      "mode": "subagent",
+      "permission": {
+        "*": "deny",
+        "bash": "allow",
+        "doom_loop": "allow",
+        "edit": "allow",
+        "external_directory": {
+          "*": "deny",
+          "/workspace/tmp/pdf_md/**": "allow"
+        },
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "local_dr_query_table": "allow",
+        "local_dr_read_csv_xlsx": "allow",
+        "local_sensitive_read": "allow",
+        "local_dr_read_docx": "allow",
+        "local_dr_read_pptx": "allow",
+        "ocr": "allow",
+        "parse_pdf": "allow",
+        "read": "allow",
+        "skill": {
+          "docx-create": "allow",
+          "pptx-create": "allow"
+        },
+        "task": {
+          "*": "deny"
+        },
+        "todoread": "allow",
+        "todowrite": "allow"
+      },
+      "prompt": "{file:./prompts/local-file-agent.txt}",
+      "steps": 30,
+      "temperature": 0.1
+    },
+    "plan": {
+      "hidden": true,
+      "permission": {
+        "external_directory": {
+          "*": "deny"
+        }
+      }
+    },
+    "protected-file-agent": {
+      "description": "Use when the user asks to analyze a sensitive file (.csv, .xlsx, .xls, .parquet, .txt, .md, .html, .htm, .docx). Requires `confirm_file_protection` approval before invoking. Handles PII masking and response restore internally.",
+      "mode": "subagent",
+      "model": "llmrouter/local-model",
+      "permission": {
+        "*": "deny",
+        "doom_loop": "ask",
+        "external_directory": {
+          "/tmp/*": "allow"
+        },
+        "glob": "allow",
+        "list": "allow",
+        "question": "allow",
+        "run_protected_file_pipeline": "allow",
+        "review_masked_entities": "ask",
+        "task": {
+          "*": "deny",
+          "build": "allow"
+        }
+      },
+      "prompt": "{file:./prompts/protected_pipeline_agent.txt}",
+      "steps": 20
+    },
+    "superclaw-default": {
+      "mode": "primary",
+      "permission": {
+        "*": "deny",
+        "automation_create": "ask",
+        "automation_list": "allow",
+        "automation_remove": "ask",
+        "bash": "allow",
+        "confirm_file_protection": "ask",
+        "edit": "allow",
+        "external_directory": {
+          "*": "deny",
+          "/workspace/data_protection_workspace/mask_registries/**": "deny",
+          "/workspace/sensitive/**": "deny",
+          "/workspace/tmp/pdf_md/**": "allow",
+          "*/channel/inbox/*": "allow"
+        },
+        "get_mcp_status": "allow",
+        "ocr": "allow",
+        "parse_pdf": "allow",
+        "question": "allow",
+        "read": "allow",
+        "skill": {
+          "*": "allow",
+          "customize-opencode": "deny",
+          "llmrouter-bench": "deny",
+          "local-safety-guard": "deny",
+          "local-security-review": "deny",
+          "protected-file-*": "deny",
+          "spreadsheet": "deny"
+        },
+        "task": {
+          "*": "deny",
+          "local-file-agent": "allow",
+          "protected-file-agent": "allow",
+          "websearch-agent": "allow"
+        },
+        "todoread": "allow",
+        "todowrite": "allow"
+      },
+      "prompt": "{file:./prompts/superclaw.txt}",
+      "steps": 30,
+      "temperature": 0.1
+    },
+    "websearch-agent": {
+      "description": "Web page reader and web search. Give it a link and it reads that page; reading a link is not a search, so use it even when the user says not to search. Returns one focused factual sentence (or short paragraph) with inline URL citations.",
+      "mode": "subagent",
+      "permission": {
+        "*": "deny",
+        "doom_loop": "allow",
+        "sc_fetch_url": "allow",
+        "sc_search_web": "allow"
+      },
+      "prompt": "{file:./prompts/sc-websearch.txt}",
+      "steps": 20
+    }
+  },
+  "default_agent": "superclaw-default",
+  "model": "llmrouter/auto",
+  "permission": {
+    "webfetch": "deny",
+    "websearch": "deny"
+  },
+  "plugin": [
+    "opencode-scheduler"
+  ],
+  "provider": {
+    "llmrouter": {
+      "models": {
+        "auto": {
+          "name": "Auto Route",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        },
+        "cloud-model": {
+          "name": "Cloud (router-bypass)",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        },
+        "local-model": {
+          "name": "Local (router-bypass)",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        }
+      },
+      "name": "LLM Router",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "{env:LRM_API_KEY}",
+        "baseURL": "{env:LRM_API_BASE_URL}/v1",
+        "timeout": 600000
+      }
+    }
+  },
+  "share": "disabled"
+}

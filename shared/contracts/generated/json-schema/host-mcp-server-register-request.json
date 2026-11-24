@@ -1,0 +1,41 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-server-register-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allow_when_locked": {
+      "type": "boolean"
+    },
+    "approval_mode": {
+      "enum": [
+        "prompt",
+        "auto"
+      ],
+      "type": "string"
+    },
+    "command": {
+      "items": {
+        "maxLength": 4096,
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "environment": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "pattern": "^[^=]+$",
+        "type": "string"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "command"
+  ],
+  "title": "HostMcpServerRegisterRequest",
+  "type": "object"
+}

@@ -1,0 +1,186 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-tier-launch-completed.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "event": {
+      "const": "tier_launch_completed",
+      "type": "string"
+    },
+    "evidence_source": {
+      "const": "tier_runner_self_report",
+      "type": "string"
+    },
+    "launch_path": {
+      "const": "tier_logon",
+      "type": "string"
+    },
+    "launch_role": {
+      "enum": [
+        "supervisor_executable",
+        "token_service_executable",
+        "runtime_executable",
+        "connector_executable",
+        "connector_service",
+        "egress_proxy",
+        "hdr_sidecar",
+        "shell_executable",
+        "test_fixed_sleep_child"
+      ],
+      "type": "string"
+    },
+    "owner_job": {
+      "additionalProperties": false,
+      "properties": {
+        "active_processes_after_cleanup": {
+          "const": 0,
+          "type": "number"
+        },
+        "active_processes_at_ready": {
+          "maximum": 64,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "active_processes_before_cleanup": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cleanup_confirmed": {
+          "const": true,
+          "type": "boolean"
+        },
+        "cleanup_elapsed_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "role_membership_verified": {
+          "const": true,
+          "type": "boolean"
+        },
+        "runner_membership_verified_before_resume": {
+          "const": true,
+          "type": "boolean"
+        },
+        "source": {
+          "const": "owner_kernel",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "runner_membership_verified_before_resume",
+        "role_membership_verified",
+        "active_processes_at_ready",
+        "active_processes_before_cleanup",
+        "active_processes_after_cleanup",
+        "cleanup_confirmed",
+        "cleanup_elapsed_ms"
+      ],
+      "type": "object"
+    },
+    "owner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "runner_exit_code": {
+      "const": 1396918850,
+      "type": "number"
+    },
+    "runner_frames": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "launch_role": {
+            "enum": [
+              "supervisor_executable",
+              "token_service_executable",
+              "runtime_executable",
+              "connector_executable",
+              "connector_service",
+              "egress_proxy",
+              "hdr_sidecar",
+              "shell_executable",
+              "test_fixed_sleep_child"
+            ],
+            "type": "string"
+          },
+          "op": {
+            "const": "started",
+            "type": "string"
+          },
+          "role_environment_names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "role_pid": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "op",
+          "tier",
+          "launch_role",
+          "role_pid",
+          "role_environment_names"
+        ],
+        "type": "object"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array"
+    },
+    "runner_pid": {
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991,
+      "type": "integer"
+    },
+    "runner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "tier": {
+      "enum": [
+        "bootstrap",
+        "file_tool",
+        "network_connector",
+        "channel"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "event",
+    "launch_path",
+    "tier",
+    "owner_sid",
+    "runner_sid",
+    "launch_role",
+    "runner_pid",
+    "runner_exit_code",
+    "evidence_source",
+    "runner_frames",
+    "owner_job"
+  ],
+  "title": "BrokerTierLaunchCompleted",
+  "type": "object"
+}

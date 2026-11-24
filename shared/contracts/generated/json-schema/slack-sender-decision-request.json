@@ -1,0 +1,15 @@
+{
+  "$id": "https://different.ai/openwork-contracts/slack-sender-decision-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "allowed"
+  ],
+  "title": "SlackSenderDecisionRequest",
+  "type": "object"
+}

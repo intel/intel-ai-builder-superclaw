@@ -1,0 +1,35 @@
+{
+  "$id": "https://different.ai/openwork-contracts/connector-admin-error.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "admin_authentication_failed",
+            "invalid_request",
+            "grant_rejected",
+            "approval_not_pending",
+            "grant_superseded"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "error"
+  ],
+  "title": "ConnectorAdminError",
+  "type": "object"
+}

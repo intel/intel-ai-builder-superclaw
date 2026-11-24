@@ -1,0 +1,22 @@
+# Prebuilt llama.cpp binaries — shipped/downloaded out-of-band, not source-controlled
+llama-b*-bin-*/
+
+# Python / uv
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# Local data / runtime artifacts
+data/models/
+data/runtime/
+*.db
+*.db-shm
+*.db-wal
+*.lock
+!uv.lock
+logs/

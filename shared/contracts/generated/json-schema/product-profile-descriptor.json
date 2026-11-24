@@ -1,0 +1,103 @@
+{
+  "$id": "https://different.ai/openwork-contracts/product-profile-descriptor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "display_name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "feature_flags": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_authoring": {
+          "type": "boolean"
+        },
+        "email_agent": {
+          "type": "boolean"
+        },
+        "host_browser": {
+          "type": "boolean"
+        },
+        "hybrid_coding_agent": {
+          "type": "boolean"
+        },
+        "hybrid_deep_research_agent": {
+          "type": "boolean"
+        },
+        "intent_classifier": {
+          "type": "boolean"
+        },
+        "local_tts": {
+          "type": "boolean"
+        },
+        "local_vision": {
+          "type": "boolean"
+        },
+        "mcp_host_execution": {
+          "type": "boolean"
+        },
+        "mcp_local_command": {
+          "type": "boolean"
+        },
+        "mcp_tool_permissions": {
+          "type": "boolean"
+        },
+        "skills_ui": {
+          "type": "boolean"
+        },
+        "voice_input": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "intent_classifier",
+        "local_tts",
+        "local_vision",
+        "hybrid_coding_agent",
+        "hybrid_deep_research_agent",
+        "email_agent",
+        "skills_ui",
+        "agent_authoring"
+      ],
+      "type": "object"
+    },
+    "profile": {
+      "enum": [
+        "lite",
+        "standard",
+        "pro"
+      ],
+      "type": "string"
+    },
+    "required_sidecars": {
+      "items": {
+        "enum": [
+          "intent-classifier",
+          "hdr-sidecar"
+        ],
+        "type": "string"
+      },
+      "maxItems": 2,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile",
+    "display_name",
+    "description",
+    "required_sidecars",
+    "feature_flags"
+  ],
+  "title": "ProductProfileDescriptor",
+  "type": "object"
+}

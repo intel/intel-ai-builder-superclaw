@@ -1,0 +1,12 @@
+# Public mapping only: internal binary/LFS tracking remains unchanged.
+*.sh text eol=lf
+host/privacy_manager/data_protection/models/** text eol=lf
+apps/desktop/src-tauri/gen/schemas/*.json text eol=lf
+apps/desktop/src-tauri/Cargo.toml text eol=lf
+sandbox/agent_config/profiles/** text eol=lf
+packaging/docker/readers/** text eol=lf
+patches/**/*.patch -text
+scripts/native-backend/shell-patches/*.patch text eol=lf
+shared/contracts/generated/** linguist-generated=true
+sandbox/agent_config/profiles/*/skills/docx-create/vendor/** linguist-generated=true
+sandbox/agent_config/profiles/*/skills/docx-create/THIRD_PARTY_NOTICES.md linguist-generated=true

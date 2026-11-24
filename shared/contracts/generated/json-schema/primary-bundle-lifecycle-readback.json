@@ -1,0 +1,138 @@
+{
+  "$id": "https://different.ai/openwork-contracts/primary-bundle-lifecycle-readback.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bundle_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "candidate_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "correlation_operation_id": {
+      "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "expected_bundle_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "idempotency_key": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pct": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "prepare_operation_id": {
+      "pattern": "^lrm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "reason_code": {
+      "anyOf": [
+        {
+          "enum": [
+            "url_unreachable",
+            "invalid_api_key",
+            "model_not_found",
+            "bundle_incomplete"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled"
+      ],
+      "type": "string"
+    },
+    "target_bundle": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "enum": [
+            "llama",
+            "edge"
+          ],
+          "type": "string"
+        },
+        "bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "capability_contract_version": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "capability_grade": {
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "type": "string"
+        },
+        "chat_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "embedding_model_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "registry_version": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "backend",
+        "bundle_id",
+        "chat_model_id",
+        "embedding_model_id",
+        "capability_grade",
+        "capability_contract_version",
+        "registry_version"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "contract_version",
+    "correlation_operation_id",
+    "prepare_operation_id",
+    "target_bundle",
+    "candidate_revision",
+    "expected_bundle_revision",
+    "bundle_revision",
+    "idempotency_key",
+    "state",
+    "pct",
+    "message"
+  ],
+  "title": "PrimaryBundleLifecycleReadback",
+  "type": "object"
+}

@@ -1,0 +1,1080 @@
+{
+  "valid_start": {
+    "contract_version": 1,
+    "manifest_version": 1,
+    "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+    "launch_role": "test_fixed_sleep_child",
+    "workspace_root_id": null,
+    "path_bindings": [
+      {
+        "placeholder": "payload_root",
+        "path": "C:\\Users\\tester\\SuperClaw\\payload"
+      },
+      {
+        "placeholder": "state_logs_root",
+        "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+      },
+      {
+        "placeholder": "isolation_root",
+        "path": "C:\\ProgramData\\SuperClaw\\isolation"
+      }
+    ],
+    "scalar_bindings": []
+  },
+  "valid_starts": [
+    {
+      "name": "test boundary child",
+      "launch_role": "test_fixed_sleep_child",
+      "tier": "bootstrap",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "test_fixed_sleep_child",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": []
+      }
+    },
+    {
+      "name": "supervisor",
+      "launch_role": "supervisor_executable",
+      "tier": "bootstrap",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "supervisor_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "supervisor_port",
+            "value": 47821
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "host_token",
+            "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "openwork_token",
+            "value": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+          },
+          {
+            "placeholder": "runtime_deployment_b64",
+            "value": "eyJkZXBsb3ltZW50X2lkIjoicnVudGltZS1kZXBsb3ltZW50LTAxMjM0NTY3ODlhYmNkZWYwMTIzNDU2Nzg5YWJjZGVmIiwicHJvZHVjdF9wcm9maWxlX2RpZ2VzdCI6IjAxMjM0NTY3ODlhYmNkZWYwMTIzNDU2Nzg5YWJjZGVmMDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWYiLCJwcm9kdWN0X3Byb2ZpbGVfaWQiOiJzdGFuZGFyZCIsInByb2ZpbGVfcmV2aXNpb24iOjEsInNjaGVtYV92ZXJzaW9uIjoyLCJzb3VyY2Vfb3BlcmF0aW9uX2lkIjpudWxsfQ=="
+          },
+          {
+            "placeholder": "runtime_desired_fingerprint",
+            "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "runtime_instance_id",
+            "value": "runtime-instance-0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "runtime_launch_attempt_id",
+            "value": "runtime-attempt-fedcba9876543210fedcba9876543210"
+          },
+          {
+            "placeholder": "hdr_enabled",
+            "value": "1"
+          },
+          {
+            "placeholder": "hdr_port",
+            "value": 47825
+          },
+          {
+            "placeholder": "hdr_ready_token",
+            "value": "ready_0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "llmrouter_port",
+            "value": 18321
+          },
+          {
+            "placeholder": "lrm_api_key",
+            "value": "lrmkey0123456789lrmkey0123456789lrmkey0123456789lrmkey0123456789"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "intent_classifier_token",
+            "value": "intent_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          }
+        ]
+      }
+    },
+    {
+      "name": "openwork server",
+      "launch_role": "token_service_executable",
+      "tier": "file_tool",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "token_service_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "supervisor_port",
+            "value": 47821
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "host_token_sha256",
+            "value": "a8ae6e6ee929abea3afcfc5258c8ccd6f85273e0d4626d26c7279f3250f77c8e"
+          },
+          {
+            "placeholder": "openwork_token",
+            "value": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+          },
+          {
+            "placeholder": "router_scoped_token",
+            "value": "5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b"
+          },
+          {
+            "placeholder": "privacy_api_key",
+            "value": "privacykey0123456789privacykey0123456789privacykey0123456789privacykey0123456789"
+          },
+          {
+            "placeholder": "hdr_enabled",
+            "value": "1"
+          },
+          {
+            "placeholder": "hdr_port",
+            "value": 47825
+          },
+          {
+            "placeholder": "hdr_api_token",
+            "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "runtime_instance_id",
+            "value": "runtime-instance-0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "intent_classifier_token",
+            "value": "intent_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "local_proxy_url",
+            "value": "http://127.0.0.1:18856"
+          },
+          {
+            "placeholder": "local_proxy_bypass",
+            "value": "127.0.0.1,localhost,::1,corp.example"
+          }
+        ]
+      }
+    },
+    {
+      "name": "opencode router",
+      "launch_role": "connector_executable",
+      "tier": "channel",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "connector_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "router_control_token",
+            "value": "0f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a6978"
+          },
+          {
+            "placeholder": "router_scoped_token",
+            "value": "5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "intent_classifier_token",
+            "value": "intent_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "local_proxy_url",
+            "value": "http://127.0.0.1:18860"
+          },
+          {
+            "placeholder": "local_proxy_bypass",
+            "value": "127.0.0.1,localhost,::1,corp.example"
+          }
+        ]
+      }
+    },
+    {
+      "name": "runtime",
+      "launch_role": "runtime_executable",
+      "tier": "file_tool",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "runtime_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "runtime_instance_id",
+            "value": "runtime-instance-0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "llmrouter_port",
+            "value": 18321
+          },
+          {
+            "placeholder": "lrm_api_key",
+            "value": "lrmkey0123456789lrmkey0123456789lrmkey0123456789lrmkey0123456789"
+          },
+          {
+            "placeholder": "privacy_api_key",
+            "value": "privacykey0123456789privacykey0123456789privacykey0123456789privacykey0123456789"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "router_scoped_token",
+            "value": "5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b5a4b3c2d1e0f9a8b"
+          },
+          {
+            "placeholder": "hdr_enabled",
+            "value": "1"
+          },
+          {
+            "placeholder": "hdr_port",
+            "value": 47825
+          },
+          {
+            "placeholder": "hdr_api_token",
+            "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "local_proxy_url",
+            "value": "http://127.0.0.1:18856"
+          },
+          {
+            "placeholder": "local_proxy_bypass",
+            "value": "127.0.0.1,localhost,::1,corp.example"
+          },
+          {
+            "placeholder": "supervisor_port",
+            "value": 47821
+          }
+        ]
+      }
+    },
+    {
+      "name": "connector service",
+      "launch_role": "connector_service",
+      "tier": "network_connector",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "connector_service",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "connector_port",
+            "value": 47823
+          }
+        ]
+      }
+    },
+    {
+      "name": "egress proxy",
+      "launch_role": "egress_proxy",
+      "tier": "network_connector",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "egress_proxy",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "egress_proxy_shell_port",
+            "value": 18856
+          },
+          {
+            "placeholder": "egress_proxy_channel_port",
+            "value": 18860
+          }
+        ]
+      }
+    },
+    {
+      "name": "hybrid deep research sidecar",
+      "launch_role": "hdr_sidecar",
+      "tier": "file_tool",
+      "request": {
+        "contract_version": 1,
+        "manifest_version": 1,
+        "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+        "launch_role": "hdr_sidecar",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "hdr_port",
+            "value": 47825
+          },
+          {
+            "placeholder": "llmrouter_port",
+            "value": 18321
+          },
+          {
+            "placeholder": "hdr_api_token",
+            "value": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "placeholder": "lrm_api_key",
+            "value": "lrmkey0123456789lrmkey0123456789lrmkey0123456789lrmkey0123456789"
+          },
+          {
+            "placeholder": "hdr_ready_token",
+            "value": "ready_0123456789abcdef0123456789abcdef"
+          }
+        ]
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "forbidden executable path",
+      "overrides": {
+        "executable": "C:\\Windows\\System32\\cmd.exe"
+      },
+      "expected_reasons": [
+        "forbidden_executable_path"
+      ]
+    },
+    {
+      "name": "forbidden argv",
+      "overrides": {
+        "argv": [
+          "cmd.exe",
+          "/c",
+          "whoami"
+        ]
+      },
+      "expected_reasons": [
+        "forbidden_command_line"
+      ]
+    },
+    {
+      "name": "forbidden shell",
+      "overrides": {
+        "shell": "powershell.exe"
+      },
+      "expected_reasons": [
+        "forbidden_shell"
+      ]
+    },
+    {
+      "name": "forbidden environment map",
+      "overrides": {
+        "environment": {
+          "PATH": "C:\\Windows\\System32"
+        }
+      },
+      "expected_reasons": [
+        "forbidden_free_env"
+      ]
+    },
+    {
+      "name": "manifest digest mismatch",
+      "overrides": {
+        "manifest_digest": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_reasons": [
+        "manifest_digest_mismatch"
+      ]
+    },
+    {
+      "name": "manifest version the shipped catalog does not carry",
+      "overrides": {
+        "manifest_version": 99
+      },
+      "expected_reasons": [
+        "manifest_version_unknown"
+      ]
+    },
+    {
+      "name": "launch role the catalog declares no entry for",
+      "overrides": {
+        "launch_role": "shell_executable"
+      },
+      "expected_reasons": [
+        "launch_role_unknown"
+      ]
+    },
+    {
+      "name": "caller-chosen log file name",
+      "overrides": {
+        "log_file": "C:\\ProgramData\\SuperClaw\\state\\logs\\bootstrap\\chosen.log"
+      },
+      "expected_reasons": [
+        "request_shape_invalid"
+      ]
+    },
+    {
+      "name": "missing required path placeholder",
+      "overrides": {
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "placeholder_missing"
+      ]
+    },
+    {
+      "name": "path placeholder the role does not declare",
+      "overrides": {
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "placeholder_not_declared"
+      ]
+    },
+    {
+      "name": "duplicate path placeholder",
+      "overrides": {
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "placeholder_duplicate"
+      ]
+    },
+    {
+      "name": "scalar placeholder the role does not declare",
+      "overrides": {
+        "scalar_bindings": [
+          {
+            "placeholder": "connector_port",
+            "value": 47823
+          }
+        ]
+      },
+      "expected_reasons": [
+        "placeholder_not_declared"
+      ]
+    },
+    {
+      "name": "workspace root id for a role that binds no workspace",
+      "overrides": {
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      },
+      "expected_reasons": [
+        "workspace_root_id_forbidden"
+      ]
+    },
+    {
+      "name": "supervisor without the workspace root id it binds",
+      "overrides": {
+        "launch_role": "supervisor_executable",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "supervisor_port",
+            "value": 47821
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          }
+        ]
+      },
+      "expected_reasons": [
+        "workspace_root_id_required"
+      ]
+    },
+    {
+      "name": "connector port below the loopback range",
+      "overrides": {
+        "launch_role": "connector_service",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "connector_port",
+            "value": 80
+          }
+        ]
+      },
+      "expected_reasons": [
+        "scalar_out_of_range"
+      ]
+    },
+    {
+      "name": "connector port supplied as text",
+      "overrides": {
+        "launch_role": "connector_service",
+        "workspace_root_id": null,
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "connector_port",
+            "value": "47823"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "scalar_out_of_range"
+      ]
+    },
+    {
+      "name": "runtime password shorter than the opaque bound",
+      "overrides": {
+        "launch_role": "connector_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "router_control_token",
+            "value": "0f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a6978"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw_short_0123456789-abcdefghi"
+          },
+          {
+            "placeholder": "intent_classifier_token",
+            "value": "intent_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "local_proxy_url",
+            "value": "http://127.0.0.1:18856"
+          },
+          {
+            "placeholder": "local_proxy_bypass",
+            "value": "127.0.0.1,localhost,::1,corp.example"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "scalar_out_of_range"
+      ]
+    },
+    {
+      "name": "runtime password with characters outside the URL-safe alphabet",
+      "overrides": {
+        "launch_role": "connector_executable",
+        "workspace_root_id": "wsr_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "path_bindings": [
+          {
+            "placeholder": "payload_root",
+            "path": "C:\\Users\\tester\\SuperClaw\\payload"
+          },
+          {
+            "placeholder": "workspace_root",
+            "path": "C:\\Users\\tester\\Projects\\demo"
+          },
+          {
+            "placeholder": "state_config_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\config"
+          },
+          {
+            "placeholder": "state_data_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\data"
+          },
+          {
+            "placeholder": "state_logs_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\logs"
+          },
+          {
+            "placeholder": "state_temp_root",
+            "path": "C:\\ProgramData\\SuperClaw\\state\\temp"
+          },
+          {
+            "placeholder": "isolation_root",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation"
+          }
+        ],
+        "scalar_bindings": [
+          {
+            "placeholder": "loopback_host",
+            "value": "127.0.0.1"
+          },
+          {
+            "placeholder": "runtime_port",
+            "value": 47822
+          },
+          {
+            "placeholder": "router_health_port",
+            "value": 47824
+          },
+          {
+            "placeholder": "router_control_token",
+            "value": "0f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a69780f1e2d3c4b5a6978"
+          },
+          {
+            "placeholder": "runtime_password",
+            "value": "rtpw+0123456789/abcdefghij+0123456789/ABCD="
+          },
+          {
+            "placeholder": "intent_classifier_token",
+            "value": "intent_0123456789-abcdefghij_0123456789-ABCDEFGHIJ_0123456789-wxyz"
+          },
+          {
+            "placeholder": "local_proxy_url",
+            "value": "http://127.0.0.1:18856"
+          },
+          {
+            "placeholder": "local_proxy_bypass",
+            "value": "127.0.0.1,localhost,::1,corp.example"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "scalar_out_of_range"
+      ]
+    }
+  ]
+}

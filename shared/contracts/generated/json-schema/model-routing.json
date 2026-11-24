@@ -1,0 +1,53 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-routing.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "auto_router_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "cloud_model_prefixes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "cloud_provider_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "local_base_url_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "local_provider_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "superrouter_local_models": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "local_provider_ids",
+    "cloud_provider_ids",
+    "auto_router_ids",
+    "superrouter_local_models",
+    "cloud_model_prefixes",
+    "local_base_url_patterns"
+  ],
+  "title": "ModelRoutingTables",
+  "type": "object"
+}

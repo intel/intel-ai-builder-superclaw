@@ -1,0 +1,78 @@
+[project]
+name = "llmrouter-manager"
+version = "0.1.0"
+description = "SuperClaw LLMRouter Manager: unified LLM routing service (local GGUF + cloud LiteLLM + edge + PII)."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "httpx>=0.27",
+    "litellm>=1.100.4",
+    "opentelemetry-api>=1.30",
+    "opentelemetry-sdk>=1.30",
+    "opentelemetry-exporter-otlp-proto-http>=1.30",
+    "pywin32>=306 ; sys_platform == 'win32'",
+    # Local llama-server lifecycle. `wmi` (Windows-only) backs the hardware
+    # probe in `local/hardware.py`; `huggingface_hub` backs the GGUF downloader
+    # in `local/downloader.py`. Both were previously satisfied only by accident
+    # (wmi leaked from the sandbox_manager workspace sibling; huggingface_hub
+    # came in transitively via litellm), so member-only `uv sync` pruned wmi.
+    "wmi>=1.5.1 ; sys_platform == 'win32'",
+    "huggingface_hub>=0.24",
+    # Phase 3 latency router (inference path only — torch/llmrouter-lib stubbed by routing/auto_router/_runtime_stubs.py).
+    # See plan section 10 Phase 3 + integrations/llmrouter/requirements.txt for the original training-time superset.
+    "numpy>=1.21",
+    "scipy>=1.10",
+    "scikit-learn>=1.0",
+    "pyyaml>=6.0",
+    "pandas>=1.3",
+    "tqdm>=4.62",
+    "loguru>=0.6",
+    "requests>=2.32",
+    "tiktoken>=0.4",
+    "superclaw-host-observability",
+    # Rust-backed tokenizer for the context-cap token counter. We load the
+    # vendored `data/tokenizer.json` (Qwen family, byte-exact against the local
+    # pool) so the cap guard doesn't drift from what the serving model sees.
+    # Previously satisfied transitively via huggingface_hub; declared here so
+    # a resolver change can't silently drop it.
+    "tokenizers>=0.15",
+    "superclaw-contracts",
+    "langfuse>=2.0, <3.0",  # for experimental observability
+]
+
+[project.scripts]
+llmrouter-manager = "llmrouter_manager.__main__:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llmrouter_manager"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "respx>=0.23.1",
+]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+superclaw-host-observability = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-q --strict-markers"
+markers = [
+    "integration: marks tests that require a live llmrouter_manager process",
+    "windows_only: requires Windows-only APIs (pywin32, real DPAPI)",
+]

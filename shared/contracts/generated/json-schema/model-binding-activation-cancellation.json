@@ -1,0 +1,21 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-binding-activation-cancellation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "operation_id": {
+      "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "operation_id"
+  ],
+  "title": "ModelBindingActivationCancellation",
+  "type": "object"
+}

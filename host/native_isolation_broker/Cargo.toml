@@ -1,0 +1,65 @@
+[package]
+name = "native_isolation_broker"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "native_isolation_broker"
+path = "src/main.rs"
+test = false
+bench = false
+
+[[bin]]
+name = "native_isolation_test_child"
+path = "src/test_child_main.rs"
+test = false
+bench = false
+
+# The unelevated tier-local launcher. It is intentionally absent from build.rs ELEVATED_BINS, so it
+# ships with the default asInvoker manifest and can never request elevation. `test = false` keeps the
+# shared modules it declares from having their unit tests compiled and run a second time.
+[[bin]]
+name = "native_isolation_launcher"
+path = "src/launcher_main.rs"
+test = false
+bench = false
+
+# The unelevated first-hop image (#3499, #3400). It runs as the tier account on `WinSta0` for as long as
+# it takes to create the tier's private window station and desktop and to start the restricted
+# supervisor there, then hands both to the owner and is ended. It is a GUI-subsystem image so it gets no
+# console host, it loads `user32` only after protecting itself, and it stays out of build.rs
+# ELEVATED_BINS. `test = false` for the same reason as the launcher's.
+[[bin]]
+name = "native_isolation_tier_bootstrap"
+path = "src/tier_bootstrap_main.rs"
+test = false
+bench = false
+
+# `Win32_System_StationsAndDesktops` reads the name of the launcher's window station
+# (src/launcher/window_station.rs) and the type, name and descriptor of the tier's private station and
+# desktop the owner adopts. `Win32_System_LibraryLoader` is how the tier bootstrap reaches `user32`
+# after protecting itself, `Win32_System_Diagnostics_ProcessSnapshotting` how it finds its own threads
+# (`Win32_System_Kernel` only declares the snapshot's thread entry),
+# `Win32_System_Diagnostics_Debug` its error mode, and `Wdk_Foundation` the owner's read of the access a
+# duplicated station or desktop handle was granted. `Wdk_System_Threading` is how the owner reads the
+# desktop the suspended supervisor was created on, and how the test role reports its supervisor's.
+[dependencies]
+hex = "0.4.3"
+hmac = "0.13.0"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+sha2 = "0.11.0"
+windows-sys = { version = "0.61.2", features = ["Wdk_Foundation", "Wdk_System_Threading", "Win32_Foundation", "Win32_NetworkManagement_NetManagement", "Win32_NetworkManagement_WindowsFilteringPlatform", "Win32_Security", "Win32_Security_Authentication_Identity", "Win32_Security_Authorization", "Win32_Security_Cryptography", "Win32_Storage_FileSystem", "Win32_System_Diagnostics_Debug", "Win32_System_Diagnostics_ProcessSnapshotting", "Win32_System_IO", "Win32_System_JobObjects", "Win32_System_Kernel", "Win32_System_LibraryLoader", "Win32_System_Memory", "Win32_System_Pipes", "Win32_System_Registry", "Win32_System_RemoteDesktop", "Win32_System_Rpc", "Win32_System_Services", "Win32_System_StationsAndDesktops", "Win32_System_SystemInformation", "Win32_System_Threading", "Win32_UI_Shell"] }
+
+# ToolHelp is needed only so the integration tests can enumerate a role's descendants and prove no
+# orphan survives its Job, the process-information and memory-read APIs only so a test can read which
+# desktop a role was created on, and `Win32_Graphics_Gdi` only because `CreateDesktopW`, which tests use
+# to start the launcher outside `WinSta0`, names `DEVMODEW`. Cargo does not enable dev-dependency
+# features for `cargo build`, so the shipped binaries gain no new surface from this.
+[dev-dependencies]
+windows-sys = { version = "0.61.2", features = ["Wdk_System_Threading", "Win32_Graphics_Gdi", "Win32_System_Diagnostics_Debug", "Win32_System_Diagnostics_ToolHelp"] }
+
+# Compiles resources/*.rc into the version resource that makes the UAC dialog and the file properties
+# say SuperClaw. It needs rc.exe from the Windows SDK, which the MSVC lane already requires.
+[build-dependencies]
+embed-resource = "3.0.7"

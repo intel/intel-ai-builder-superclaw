@@ -1,0 +1,175 @@
+{
+  "models": [
+    {
+      "id": "qwen3.6-35b-a3b",
+      "name": "Qwen3.6 35B A3B (UD-Q4_K_M)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "unsloth/Qwen3.6-35B-A3B-GGUF",
+      "revision": "edc6f12e7bb90602ca1d34faecbec9844137b7fe",
+      "filename": "Qwen3.6-35B-A3B-UD-Q4_K_M.gguf",
+      "size_bytes": 22134528992,
+      "sha256": "ac0e2c1189e055faa36eff361580e79c5bd6f8e76bffb4ce547f167d53e31a61",
+      "default_port": 8080,
+      "default_ctx": 100000,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "draft_url": "https://aibuilder.intel.com/models/Qwen3.6-35B-A3B-DFlash-Q8_0.gguf",
+      "draft_filename": "Qwen3.6-35B-A3B-DFlash-Q8_0.gguf",
+      "draft_size_bytes": 421060800,
+      "draft_sha256": "724ac8a102763e0d896cd49bf558fdf5bfdb146ec9f7097d18b035e4a95eac3f",
+      "extra_args": [
+        "--spec-type", "draft-dflash",
+        "--spec-draft-ngl", "99",
+        "--spec-draft-n-max", "7"
+      ],
+      "requirements": {
+        "min_ram_gb": 64,
+        "min_mem_speed_mts": 6400,
+        "igpu_keywords": ["B370", "B390"]
+      }
+    },
+    {
+      "id": "gemma-4-26b-a4b-it",
+      "name": "Gemma 4 26B A4B IT (UD-Q4_K_M) (Experimental)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "unsloth/gemma-4-26B-A4B-it-GGUF",
+      "revision": "c099eb48e663fd284577b04978a94ffccb261841",
+      "filename": "gemma-4-26B-A4B-it-UD-Q4_K_M.gguf",
+      "size_bytes": 16947541728,
+      "sha256": "f2c28b3dc4776931ac6f879e11f203dec637ea0f14267a86ec8f6165f63f293f",
+      "default_port": 8080,
+      "default_ctx": 100000,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "draft_repo": "unsloth/gemma-4-26B-A4B-it-GGUF",
+      "draft_revision": "c099eb48e663fd284577b04978a94ffccb261841",
+      "draft_filename": "mtp-gemma-4-26B-A4B-it.gguf",
+      "draft_size_bytes": 461766816,
+      "draft_sha256": "6326fb9f5e487aa8dcdd313a091e3c67724cb2a666ec3b7d2895b5b26d93ed1b",
+      "extra_args": [
+        "--split-mode", "none",
+        "--main-gpu", "0",
+        "--spec-type", "draft-mtp",
+        "--spec-draft-ngl", "99",
+        "--spec-draft-n-max", "7"
+      ],
+      "requirements": {
+        "min_ram_gb": 64,
+        "min_mem_speed_mts": 6400,
+        "igpu_keywords": ["B370", "B390"]
+      },
+      "warnings": ["below_default_benchmark_limited_testing"]
+    },
+    {
+      "id": "qwen3.8-27b",
+      "name": "Qwen3.8 27B (Q4_K_M)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "ggml-org/Qwen3.8-27B-GGUF",
+      "revision": "97c30c65c8d9a3e73f9fdfb50f1d1a669e9a2827",
+      "filename": "Qwen3.8-27B-Q4_K_M.gguf",
+      "size_bytes": 18973870432,
+      "sha256": "31629f53165ab6a7dad8c9847dcfd1fdf55829dac1e6e748f4a68581b0033d34",
+      "default_port": 8080,
+      "default_ctx": 262144,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "draft_repo": "z-lab/Qwen3.8-27B-DFlash2-GGUF",
+      "draft_revision": "343c7b53e38446de81efd6a25725c7f0fb26728e",
+      "draft_filename": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf",
+      "draft_size_bytes": 1143006816,
+      "draft_sha256": "1a25c56858e1ebe93f2718ac1d49d1151f9323325c1bbfd6209370f4db131ebd",
+      "extra_args": [
+        "--split-mode", "none",
+        "--main-gpu", "0",
+        "--spec-type", "draft-dflash",
+        "--spec-draft-ngl", "99",
+        "--spec-draft-n-max", "7",
+        "--cache-type-k", "q8_0",
+        "--cache-type-v", "q8_0"
+      ],
+      "requirements": {
+        "min_ram_gb": 32,
+        "min_mem_speed_mts": 4800,
+        "igpu_keywords": ["B70"]
+      }
+    },
+    {
+      "id": "qwen3.5-4b",
+      "name": "Qwen3.5 4B MTP (Q4_K_M)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "unsloth/Qwen3.5-4B-MTP-GGUF",
+      "revision": "5001b2dc2bd94eff32ab246316550382d6a75041",
+      "filename": "Qwen3.5-4B-Q4_K_M.gguf",
+      "size_bytes": 2834975040,
+      "sha256": "3874209241c9a397e2f62cd3f70f80fd2dfbf0dfccb6838416bdb48a714e8630",
+      "default_port": 8080,
+      "default_ctx": 65536,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "extra_args": [
+        "--spec-type", "draft-mtp",
+        "--spec-draft-n-max", "3"
+      ],
+      "requirements": {
+        "min_ram_gb": 32,
+        "min_mem_speed_mts": 6400,
+        "igpu_keywords": ["B370", "B390"]
+      }
+    },
+    {
+      "id": "gemma4-e4b-it",
+      "name": "Gemma 4 E4B IT (Q4_K_M) (Experimental)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "unsloth/gemma-4-E4B-it-GGUF",
+      "revision": "bfc15c382204943c3a8fff0c750b94ae2364d7a3",
+      "filename": "gemma-4-E4B-it-Q4_K_M.gguf",
+      "size_bytes": 4977171584,
+      "sha256": "85a896a047553e842f25297ee5b031d64ff30147d9c4af17b1e4b394cd1fab87",
+      "default_port": 8080,
+      "default_ctx": 65536,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "draft_repo": "unsloth/gemma-4-E4B-it-GGUF",
+      "draft_revision": "bfc15c382204943c3a8fff0c750b94ae2364d7a3",
+      "draft_filename": "mtp-gemma-4-E4B-it.gguf",
+      "draft_size_bytes": 98653248,
+      "draft_sha256": "b6a723115efa510d3b3215db1e26790dae84cd08c2134a764f3d194f1f0c3376",
+      "extra_args": [
+        "--spec-type", "draft-mtp",
+        "--spec-draft-ngl", "99",
+        "--spec-draft-n-max", "3"
+      ],
+      "requirements": {
+        "min_ram_gb": 32,
+        "min_mem_speed_mts": 6400,
+        "igpu_keywords": ["B370", "B390"]
+      },
+      "warnings": ["below_default_benchmark_limited_testing"]
+    },
+    {
+      "id": "KaLM-embedding-v2.5",
+      "name": "KaLM Embedding Multilingual Mini Instruct v2.5 (Q8_0)",
+      "role": "embedding",
+      "source": "huggingface",
+      "repo": "Aashraf995/KaLM-embedding-multilingual-mini-instruct-v2.5-Q8_0-GGUF",
+      "revision": "74e556f75004385b9dc1dbba3bd5038588635f93",
+      "filename": "kalm-embedding-multilingual-mini-instruct-v2.5-q8_0.gguf",
+      "size_bytes": 531066976,
+      "sha256": "4a55b53bea655f3b91d96a4c87b7baee3d5b4b4483767774b1ee4c9bd7420458",
+      "default_port": 8080,
+      "default_ctx": 8192,
+      "default_ngl": 30,
+      "embedding_dimension": 896,
+      "extra_args": [
+        "--split-mode", "none",
+        "--main-gpu", "0",
+        "-ub", "512", "-b", "512"
+      ]
+    }
+  ]
+}

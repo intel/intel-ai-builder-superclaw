@@ -1,0 +1,1088 @@
+{
+  "_comment": [
+    "Golden table for the isolation report cross-field rules, read by both",
+    "shared/contracts/src/__tests__/isolation-reporting.test.ts and",
+    "host/sandbox_manager/tests/unit/test_native_isolation_report_rules.py.",
+    "The rules necessarily exist twice, once as the Zod refinement in",
+    "shared/contracts/src/isolation-reporting.ts and once as the hand-authored Python",
+    "module sandbox_manager.native_isolation.isolation_report_rules. This table is what",
+    "keeps them identical: each case is applied as a shallow override of `base`, and both",
+    "suites assert that the set of refusal reason codes equals `expected_reasons` exactly.",
+    "`expected_reasons` is compared as a sorted set, so ordering is not part of the",
+    "contract but membership is. An empty list means the report must be accepted.",
+    "Reason codes are the closed enumeration in isolation-reporting.ts, generated into",
+    "Python as contracts.isolation_report_refusal.Reason. A test on each side asserts every",
+    "member of that enumeration is produced by some case here.",
+    "When a field's own shape is refused, the rules that read that field are skipped, so a",
+    "broken field yields the one reason that names it rather than a second reason derived",
+    "from a value nobody should read. Both sides skip the same rule for the same input.",
+    "`base` is deliberately the v2.0 release shape: level `user_open_egress`, an",
+    "applied file policy version, an egress version label that says `permissive` out loud,",
+    "and a passing attestation covering identity and filesystem only. It is accepted, and",
+    "every refusal below is one edit away from it."
+  ],
+  "base": {
+    "contract_version": 3,
+    "backend_mode": "native",
+    "isolation_level": "user_open_egress",
+    "isolation_policy_version": 1,
+    "isolation_egress_policy_version": {
+      "version_label": "v9/permissive",
+      "boundary_state": "declared_permissive_no_rules",
+      "enforced_tiers": [],
+      "readback": { "verdict": "not_read", "read_at": null }
+    },
+    "isolation_warnings": [],
+    "isolation_token_shape": "write_restricted_logon",
+    "isolation_attestation": {
+      "verdict": "pass",
+      "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+      "last_pass_at": "2026-09-01T00:00:00Z",
+      "covered_policy_categories": ["identity", "filesystem"]
+    },
+    "isolation_workspace_root_count": 2,
+    "isolation_workspace_root_classes": ["managed_default", "user_granted_rw"],
+    "isolation_tier_evidence": [
+      {
+        "tier": "bootstrap",
+        "identity": "owner_kernel_verified",
+        "acl_readback": "matches_shipped_descriptor",
+        "job": "tier_reported_verified",
+        "observed_at": "2026-09-01T00:00:00Z"
+      },
+      {
+        "tier": "file_tool",
+        "identity": "owner_kernel_verified",
+        "acl_readback": "matches_shipped_descriptor",
+        "job": "tier_reported_verified",
+        "observed_at": "2026-09-01T00:00:00Z"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "an_unknown_egress_field_hides_its_local_mismatch",
+      "note": "An unreadable nested field cannot produce its field-local mismatch diagnostic after a Zod upgrade.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v4/enforcing",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": [],
+          "readback": { "verdict": "not_read", "read_at": null },
+          "surprise": true
+        }
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "an_unknown_field_aborts_cross_field_level_rules",
+      "note": "Zod upgrades must preserve the shared unknown-field shape-fatal policy, even when the requested level would also fail cross-field rules.",
+      "overrides": { "surprise": true, "isolation_level": "user" },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "an_invalid_version_hides_an_oversized_duplicate_tier_array",
+      "note": "The bounded duplicate diagnostic must not run when a shape-fatal contract version prevents cross-field validation.",
+      "overrides": {
+        "contract_version": 999,
+        "isolation_tier_evidence": [
+          {"tier":"bootstrap","identity":"owner_kernel_verified","acl_readback":"matches_shipped_descriptor","job":"tier_reported_verified","observed_at":"2026-09-01T00:00:00Z"},
+          {"tier":"bootstrap","identity":"owner_kernel_verified","acl_readback":"matches_shipped_descriptor","job":"tier_reported_verified","observed_at":"2026-09-01T00:00:00Z"},
+          {"tier":"bootstrap","identity":"owner_kernel_verified","acl_readback":"matches_shipped_descriptor","job":"tier_reported_verified","observed_at":"2026-09-01T00:00:00Z"},
+          {"tier":"bootstrap","identity":"owner_kernel_verified","acl_readback":"matches_shipped_descriptor","job":"tier_reported_verified","observed_at":"2026-09-01T00:00:00Z"}
+        ]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "the_first_release_shape_is_accepted",
+      "note": "The gate target confirmed 2026-09-01: identity, filesystem and Job evidence, a permissive egress version reported as a version, and an attestation that covered exactly what that level is defined over.",
+      "overrides": {},
+      "expected_reasons": []
+    },
+    {
+      "name": "user_over_a_permissive_egress_version_is_refused",
+      "note": "The rule the whole slice exists for. Nothing else about the report changes: one word in `isolation_level`, and the product would be claiming a closed outbound boundary over the empty permissive rule set C3 ships.",
+      "overrides": { "isolation_level": "user" },
+      "expected_reasons": [
+        "level_requires_closed_egress_boundary",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "user_with_egress_coverage_over_a_permissive_boundary_is_refused",
+      "note": "The same edit with the coverage list filled in to satisfy the level, which is what a producer trying to make the first refusal go away would reach for. The coverage claim is then refused in its own right, because probes over a boundary that is not closed attest nothing.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": [
+        "level_requires_closed_egress_boundary",
+        "egress_coverage_claimed_without_closed_boundary"
+      ]
+    },
+    {
+      "name": "user_with_a_closed_boundary_and_full_coverage_is_accepted",
+      "note": "A shape test, not a claim: the values here are fabricated, `primary_enforcing` is reached by no shipped descriptor in this repository (C3: only the enforcing reference, which ships as a fixture), and nothing in this branch applies policy. It is here so `user` is a reachable member of the enum under evidence rather than a decorative one, and so the refusals above are about the missing evidence rather than about the word.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/enforcing",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        },
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "user_over_a_boundary_nobody_read_back_is_refused",
+      "note": "Design 2026-10-01 section 6.8: the egress evidence for `user` is the unelevated WFP readback plus the negative probes. A descriptor that says `primary_enforcing` is policy intent; without a readback that matched the plan, nothing shows the filters are installed, so the boundary does not read as closed.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/enforcing",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "not_read", "read_at": null }
+        },
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": [
+        "level_requires_closed_egress_boundary",
+        "egress_coverage_claimed_without_closed_boundary"
+      ]
+    },
+    {
+      "name": "user_over_a_drifted_boundary_is_refused",
+      "note": "Invariant 10: drift downgrades the report. The drift is warned about, so the warning rules are satisfied, and the level still falls because a boundary whose readback disagrees with the plan is not closed.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/enforcing",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "drifted", "read_at": "2026-09-01T00:00:00Z" }
+        },
+        "isolation_warnings": [{ "code": "egress_policy_drifted" }],
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": [
+        "level_requires_closed_egress_boundary",
+        "egress_coverage_claimed_without_closed_boundary"
+      ]
+    },
+    {
+      "name": "partial_coverage_names_the_tiers_it_closes",
+      "note": "Revised sandbox design section 6.1, M1 (N2): bootstrap and file_tool are blocked, the network is partly covered, the level stays `user_open_egress`, and the report says which tiers are covered.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v2/enforcing",
+          "boundary_state": "primary_rules_do_not_cover_every_tier",
+          "enforced_tiers": ["bootstrap", "file_tool"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "partial_coverage_that_names_no_tier_is_refused",
+      "note": "A partly covering boundary covers somebody. An empty list next to it is a report that says enforcement happened and cannot say where.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v2/enforcing",
+          "boundary_state": "primary_rules_do_not_cover_every_tier",
+          "enforced_tiers": [],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_enforced_tiers_disagree_with_boundary_state"]
+    },
+    {
+      "name": "a_closed_boundary_that_leaves_a_tier_out_is_refused",
+      "note": "`primary_enforcing` means every tier, so a list one short of every tier came from a different boundary than the state did.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v2/enforcing",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_enforced_tiers_disagree_with_boundary_state"]
+    },
+    {
+      "name": "a_closed_boundary_that_leaves_channel_out_is_refused",
+      "note": "Every tier includes channel once it exists: a closed boundary over the three earlier tiers leaves the channel account's traffic unblocked.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v5/enforcing",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_enforced_tiers_disagree_with_boundary_state"]
+    },
+    {
+      "name": "enforced_tiers_over_a_permissive_boundary_are_refused",
+      "note": "Nothing is blocked under a permissive posture, so naming a tier as enforced there is the overclaim this field exists to make visible.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": ["file_tool"],
+          "readback": { "verdict": "not_read", "read_at": null }
+        }
+      },
+      "expected_reasons": ["egress_enforced_tiers_disagree_with_boundary_state"]
+    },
+    {
+      "name": "a_tier_named_twice_is_refused",
+      "note": "The list is a set; a repeated tier is a producer that counted something twice.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v2/enforcing",
+          "boundary_state": "primary_rules_do_not_cover_every_tier",
+          "enforced_tiers": ["file_tool", "file_tool"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_enforced_tiers_disagree_with_boundary_state"]
+    },
+    {
+      "name": "a_readback_verdict_without_its_instant_is_refused",
+      "note": "A readback that ran says when; one that did not run has no instant to give.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": [],
+          "readback": { "verdict": "matches_plan", "read_at": null }
+        }
+      },
+      "expected_reasons": ["egress_readback_instant_disagrees_with_verdict"]
+    },
+    {
+      "name": "an_instant_for_a_readback_that_did_not_run_is_refused",
+      "note": "The other direction of the same pairing: an instant is evidence that a readback ran, so `not_read` cannot carry one.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": [],
+          "readback": { "verdict": "not_read", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_readback_instant_disagrees_with_verdict"]
+    },
+    {
+      "name": "a_drifted_readback_without_its_warning_is_refused",
+      "note": "Drift at `user_open_egress` does not move the level, but it is still owed a warning, the same way a failing attestation is.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v2/enforcing",
+          "boundary_state": "primary_rules_do_not_cover_every_tier",
+          "enforced_tiers": ["bootstrap", "file_tool"],
+          "readback": { "verdict": "drifted", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_drift_requires_warning"]
+    },
+    {
+      "name": "a_drift_warning_without_a_drifted_readback_is_refused",
+      "note": "A warning that pairs with a value is checked against it, as the attestation and hardening warnings are.",
+      "overrides": {
+        "isolation_warnings": [{ "code": "egress_policy_drifted" }]
+      },
+      "expected_reasons": ["egress_drift_warning_disagrees_with_readback"]
+    },
+    {
+      "name": "a_failing_attestation_cannot_hold_a_gated_level",
+      "note": "Section 6.5: a failed pre-launch verification blocks `user` and refuses launch. The missing coverage is reported as well, because a verdict that is not `pass` covers nothing.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "fail",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": []
+        },
+        "isolation_warnings": [
+          { "code": "policy_attestation_not_passing", "verdict": "fail" }
+        ]
+      },
+      "expected_reasons": [
+        "level_requires_attestation_pass",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "stale_is_not_a_weak_pass",
+      "note": "Section 6.3 says so in words; this is the rule. The coverage list left over from the last pass is refused too, so an expired result cannot go on describing what it once covered.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "stale",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem"]
+        },
+        "isolation_warnings": [
+          { "code": "policy_attestation_not_passing", "verdict": "stale" }
+        ]
+      },
+      "expected_reasons": [
+        "level_requires_attestation_pass",
+        "attestation_coverage_claimed_without_pass"
+      ]
+    },
+    {
+      "name": "an_attestation_warning_that_names_the_other_verdict_is_refused",
+      "note": "The warning is the only part of the report a consumer reads as prose, so it is the part where a wrong value is least likely to be noticed. It carries the verdict and is checked against it.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "fail",
+          "probe_set_id": null,
+          "last_pass_at": null,
+          "covered_policy_categories": []
+        },
+        "isolation_warnings": [
+          { "code": "policy_attestation_not_passing", "verdict": "stale" }
+        ]
+      },
+      "expected_reasons": [
+        "attestation_warning_disagrees_with_verdict",
+        "level_requires_attestation_pass",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "a_non_passing_attestation_without_a_warning_is_refused",
+      "note": "Section 6.3 requires the warning entry for `fail` and `stale` alike. Without this rule a periodic verification could fail and the only visible change would be one enum value nothing surfaces.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "fail",
+          "probe_set_id": null,
+          "last_pass_at": null,
+          "covered_policy_categories": []
+        }
+      },
+      "expected_reasons": [
+        "attestation_not_passing_requires_warning",
+        "level_requires_attestation_pass",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "an_unmeasured_token_without_its_warning_is_refused",
+      "note": "Corollary 1 of section 1.2: the two weakest shapes are reportable at a gated level, and each owes a warning naming what is missing or unproven.",
+      "overrides": { "isolation_token_shape": "unknown" },
+      "expected_reasons": ["token_shape_requires_hardening_warning"]
+    },
+    {
+      "name": "a_hardening_warning_that_names_the_other_shape_is_refused",
+      "note": "Otherwise a report whose token could not be dumped at all discharges its obligation with a warning about a token that merely lacks a restricting SID.",
+      "overrides": {
+        "isolation_token_shape": "unknown",
+        "isolation_warnings": [
+          { "code": "token_hardening_unverified", "token_shape": "unrestricted_hardened" }
+        ]
+      },
+      "expected_reasons": ["hardening_warning_disagrees_with_token_shape"]
+    },
+    {
+      "name": "a_warned_unhardened_token_does_not_gate_the_level",
+      "note": "Section 6.3, stated as a property rather than as a comment: no value of this column decides whether a gated level is reached. Identity, Job, ACL, egress policy, tier policy and the section 6.5 attestation decide it.",
+      "overrides": {
+        "isolation_token_shape": "unrestricted_hardened",
+        "isolation_warnings": [
+          { "code": "token_hardening_unverified", "token_shape": "unrestricted_hardened" }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "a_hardening_warning_about_a_shape_that_owes_none_is_refused",
+      "note": "The pairing is checked in both directions. A stale warning left behind after the token got stronger would otherwise sit in the report describing a shape nothing reports.",
+      "overrides": {
+        "isolation_token_shape": "restricted_all_access",
+        "isolation_warnings": [
+          { "code": "token_hardening_unverified", "token_shape": "unknown" }
+        ]
+      },
+      "expected_reasons": ["hardening_warning_disagrees_with_token_shape"]
+    },
+    {
+      "name": "a_pass_without_a_probe_set_is_refused",
+      "note": "A pass that cannot say which probe set produced it is not evidence, and section 6.5 derives the probe set from the effective root set, so a missing one also means nothing invalidates the result when that set changes.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": null,
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": ["attestation_pass_without_probe_evidence"]
+    },
+    {
+      "name": "a_pass_without_an_instant_is_refused",
+      "note": "Section 6.3's validity window is measured from this instant. Without it the pass has no expiry, which is exactly the indefinitely fresh `pass` the transitions exist to prevent.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": null,
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": ["attestation_pass_without_probe_evidence"]
+    },
+    {
+      "name": "a_pass_that_covered_nothing_is_refused",
+      "note": "The I7 row requires the reported result to say which policy categories it covered. A pass over an empty list is the shape that would let a first release read as a full one.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": []
+        }
+      },
+      "expected_reasons": [
+        "attestation_pass_without_probe_evidence",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "a_probe_set_id_that_is_a_path_is_refused",
+      "note": "The no-path rule of section 6.3, tested on the one field on this surface where something readable could plausibly be written. Every other string field is a closed enum or carries its own pattern, and a test asserts that over the whole schema.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "C:\\Users\\owner\\SuperClawProjects",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": ["probe_set_id_shape_invalid"]
+    },
+    {
+      "name": "a_bare_policy_version_number_is_not_a_version_label",
+      "note": "The 2026-09-01 addition to the C4a row: the shipped descriptor and the built-in enforcing reference are both policy_version 1 and differ only in posture, so the bare integer cannot tell them apart and is not an accepted spelling.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "1",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": [],
+          "readback": { "verdict": "not_read", "read_at": null }
+        }
+      },
+      "expected_reasons": ["egress_version_label_shape_invalid"]
+    },
+    {
+      "name": "an_enforcing_label_over_an_open_boundary_is_refused",
+      "note": "The two halves of this field have to come from the same descriptor. This is the direction that overstates the release.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/enforcing",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": [],
+          "readback": { "verdict": "not_read", "read_at": null }
+        }
+      },
+      "expected_reasons": ["egress_version_label_disagrees_with_boundary_state"]
+    },
+    {
+      "name": "a_permissive_label_over_a_closed_boundary_is_refused",
+      "note": "The other direction, and the one that matters more: `boundary_state` is what the level rule reads, so a boundary state pasted next to a permissive label is the one word edit that makes an open egress policy read as closed.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": ["egress_version_label_disagrees_with_boundary_state"]
+    },
+    {
+      "name": "a_closed_boundary_state_next_to_a_permissive_label_buys_nothing",
+      "note": "The disagreement is refused and the pair also does not read as closed, so `user` still fails for want of a closed boundary and the egress coverage claim still fails too. Refusing the pair without this would leave the safe reading available to exactly the edit that produced it.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        },
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": [
+        "egress_version_label_disagrees_with_boundary_state",
+        "level_requires_closed_egress_boundary",
+        "egress_coverage_claimed_without_closed_boundary"
+      ]
+    },
+    {
+      "name": "a_gated_level_without_the_file_policy_version_is_refused",
+      "note": "Section 6.3 reports the applied file policy version and the applied egress policy version as separate fields. A level that claims applied file policy has to name its version.",
+      "overrides": { "isolation_policy_version": null },
+      "expected_reasons": ["level_requires_file_policy_version"]
+    },
+    {
+      "name": "a_gated_level_without_the_egress_policy_version_is_refused",
+      "note": "An empty permissive rule set is reported as a version, never as a missing field. This is the rule that makes that true rather than conventional.",
+      "overrides": { "isolation_egress_policy_version": null },
+      "expected_reasons": ["level_requires_egress_policy_version"]
+    },
+    {
+      "name": "coverage_short_of_the_level_definition_is_refused",
+      "note": "`user_open_egress` is section 1.4's `user` minus per-SID per-tier default-deny egress and minus the egress half of the attestation. The filesystem half is not one of the removals.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity"]
+        }
+      },
+      "expected_reasons": ["attestation_coverage_missing_policy_category"]
+    },
+    {
+      "name": "egress_coverage_over_an_open_boundary_is_refused_at_any_level",
+      "note": "The first release runs no network probes, and the honest report of that is a coverage list without `egress`. This rule holds whatever the level says, so it also catches the report that would arrive if network probes were added before the boundary was.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem", "egress"]
+        }
+      },
+      "expected_reasons": ["egress_coverage_claimed_without_closed_boundary"]
+    },
+    {
+      "name": "filesystem_coverage_over_an_empty_root_set_is_refused",
+      "note": "Section 6.5 derives the filesystem probes from the effective root set: a placeholder read that must fail, a write inside a declared root that must succeed, a write outside every declared root that must fail. Over zero roots there is nothing for any of them to have run against.",
+      "overrides": {
+        "isolation_workspace_root_count": 0,
+        "isolation_workspace_root_classes": []
+      },
+      "expected_reasons": [
+        "filesystem_coverage_claimed_without_workspace_root_evidence"
+      ]
+    },
+    {
+      "name": "a_class_list_shorter_than_the_count_is_refused",
+      "note": "The count is how many members the policy applied to and the class list is one class per member, so a length mismatch means one of the two is wrong and a reader cannot tell which.",
+      "overrides": { "isolation_workspace_root_classes": ["managed_default"] },
+      "expected_reasons": ["workspace_root_classes_disagree_with_count"]
+    },
+    {
+      "name": "a_count_above_the_root_set_bound_is_refused",
+      "note": "The bound is the section 4.1.1 maximum, imported from the workspace root vocabulary rather than restated. Only the shape reason is reported: the class list rule reads the count, and a count that is itself refused is not a number to compare anything against.",
+      "overrides": { "isolation_workspace_root_count": 9 },
+      "expected_reasons": ["workspace_root_count_above_bound"]
+    },
+    {
+      "name": "a_degraded_root_does_not_prevent_a_gated_level",
+      "note": "Section 6.3 says so explicitly: the boundary over the remaining members is unaffected, and refusing a grant is the correct fail-closed outcome rather than a policy failure. A member whose descriptor did not fully apply is a section 6.5 `fail` instead, which the attestation rules already refuse a level for.",
+      "overrides": {
+        "isolation_warnings": [
+          {
+            "code": "workspace_root_degraded",
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "reason": "volume_verdict_removable"
+          }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "no_level_established_without_a_reason_is_refused",
+      "note": "Which level and why not are two questions. The enum answers the first with a value that claims nothing; the second is a warning with a typed reason, and a report that gives neither is the silent fail-closed section 6.2 forbids.",
+      "overrides": { "isolation_level": "not_established" },
+      "expected_reasons": ["level_not_established_requires_warning"]
+    },
+    {
+      "name": "a_not_established_warning_beside_a_level_is_refused",
+      "note": "The pairing again in both directions. A leftover warning from the run that established nothing would otherwise sit inside a report that establishes a level. The leftover is refused twice, because a report that carries both policy versions also contradicts the reason the warning blames, and both rules are part of what makes a leftover warning unusable.",
+      "overrides": {
+        "isolation_level": "restricted",
+        "isolation_warnings": [
+          {
+            "code": "isolation_level_not_established",
+            "reason": "native_isolation_not_applied"
+          }
+        ]
+      },
+      "expected_reasons": [
+        "not_established_warning_disagrees_with_level",
+        "not_established_reason_disagrees_with_report"
+      ]
+    },
+    {
+      "name": "a_development_level_is_not_gated_by_the_evidence_fields",
+      "note": "Section 6.2 defines `restricted` as a restricted token derived from the developer's own user plus a Job, claiming neither protected-read confidentiality nor SID-isolated egress, so there is no claim here for the evidence fields to have to support. That an installed release may not launch at it is a launch gate, `ISOLATION_INSTALLED_RELEASE_LEVELS`, and not a property of one report.",
+      "overrides": { "isolation_level": "restricted" },
+      "expected_reasons": []
+    },
+    {
+      "name": "an_unparseable_instant_is_a_shape_refusal",
+      "note": "The generic reason exists so a malformed report has a usable verdict rather than falling through as a rule violation it is not. The spelling is the RFC 3339 UTC one the native path contract uses for `granted_at`.",
+      "overrides": {
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4",
+          "last_pass_at": "yesterday",
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_reason_for_no_level_that_the_report_does_not_show_is_refused",
+      "note": "The reason is the one part of the fail-closed path a producer picks by hand. Unchecked, a report with a passing attestation could blame a failed one, and an operator reading section 6.3 would look for probes that did not fail.",
+      "overrides": {
+        "isolation_level": "not_established",
+        "isolation_warnings": [
+          {
+            "code": "isolation_level_not_established",
+            "reason": "attestation_not_passing"
+          }
+        ]
+      },
+      "expected_reasons": ["not_established_reason_disagrees_with_report"]
+    },
+    {
+      "name": "a_count_above_the_bound_still_gets_the_cross_field_pass",
+      "note": "A bound failure is one of the kinds both validators continue into the cross-field rules after, so a report that is malformed at one field and unsupported at another has to be refused for both on both surfaces. Without a case combining the two, the published `cross_field_rules_continue_after` policy would be asserted only by the implementation that wrote it.",
+      "overrides": {
+        "isolation_workspace_root_count": 9,
+        "isolation_policy_version": null
+      },
+      "expected_reasons": [
+        "workspace_root_count_above_bound",
+        "level_requires_file_policy_version"
+      ]
+    },
+    {
+      "name": "a_malformed_probe_set_id_still_gets_the_cross_field_pass",
+      "note": "The same continuation, for a pattern failure rather than a bound failure, and with a level claim behind it that no rule about the identifier would have caught.",
+      "overrides": {
+        "isolation_level": "user",
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_short",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": [
+        "probe_set_id_shape_invalid",
+        "level_requires_closed_egress_boundary",
+        "attestation_coverage_missing_policy_category"
+      ]
+    },
+    {
+      "name": "a_policy_version_that_is_a_string_is_not_a_policy_version",
+      "note": "Zod refuses `\"1\"` outright and the generated Pydantic model reads it as the integer 1, because the generated models carry `extra=\"forbid\"` and not `strict=True`. Left alone that is an acceptance divergence: a level's version requirement would be satisfied on one surface by evidence the other rejects. The Python side compares the validated model against the payload to catch it, and this case is what holds the two to one answer.",
+      "overrides": { "isolation_policy_version": "1" },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_root_count_that_is_a_string_is_not_a_root_count",
+      "note": "The same coercion on a bounded field, and one whose coerced value would have agreed with the class list. A tripwire that only covered the fields a current rule reads would be a tripwire the next field escapes.",
+      "overrides": { "isolation_workspace_root_count": "2" },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_policy_version_that_is_a_boolean_is_not_a_policy_version",
+      "note": "The coercion the string cases do not cover. Python reads `true` as the integer 1, and a tripwire that compares the validated model against the payload with `!=` cannot see it, because `True == 1` in Python. So a report claiming policy version `true` would satisfy a level's version requirement on the Python surface and be refused on the other one.",
+      "overrides": { "isolation_policy_version": true },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_root_count_that_is_a_boolean_is_not_a_root_count",
+      "note": "The same bool coercion on the bounded field, where the coerced 1 would also have disagreed with the two-member class list and so would have been refused for the wrong reason.",
+      "overrides": { "isolation_workspace_root_count": true },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_malformed_root_id_still_gets_the_cross_field_pass",
+      "note": "A pattern failure inside an array of a discriminated union. Zod picks the member the discriminator names and reports one pattern failure, which is a kind the cross-field rules continue after. The generated Pydantic union is untagged, so Pydantic also reports a literal failure on every other member's discriminator - a kind that aborts - and without dropping those branches this report would refuse for one reason there and two here.",
+      "overrides": {
+        "isolation_policy_version": null,
+        "isolation_warnings": [
+          {
+            "code": "workspace_root_degraded",
+            "root_id": "wsr_not_a_digest",
+            "reason": "volume_verdict_removable"
+          }
+        ]
+      },
+      "expected_reasons": ["report_shape_invalid", "level_requires_file_policy_version"]
+    },
+    {
+      "name": "a_warning_with_an_unknown_code_aborts_the_cross_field_pass",
+      "note": "The other side of the same field: when no member's discriminator matches, neither validator knows which member was meant, and both abort rather than reporting rules read off a warning nobody can classify. The missing file policy version is deliberately in this case too, so an implementation that kept going would be visible here.",
+      "overrides": {
+        "isolation_policy_version": null,
+        "isolation_warnings": [{ "code": "isolation_level_degraded" }]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "nothing_applied_beside_an_applied_policy_version_is_refused",
+      "note": "`native_isolation_not_applied` is the strongest of the three reasons, and a report that carries a policy version contradicts it within one document. Without this, the reason an operator reads as `no policy has been applied at all` would be backed by a report that says which policy version applied.",
+      "overrides": {
+        "isolation_level": "not_established",
+        "isolation_warnings": [
+          {
+            "code": "isolation_level_not_established",
+            "reason": "native_isolation_not_applied"
+          }
+        ]
+      },
+      "expected_reasons": ["not_established_reason_disagrees_with_report"]
+    },
+    {
+      "name": "a_native_report_may_say_the_upstream_proxy_cannot_be_chained",
+      "note": "The egress proxy keeps running and refuses every tunnel when the host's proxy is one it cannot chain to; the warning says why the island's general egress fails, and which of the five kinds the value was.",
+      "overrides": {
+        "isolation_warnings": [{ "code": "egress_upstream_unsupported", "kind": "credentials" }]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "an_upstream_warning_names_one_of_the_five_kinds",
+      "note": "The kinds are a closed vocabulary shared with the classifier that produces them.",
+      "overrides": {
+        "isolation_warnings": [{ "code": "egress_upstream_unsupported", "kind": "socks" }]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "an_upstream_warning_carries_its_kind",
+      "note": "Without the kind the warning cannot say what to fix.",
+      "overrides": {
+        "isolation_warnings": [{ "code": "egress_upstream_unsupported" }]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_release_report_may_say_host_mcp_tools_run_outside_every_tier",
+      "note": "The host MCP gateway runs servers and an Edge as the signed-in user. No tier's isolation changed, so the level stands; the warning says what runs outside the boundary.",
+      "overrides": {
+        "isolation_warnings": [
+          { "code": "host_mcp_execution_enabled", "host_server_count": 2, "host_browser_active": true }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "a_host_mcp_warning_carries_both_counts",
+      "note": "Without the browser flag the warning cannot say whether the host Edge is running.",
+      "overrides": {
+        "isolation_warnings": [{ "code": "host_mcp_execution_enabled", "host_server_count": 1 }]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_host_mcp_warning_counts_from_zero",
+      "note": "A negative server count is not a count.",
+      "overrides": {
+        "isolation_warnings": [
+          { "code": "host_mcp_execution_enabled", "host_server_count": -1, "host_browser_active": false }
+        ]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_disagreeing_egress_pair_is_named_beside_a_failure_elsewhere",
+      "note": "The pair is refused by the egress version's own schema rather than by the report's refinement, so it is named whenever that field parsed - here beside a token shape outside the vocabulary, which aborts the cross-field pass on both surfaces. This is the one asymmetry `field_local_refusal_reasons` publishes, and without this case the two validators disagree about the reason set of a report both of them refuse.",
+      "overrides": {
+        "isolation_token_shape": "hardened",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "primary_enforcing",
+          "enforced_tiers": ["bootstrap", "file_tool", "network_connector", "channel"],
+          "readback": { "verdict": "matches_plan", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": [
+        "egress_version_label_disagrees_with_boundary_state",
+        "report_shape_invalid"
+      ]
+    },
+    {
+      "name": "an_egress_coverage_disagreement_is_named_beside_a_failure_elsewhere",
+      "note": "The enforced tier list and the readback instant are checked by the egress version's own schema too, so they are field-local in the same sense as the label pair and are named whenever that field parsed.",
+      "overrides": {
+        "isolation_token_shape": "hardened",
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": ["file_tool"],
+          "readback": { "verdict": "not_read", "read_at": "2026-09-01T00:00:00Z" }
+        }
+      },
+      "expected_reasons": [
+        "egress_enforced_tiers_disagree_with_boundary_state",
+        "egress_readback_instant_disagrees_with_verdict",
+        "report_shape_invalid"
+      ]
+    },
+    {
+      "name": "a_malformed_readback_instant_stops_the_egress_field_rules",
+      "note": "A pattern failure inside the egress version means that field did not parse, so neither side runs its field-local rules over it - the same as for a malformed label - and the tier list that disagrees here is not named. The pattern failure is one the cross-field pass runs after, and nothing at this level reads the instant.",
+      "overrides": {
+        "isolation_egress_policy_version": {
+          "version_label": "v1/permissive",
+          "boundary_state": "declared_permissive_no_rules",
+          "enforced_tiers": ["file_tool"],
+          "readback": { "verdict": "matches_plan", "read_at": "yesterday" }
+        }
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_policy_version_pydantic_reads_as_zero_stops_the_cross_field_pass",
+      "note": "`false` is not an integer on either surface, but Pydantic's lax mode reads it as 0 and then refuses it for being below the bound - a kind the cross-field rules run after. The level here establishes nothing and carries no warning, so a cross-field pass that ran would add `level_not_established_requires_warning` to a report Zod refuses for its shape alone.",
+      "overrides": { "isolation_policy_version": false, "isolation_level": "not_established" },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "a_root_count_pydantic_reads_from_a_string_stops_the_cross_field_pass",
+      "note": "The other direction of the same divergence: `\"2\"` is a wrong type that Pydantic accepts, so the report fails at the probe set id instead and the coerced count is never named. A report refused for its shape has to be refused for every field whose shape is wrong, or the field nobody named is the one a later rule reads.",
+      "overrides": {
+        "isolation_workspace_root_count": "2",
+        "isolation_attestation": {
+          "verdict": "pass",
+          "probe_set_id": "pst_short",
+          "last_pass_at": "2026-09-01T00:00:00Z",
+          "covered_policy_categories": ["identity", "filesystem"]
+        }
+      },
+      "expected_reasons": ["probe_set_id_shape_invalid", "report_shape_invalid"]
+    },
+    {
+      "name": "identity_and_filesystem_coverage_without_tier_evidence_are_refused",
+      "note": "C4a's first recorded gap: identity coverage used to rest on the attestation's word alone. With no launch evidence there is nothing behind identity coverage, nothing behind the ACL half of filesystem coverage, and no Job evidence for a level that owes it.",
+      "overrides": { "isolation_tier_evidence": [] },
+      "expected_reasons": [
+        "filesystem_coverage_claimed_without_acl_readback",
+        "identity_coverage_claimed_without_tier_identity_evidence",
+        "level_requires_tier_job_evidence"
+      ]
+    },
+    {
+      "name": "launch_evidence_without_the_file_tool_tier_is_refused",
+      "note": "Bootstrap and file_tool run in every Product Profile and hold the agent's files, so evidence that leaves one of them out backs none of the three claims.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": [
+        "filesystem_coverage_claimed_without_acl_readback",
+        "identity_coverage_claimed_without_tier_identity_evidence",
+        "level_requires_tier_job_evidence"
+      ]
+    },
+    {
+      "name": "identity_coverage_over_a_tier_the_launcher_did_not_verify_is_refused",
+      "note": "Only the launcher's own reading of the runner's token, matched by the Sandbox Manager to the tier's account, backs identity. A tier's word about who it runs as does not.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "not_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["identity_coverage_claimed_without_tier_identity_evidence"]
+    },
+    {
+      "name": "filesystem_coverage_over_a_readback_that_drifted_is_refused",
+      "note": "The probes show a tier is refused; the readback shows its roots carry the intended DACLs. Filesystem coverage needs both, so a drifted root takes it away whatever the probes said.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "drifted", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["filesystem_coverage_claimed_without_acl_readback"]
+    },
+    {
+      "name": "filesystem_coverage_over_a_readback_that_never_ran_is_refused",
+      "note": "No readback is not a matching readback.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "not_read", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["filesystem_coverage_claimed_without_acl_readback"]
+    },
+    {
+      "name": "a_level_owing_job_evidence_without_it_is_refused",
+      "note": "C4b's exit criterion: identity, ACL and Job evidence all present before user_open_egress is reported. Job evidence is the tier's report, and its value says so.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "not_reported", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["level_requires_tier_job_evidence"]
+    },
+    {
+      "name": "a_development_level_owes_no_job_evidence",
+      "note": "minimal and restricted claim no applied policy, so their level facts do not ask for Job evidence.",
+      "overrides": {
+        "isolation_level": "minimal",
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "not_reported", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "not_reported", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "a_tier_named_twice_is_refused",
+      "note": "One entry per tier, holding the worst of that tier's running roles. Two entries for one tier would let the better one hide the worse.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "not_verified", "acl_readback": "drifted", "job": "not_reported", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": [
+        "filesystem_coverage_claimed_without_acl_readback",
+        "identity_coverage_claimed_without_tier_identity_evidence",
+        "level_requires_tier_job_evidence",
+        "tier_evidence_tier_repeated"
+      ]
+    },
+    {
+      "name": "the_connector_tier_is_held_to_its_evidence_when_it_ran",
+      "note": "A Profile with the Connector launches a network connector role, and then that tier's evidence counts like the other two.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "network_connector", "identity": "not_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["identity_coverage_claimed_without_tier_identity_evidence"]
+    },
+    {
+      "name": "all_three_tiers_with_verified_evidence_are_accepted",
+      "note": "The Profile with the Connector, every tier's launch evidence passing.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "network_connector", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "tier_evidence_carries_no_account",
+      "note": "A SID carries the machine's prefix, a host identifier this surface may not hold. The account stays between the Sandbox Manager and the broker.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z", "account_sid": "S-1-5-21-1-2-3-1101" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["report_shape_invalid"]
+    },
+    {
+      "name": "an_entry_past_one_per_tier_is_above_the_bound_and_still_read_for_repeats",
+      "note": "A bound failure is one the cross-field rules run after, on both surfaces, so the entry over the bound is refused as a shape and the repeat it must contain is named as well. The bound is one entry per tier in the vocabulary, so this takes one entry more than there are tiers.",
+      "overrides": {
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "file_tool", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "network_connector", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "channel", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" },
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": ["report_shape_invalid", "tier_evidence_tier_repeated"]
+    },
+    {
+      "name": "no_level_for_incomplete_launch_evidence_is_accepted",
+      "note": "The fallback C4b ships if the probes miss 10/9: real launch evidence, an attestation that has not passed, and the reason for no level naming what is missing.",
+      "overrides": {
+        "isolation_level": "not_established",
+        "isolation_warnings": [
+          {
+            "code": "isolation_level_not_established",
+            "reason": "tier_launch_evidence_incomplete"
+          },
+          { "code": "policy_attestation_not_passing", "verdict": "stale" }
+        ],
+        "isolation_attestation": {
+          "verdict": "stale",
+          "probe_set_id": null,
+          "last_pass_at": null,
+          "covered_policy_categories": []
+        },
+        "isolation_tier_evidence": [
+          { "tier": "bootstrap", "identity": "owner_kernel_verified", "acl_readback": "matches_shipped_descriptor", "job": "tier_reported_verified", "observed_at": "2026-09-01T00:00:00Z" }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "no_level_blaming_launch_evidence_that_is_complete_is_refused",
+      "note": "Every tier's evidence passing contradicts a warning that blames it, within one document.",
+      "overrides": {
+        "isolation_level": "not_established",
+        "isolation_warnings": [
+          {
+            "code": "isolation_level_not_established",
+            "reason": "tier_launch_evidence_incomplete"
+          },
+          { "code": "policy_attestation_not_passing", "verdict": "stale" }
+        ],
+        "isolation_attestation": {
+          "verdict": "stale",
+          "probe_set_id": null,
+          "last_pass_at": null,
+          "covered_policy_categories": []
+        }
+      },
+      "expected_reasons": ["not_established_reason_disagrees_with_report"]
+    }
+  ]
+}

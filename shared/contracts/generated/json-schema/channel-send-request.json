@@ -1,0 +1,36 @@
+{
+  "$id": "https://different.ai/openwork-contracts/channel-send-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "auto_bind": {
+      "type": "boolean"
+    },
+    "directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+      "type": "string"
+    },
+    "identity_id": {
+      "pattern": "^[A-Za-z0-9_.-]{1,48}$",
+      "type": "string"
+    },
+    "peer_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^[^\\p{Cc}\\p{Cf}\\s]+$",
+      "type": "string"
+    },
+    "text": {
+      "maxLength": 20000,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "text"
+  ],
+  "title": "ChannelSendRequest",
+  "type": "object"
+}

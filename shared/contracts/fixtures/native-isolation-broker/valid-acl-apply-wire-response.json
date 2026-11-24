@@ -1,0 +1,9 @@
+{
+  "contract_version": 1,
+  "operation_id": "sm:apply-acl-1",
+  "observation": {
+    "contract_version": 1,
+    "workspace_root_observations": [],
+    "managed_root_observations": []
+  }
+}

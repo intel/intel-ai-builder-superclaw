@@ -1,0 +1,12 @@
+{
+  "contract_version": 1,
+  "operation": {
+    "contract_version": 1,
+    "operation_id": "hub:activation-fixture",
+    "status": "applying",
+    "stage": "aligning_runtime",
+    "progress": {
+      "pct": 90
+    }
+  }
+}

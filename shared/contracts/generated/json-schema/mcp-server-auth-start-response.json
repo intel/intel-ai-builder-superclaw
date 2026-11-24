@@ -1,0 +1,13 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-auth-start-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorizationUrl": {
+      "format": "uri",
+      "type": "string"
+    }
+  },
+  "title": "McpServerAuthStartResponse",
+  "type": "object"
+}

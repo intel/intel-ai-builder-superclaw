@@ -1,0 +1,39 @@
+{
+  "models": {
+    "pplx-pii-masking-ov-int8": {
+      "archive": {
+        "sha256": "8011a1582e6dc093b0b98438bcd18d108c1fe55165db2757ce41d9cd028ea8a0",
+        "size": 536034685
+      },
+      "files": [
+        {
+          "path": "config.json",
+          "sha256": "7162c30da7009cfb9c9af6204782177ef6f5d88e2653fd87d6514308d97dcaa7",
+          "size": 2458
+        },
+        {
+          "path": "openvino_model.bin",
+          "sha256": "83600aaf57c6942db8f912dc1dffb5f4eb955cb1771e8d622bc705fcb957e694",
+          "size": 597147273
+        },
+        {
+          "path": "openvino_model.xml",
+          "sha256": "ff468a3b2224efb732a5f9c1ddf474e96a688f9b407913b173da3ba39073f2bd",
+          "size": 2459302
+        },
+        {
+          "path": "tokenizer.json",
+          "sha256": "cae14d1c8dda080f23792355b0692b826bf1f1da3c86ebc1b37548a391cf6526",
+          "size": 11422936
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sha256": "aa9c1b0a1c9b48c2f70bacdf64f7dab25194be4ffea0c6a6e4da262360a91d0a",
+          "size": 398
+        }
+      ],
+      "revision": "a4de59a2447e6127"
+    }
+  },
+  "schema": 2
+}

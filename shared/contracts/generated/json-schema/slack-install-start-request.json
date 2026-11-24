@@ -1,0 +1,21 @@
+{
+  "$id": "https://different.ai/openwork-contracts/slack-install-start-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "configuration_token": {
+      "pattern": "^[\\x21-\\x7e]{1,512}$",
+      "type": "string"
+    },
+    "identity_id": {
+      "pattern": "^[A-Za-z0-9_.-]{1,48}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity_id",
+    "configuration_token"
+  ],
+  "title": "SlackInstallStartRequest",
+  "type": "object"
+}

@@ -1,0 +1,31 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-browser-view.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "active": {
+      "type": "boolean"
+    },
+    "cdp_endpoint": {
+      "anyOf": [
+        {
+          "pattern": "^ws:\\/\\/127\\.0\\.0\\.1:18831\\/mcp-host\\/cdp\\/[A-Za-z0-9_-]{32,128}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "configured": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "configured",
+    "active",
+    "cdp_endpoint"
+  ],
+  "title": "HostBrowserView",
+  "type": "object"
+}

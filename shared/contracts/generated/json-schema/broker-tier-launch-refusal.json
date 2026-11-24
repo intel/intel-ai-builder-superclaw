@@ -1,0 +1,72 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-tier-launch-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "account_name": {
+      "pattern": "^SCB[BFCH][A-Z2-7]{16}$",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "event": {
+      "const": "tier_launch_refused",
+      "type": "string"
+    },
+    "owner_sid": {
+      "pattern": "^S-1-(?:\\d+-)+\\d+$",
+      "type": "string"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "provision_required",
+              "seclogon_unavailable",
+              "local_logon_denied",
+              "windows_api_failure"
+            ],
+            "type": "string"
+          },
+          "remedy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "detail",
+          "remedy"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "tier": {
+      "enum": [
+        "bootstrap",
+        "file_tool",
+        "network_connector",
+        "channel"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "event",
+    "tier",
+    "owner_sid",
+    "account_name",
+    "refusals"
+  ],
+  "title": "BrokerTierLaunchRefusal",
+  "type": "object"
+}

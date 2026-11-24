@@ -1,0 +1,27 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-approval-decision-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "enum": [
+        "approve",
+        "deny"
+      ],
+      "type": "string"
+    },
+    "grant_scope": {
+      "enum": [
+        "once",
+        "until_restart",
+        "always"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision"
+  ],
+  "title": "HostMcpApprovalDecisionRequest",
+  "type": "object"
+}

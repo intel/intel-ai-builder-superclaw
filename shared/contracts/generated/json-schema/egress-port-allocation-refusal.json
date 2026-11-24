@@ -1,0 +1,65 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-port-allocation-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "port": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "unavailable_because": {
+            "enum": [
+              "in_use",
+              "bind_access_denied",
+              "inside_dynamic_port_range"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "port",
+          "unavailable_because"
+        ],
+        "type": "object"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "placeholder": {
+      "enum": [
+        "runtime_port",
+        "hdr_port",
+        "router_health_port",
+        "connector_port",
+        "egress_proxy_shell_port",
+        "egress_proxy_channel_port",
+        "service_hub"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "enum": [
+        "fixed_port_candidates_unavailable"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "reason",
+    "placeholder",
+    "candidates"
+  ],
+  "title": "EgressPortAllocationRefusal",
+  "type": "object"
+}

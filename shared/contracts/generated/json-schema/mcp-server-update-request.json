@@ -1,0 +1,211 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-update-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "oneOf": [
+            {
+              "additionalProperties": {},
+              "properties": {
+                "command": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "environment": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "timeout": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "type": {
+                  "const": "local",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "command"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": {},
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "headers": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "oauth": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": {},
+                      "properties": {},
+                      "type": "object"
+                    },
+                    {
+                      "const": false,
+                      "type": "boolean"
+                    }
+                  ]
+                },
+                "timeout": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "type": {
+                  "const": "remote",
+                  "type": "string"
+                },
+                "url": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "url"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "oneOf": [
+            {
+              "additionalProperties": {},
+              "properties": {
+                "command": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "environment": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "timeout": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "type": {
+                  "const": "local",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "command"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": {},
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "headers": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "oauth": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": {},
+                      "properties": {},
+                      "type": "object"
+                    },
+                    {
+                      "const": false,
+                      "type": "boolean"
+                    }
+                  ]
+                },
+                "timeout": {
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991,
+                  "type": "integer"
+                },
+                "type": {
+                  "const": "remote",
+                  "type": "string"
+                },
+                "url": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "url"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "config"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "McpServerUpdateRequest"
+}

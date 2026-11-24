@@ -1,0 +1,37 @@
+{
+  "lifecycle_state": "active",
+  "product_profile_id": "standard",
+  "product_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "descriptor": {
+    "schema_version": 1,
+    "profile": "standard",
+    "display_name": "Standard",
+    "description": "Standard packaged Product Profile",
+    "required_sidecars": ["intent-classifier"],
+    "feature_flags": {
+      "intent_classifier": true,
+      "local_tts": false,
+      "local_vision": false,
+      "hybrid_coding_agent": true,
+      "hybrid_deep_research_agent": false,
+      "email_agent": true,
+      "skills_ui": true,
+      "agent_authoring": true
+    }
+  },
+  "resolution_source": "primary_bundle",
+  "profile_revision": 8,
+  "resolved_at": "2026-07-17T00:00:00Z",
+  "primary_bundle": {
+    "backend": "llama",
+    "bundle_id": "local-35b",
+    "chat_model_id": "qwen-35b",
+    "embedding_model_id": "kalm",
+    "capability_grade": "full",
+    "capability_contract_version": 1,
+    "registry_version": 1,
+    "bundle_revision": 4,
+    "state": "ready"
+  },
+  "reasons": []
+}

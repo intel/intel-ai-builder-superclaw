@@ -1,0 +1,91 @@
+{
+  "$id": "https://different.ai/openwork-contracts/connector-admin-pending-list.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approvals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "connector.fetch_result"
+            ],
+            "type": "string"
+          },
+          "approval_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "audience": {
+            "enum": [
+              "connector"
+            ],
+            "type": "string"
+          },
+          "caller": {
+            "enum": [
+              "agent"
+            ],
+            "type": "string"
+          },
+          "expires_at_ms": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "grant_scopes": {
+            "items": {
+              "enum": [
+                "once",
+                "all_for_chat"
+              ],
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "request_digest": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "requested_at_ms": {
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991,
+            "type": "integer"
+          },
+          "session_ref": {
+            "pattern": "^sref_[0-9a-f]{16}$",
+            "type": "string"
+          },
+          "target": {
+            "maxLength": 4097,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "approval_id",
+          "audience",
+          "action",
+          "caller",
+          "target",
+          "request_digest",
+          "requested_at_ms",
+          "expires_at_ms",
+          "grant_scopes",
+          "session_ref"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    }
+  },
+  "required": [
+    "approvals"
+  ],
+  "title": "ConnectorAdminPendingList",
+  "type": "object"
+}

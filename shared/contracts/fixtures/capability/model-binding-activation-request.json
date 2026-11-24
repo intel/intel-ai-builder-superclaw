@@ -1,0 +1,9 @@
+{
+  "contract_version": 1,
+  "intent": "download_and_connect",
+  "target_bundle_id": "local-35b",
+  "candidate_revision": 4,
+  "expected_bundle_revision": 3,
+  "user_confirmed_download": true,
+  "idempotency_key": "switch-1"
+}

@@ -1,0 +1,25 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-tool-policy-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "policy": {
+      "additionalProperties": {
+        "enum": [
+          "allow",
+          "deny"
+        ],
+        "type": "string"
+      },
+      "propertyNames": {
+        "type": "string"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "policy"
+  ],
+  "title": "McpToolPolicyResponse",
+  "type": "object"
+}

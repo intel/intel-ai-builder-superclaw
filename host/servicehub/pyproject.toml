@@ -1,0 +1,60 @@
+[project]
+name = "servicehub"
+version = "0.1.0"
+description = "SuperClaw ServiceHub: Windows host service supervisor and control-plane proxy"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "httpx>=0.27",
+    "pydantic>=2.8",
+    "sse-starlette>=2.1",
+    "jsonschema>=4.23",
+    "loguru>=0.6",
+    "llm-pipeline",
+    "llmrouter-manager",
+    "superclaw-host-observability",
+    "superclaw-contracts",
+]
+
+[project.scripts]
+servicehub = "servicehub.__main__:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/servicehub"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "pyinstaller>=6.0",
+]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+llmrouter-manager = { workspace = true }
+superclaw-host-observability = { workspace = true }
+superclaw-contracts = { workspace = true }
+llm-pipeline = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+# Turn a hung case into a fast, diagnosed failure instead of a silent job timeout. A
+# deadlock in this suite (an ASGI request that can never complete) held the Linux lane for
+# its full 30-minute budget and reported nothing about where it stopped, because `-q` had
+# not yet flushed the progress line the hang was on. This dumps every thread's stack and
+# aborts. 60s is well over 10x the slowest case here (the whole suite is ~135s for 639),
+# so it only fires on something genuinely stuck.
+faulthandler_timeout = 60
+faulthandler_exit_on_timeout = true

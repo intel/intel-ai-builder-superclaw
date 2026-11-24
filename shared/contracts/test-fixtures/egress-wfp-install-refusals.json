@@ -1,0 +1,10 @@
+{
+  "$comment": "The closed vocabulary of reasons a provision session answers a WFP plan with when it installs nothing. The Rust WfpInstallRefusal wire names and the Python WFP_REFUSAL_REASONS must both equal this list.",
+  "reasons": [
+    "wfp_plan_shape_invalid",
+    "wfp_plan_owner_mismatch",
+    "wfp_objects_not_installable",
+    "wfp_apply_refused",
+    "wfp_engine_unavailable"
+  ]
+}

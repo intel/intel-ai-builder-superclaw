@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["services"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "entrypoint", "proxy_prefix", "port"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "entrypoint": { "type": "string", "minLength": 1 },
+          "proxy_prefix": { "type": "string", "pattern": "^/[a-z0-9][a-z0-9-]*$" },
+          "port": { "type": "integer", "minimum": 1024, "maximum": 65535 },
+          "bind_host": { "enum": ["127.0.0.1", "0.0.0.0"] },
+          "data_plane": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["enabled"],
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "paths": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              }
+            }
+          },
+          "launch": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind"],
+            "properties": {
+              "kind": { "enum": ["module", "exe", "role"] },
+              "exe_name": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+\\.exe$" }
+            }
+          },
+          "env": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "restart_policy": { "enum": ["never", "on-failure", "always"] },
+          "startup": { "enum": ["required", "on_demand"] },
+          "ready_timeout_s": { "type": "number", "exclusiveMinimum": 0 },
+          "shutdown_grace_s": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    }
+  }
+}

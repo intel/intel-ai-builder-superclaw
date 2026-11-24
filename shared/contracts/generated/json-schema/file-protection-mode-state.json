@@ -1,0 +1,51 @@
+{
+  "$id": "https://different.ai/openwork-contracts/file-protection-mode-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "applied": {
+      "enum": [
+        "none",
+        "deterministic",
+        "hybrid",
+        "llm"
+      ],
+      "type": "string"
+    },
+    "mode": {
+      "anyOf": [
+        {
+          "enum": [
+            "none",
+            "deterministic",
+            "hybrid",
+            "llm"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "enum": [
+        "env",
+        "store",
+        "default"
+      ],
+      "type": "string"
+    },
+    "supported": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "mode",
+    "applied",
+    "source",
+    "supported"
+  ],
+  "title": "FileProtectionModeState",
+  "type": "object"
+}

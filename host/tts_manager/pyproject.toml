@@ -1,0 +1,71 @@
+[project]
+name = "tts-manager"
+version = "0.1.0"
+description = "SuperClaw TTS Manager: native Windows-host Kokoro-82M narration service (onnxruntime, no torch)."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+# ONNX RUNTIME, NO PYTORCH — deliberate. Inference runs on onnxruntime (~40 MB)
+# driven directly by kokoro_helper.py, not the PyTorch `kokoro` package.
+# Text->phonemes still uses misaki (unchanged pronunciation). Narration is
+# English-only.
+#
+# NO GPL. `kokoro-onnx` and misaki's `[en]` extra both require `phonemizer-fork`
+# (GPL-3.0) and `espeakng-loader` (espeak-ng, GPL-3.0), neither of which this
+# service calls. So kokoro-onnx is not a dependency, and misaki is pulled with no
+# extras (misaki.en ships in the base package) plus the two packages `misaki.en`
+# imports (`spacy`, `num2words`). tests/test_no_gpl_dependencies.py keeps both
+# GPL packages out of host/uv.lock.
+#
+# misaki's English G2P can OPTIONALLY
+# pull a transformer POS tagger (spacy-curated-transformers -> curated-transformers
+# -> torch); kokoro_helper.py uses `en.G2P(trf=False)` so that chain never loads.
+# The workspace ROOT pins CPU torch for privacy_manager, so a global torch
+# exclude is impossible here — the two transformer packages are overridden away at
+# the root instead (see host/pyproject.toml [tool.uv] override-dependencies). They
+# are used by no other workspace member, so the override is member-safe.
+#
+# `en-core-web-sm` is the small spaCy English model `G2P(trf=False)` loads; it is
+# NOT on PyPI (installed from a GitHub-release wheel, pinned via [tool.uv.sources]).
+# `click` is pinned explicitly because spaCy imports it eagerly at `import spacy`
+# but the resolved `typer` does not always pull it transitively — without it
+# English G2P fails with ModuleNotFoundError: click.
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "onnxruntime>=1.20",
+    "misaki>=0.9",
+    "spacy>=3.8",
+    "num2words>=0.5",
+    "numpy<3",
+    "scipy>=1.10",
+    "click>=8.0",
+    "en-core-web-sm",
+    "loguru>=0.6",
+    "superclaw-host-observability",
+]
+
+[project.scripts]
+tts-manager = "tts_manager.__main__:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tts_manager"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+
+[tool.uv]
+package = true
+constraint-dependencies = ["starlette>=1.3.1"]
+
+[tool.uv.sources]
+superclaw-host-observability = { workspace = true }
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }

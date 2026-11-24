@@ -1,0 +1,9 @@
+{
+  "contract_version": 1,
+  "correlation_operation_id": "hub:activation-1",
+  "prepare_operation_id": "lrm:prepare-1",
+  "idempotency_key": "prepare-1",
+  "state": "running",
+  "pct": 25,
+  "message": "preparing bundle"
+}

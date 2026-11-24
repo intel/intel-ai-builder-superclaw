@@ -1,0 +1,45 @@
+[project]
+name = "sandbox-policy"
+version = "0.1.0"
+description = "SuperClaw L1 sandbox policy: ACL policy planning and drift checking for the native Windows backend"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SuperClaw" }]
+
+# L1 plans policy; it never applies it. That is why there is no pywin32 here and
+# no dependency on sandbox_manager: a planner that could reach Win32 would sooner
+# or later be asked to.
+dependencies = [
+    "pydantic>=2.8",
+    "superclaw-contracts",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sandbox_policy"]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+superclaw-contracts = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# `-q` matches every other host package, so one lane command reads the same
+# everywhere. Do not pass `-q` again on the command line: two of them is `-qq`,
+# which drops the summary count line the §6.1 lane records as its evidence.
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+# Ruff resolves config by walking up from each file, so this table governs this
+# package alone. `src` is what makes `sandbox_policy` and the tests' `conftest`
+# first-party: without it, a run started at the repo root sorts them in among the
+# third-party imports and then reports the correct order as unsorted.
+src = ["src", "tests"]

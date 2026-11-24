@@ -1,0 +1,104 @@
+{
+  "values": {
+    "owner_sid": "S-1-5-21-1-2-3-1001",
+    "pipe_id": "00112233445566778899aabbccddeeff",
+    "auth_key": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+  },
+  "argument_patterns": {
+    "owner_sid": "^S-1-(?:\\d+-)+\\d+$",
+    "pipe_id": "^[A-Za-z0-9_-]{1,64}$",
+    "auth_key": "^[0-9a-f]{64}$"
+  },
+  "operations": [
+    {
+      "operation": "provision",
+      "argv": ["--provision", "--owner-sid", "S-1-5-21-1-2-3-1001"]
+    },
+    {
+      "operation": "provision_session",
+      "argv": [
+        "--provision-session",
+        "--owner-sid",
+        "S-1-5-21-1-2-3-1001",
+        "--pipe-id",
+        "00112233445566778899aabbccddeeff",
+        "--auth-key",
+        "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+      ]
+    },
+    {
+      "operation": "provision_identities_and_session",
+      "argv": [
+        "--provision-identities-and-session",
+        "--owner-sid",
+        "S-1-5-21-1-2-3-1001",
+        "--pipe-id",
+        "00112233445566778899aabbccddeeff",
+        "--auth-key",
+        "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+      ]
+    },
+    {
+      "operation": "revoke",
+      "argv": ["--revoke", "--owner-sid", "S-1-5-21-1-2-3-1001"]
+    },
+    {
+      "operation": "revoke_workspace_authorization",
+      "argv": ["--revoke-workspace-authorization", "--owner-sid", "S-1-5-21-1-2-3-1001"]
+    }
+  ],
+  "refused_argv": [
+    ["--provision-identities-and-session"],
+    ["--provision-identities-and-session", "--owner-sid", "S-1-5-21-1-2-3-1001"],
+    [
+      "--provision-identities-and-session",
+      "--pipe-id",
+      "00112233445566778899aabbccddeeff",
+      "--owner-sid",
+      "S-1-5-21-1-2-3-1001",
+      "--auth-key",
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+    ],
+    [
+      "--provision-identities-and-session",
+      "--owner-sid",
+      "S-1-5-21-1-2-3-1001",
+      "--pipe-id",
+      "00112233445566778899aabbccddeeff",
+      "--auth-key",
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "C:\\Windows\\System32\\cmd.exe"
+    ],
+    [
+      "--provision-identities-and-session",
+      "--owner-sid",
+      "S-1-5-21-1-2-3-1001",
+      "--pipe-id",
+      "00112233445566778899aabbccddeeff",
+      "--auth-key",
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "--path-set-file",
+      "C:\\Users\\tester\\path-set.json"
+    ],
+    [
+      "--provision",
+      "--owner-sid",
+      "S-1-5-21-1-2-3-1001",
+      "--pipe-id",
+      "00112233445566778899aabbccddeeff",
+      "--auth-key",
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+    ],
+    [
+      "--provision-session",
+      "--provision-identities-and-session",
+      "--owner-sid",
+      "S-1-5-21-1-2-3-1001",
+      "--pipe-id",
+      "00112233445566778899aabbccddeeff",
+      "--auth-key",
+      "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+    ],
+    ["--provision-identities-and-session", "--owner-sid", "S-1-5-21-1-2-3-1001", "--plan-stdin"]
+  ]
+}

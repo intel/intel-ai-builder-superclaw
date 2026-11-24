@@ -1,0 +1,31 @@
+# Public mapping only: generated files must not enter the source snapshot.
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+.cache/
+target/
+dist/
+out/
+apps/desktop/src-tauri/sidecars/
+packaging/docker/superclaw-runtime-bin/*
+!packaging/docker/superclaw-runtime-bin/README.md
+host/llmrouter_manager/inference/llama-win-sycl/*
+!host/llmrouter_manager/inference/llama-win-sycl/README.md
+!host/llmrouter_manager/inference/llama-win-sycl/NOTICE*
+host/llmrouter_manager/src/llmrouter_manager/data/pca_model.pkl
+host/llmrouter_manager/src/llmrouter_manager/data/latent_factor_artefacts.pkl
+.env
+.env.*
+!.env.example
+*.log
+*.db
+.DS_Store
+
+# Root LICENSE/NOTICE staged into npm packages by their prepack scripts
+/sandbox/server/LICENSE
+/sandbox/server/NOTICE
+/sandbox/channels/LICENSE
+/sandbox/channels/NOTICE

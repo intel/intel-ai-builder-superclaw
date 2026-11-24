@@ -1,0 +1,46 @@
+{
+  "cases": [
+    {
+      "object_key": "openwork-egress.wfp.loopback_non_allowlisted_block.file_tool.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_auth_connect_v4",
+      "match": "loopback_flag",
+      "transport": "tcp",
+      "filter_key": "850e960b-11e8-840a-b87a-8dd8ee042df9"
+    },
+    {
+      "object_key": "openwork-egress.wfp.loopback_non_allowlisted_block.file_tool.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_auth_connect_v4",
+      "match": "loopback_flag",
+      "transport": "udp",
+      "filter_key": "e932bc6d-0cd6-8e7f-bb4d-bc6ec45c3b67"
+    },
+    {
+      "object_key": "openwork-egress.wfp.loopback_non_allowlisted_block.file_tool.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_auth_connect_v4",
+      "match": "loopback_address",
+      "transport": "tcp",
+      "filter_key": "52817eb7-b103-887d-b0f8-a958dc6777f1"
+    },
+    {
+      "object_key": "openwork-egress.wfp.loopback_non_allowlisted_block.file_tool.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_auth_connect_v6",
+      "match": "loopback_flag",
+      "transport": "other_protocols",
+      "filter_key": "6ad88587-d1f1-8651-9b92-2002acf12918"
+    },
+    {
+      "object_key": "openwork-egress.wfp.external_outbound_block.bootstrap.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_auth_connect_v6",
+      "match": "non_loopback",
+      "transport": "unsplit",
+      "filter_key": "9acdc53f-877c-8766-acb4-2800dbea0d3c"
+    },
+    {
+      "object_key": "openwork-egress.wfp.icmp_resource_assignment_block.bootstrap.S-1-5-21-1004336348-1177238915-682003330-1001",
+      "layer": "ale_resource_assignment_v4",
+      "match": "any_address",
+      "transport": "unsplit",
+      "filter_key": "39863016-7578-8694-b4bc-4126b22aeda1"
+    }
+  ]
+}

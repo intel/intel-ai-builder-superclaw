@@ -1,0 +1,17 @@
+{
+  "$id": "https://different.ai/openwork-contracts/perf-weight-update.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "perf_weight": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "perf_weight"
+  ],
+  "title": "PerfWeightUpdate",
+  "type": "object"
+}

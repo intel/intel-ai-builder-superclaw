@@ -1,0 +1,74 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-binding-activation-active-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "operation": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "contract_version": {
+              "const": 1,
+              "type": "number"
+            },
+            "operation_id": {
+              "pattern": "^hub:[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "type": "string"
+            },
+            "progress": {
+              "additionalProperties": false,
+              "properties": {
+                "lrm_prepare_operation_id": {
+                  "pattern": "^lrm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+                  "type": "string"
+                },
+                "pct": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "pct"
+              ],
+              "type": "object"
+            },
+            "stage": {
+              "enum": [
+                "preparing",
+                "activating",
+                "aligning_runtime"
+              ],
+              "type": "string"
+            },
+            "status": {
+              "const": "applying",
+              "type": "string"
+            }
+          },
+          "required": [
+            "contract_version",
+            "status",
+            "operation_id",
+            "stage"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "operation"
+  ],
+  "title": "ModelBindingActivationActiveResponse",
+  "type": "object"
+}

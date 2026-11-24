@@ -1,0 +1,18 @@
+{
+  "$id": "https://different.ai/openwork-contracts/channel-enabled-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "clear_token": {
+      "type": "boolean"
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "enabled"
+  ],
+  "title": "ChannelEnabledRequest",
+  "type": "object"
+}

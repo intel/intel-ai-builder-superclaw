@@ -1,0 +1,28 @@
+{
+  "$id": "https://different.ai/openwork-contracts/file-protection-mode-update.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "anyOf": [
+        {
+          "enum": [
+            "none",
+            "deterministic",
+            "hybrid",
+            "llm"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "mode"
+  ],
+  "title": "FileProtectionModeUpdate",
+  "type": "object"
+}

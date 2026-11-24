@@ -1,0 +1,70 @@
+{
+  "$id": "https://different.ai/openwork-contracts/primary-bundle-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "backend": {
+      "enum": [
+        "llama",
+        "edge"
+      ],
+      "type": "string"
+    },
+    "bundle_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "bundle_revision": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "capability_contract_version": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "capability_grade": {
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "type": "string"
+    },
+    "chat_model_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "embedding_model_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "registry_version": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "unavailable",
+        "provisioning",
+        "ready",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "backend",
+    "bundle_id",
+    "chat_model_id",
+    "embedding_model_id",
+    "capability_grade",
+    "capability_contract_version",
+    "registry_version",
+    "bundle_revision",
+    "state"
+  ],
+  "title": "PrimaryBundleState",
+  "type": "object"
+}

@@ -1,0 +1,68 @@
+{
+  "$id": "https://different.ai/openwork-contracts/agent-runtime-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "member_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "enum": [
+              "runtime_id_not_payload_backed",
+              "member_list_empty",
+              "duplicate_member_path",
+              "member_path_not_posix_relative",
+              "member_role_must_be_unique",
+              "member_not_readable",
+              "executable_role_not_marked_executable",
+              "non_executable_role_marked_executable",
+              "member_tier_inconsistent_with_role",
+              "program_member_not_declared",
+              "program_member_not_executable",
+              "program_member_relaxable",
+              "template_token_shape_invalid",
+              "template_references_undeclared_member",
+              "launch_group_empty",
+              "launch_group_guard_member_undeclared",
+              "launch_group_guard_member_unconditional",
+              "launch_group_relaxable_member_unguarded",
+              "env_name_shape_invalid",
+              "env_name_secret_bearing",
+              "readiness_probe_port_not_passed_to_launch",
+              "config_projection_adapter_inconsistent_with_runtime_id",
+              "config_projection_requires_config_source_member",
+              "guard_adapter_requires_shell_member",
+              "shutdown_grace_out_of_bounds",
+              "descriptor_shape_invalid"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "member_path"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "refusals"
+  ],
+  "title": "AgentRuntimeRefusal",
+  "type": "object"
+}

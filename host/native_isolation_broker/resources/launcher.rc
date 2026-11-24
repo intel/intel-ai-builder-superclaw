@@ -1,0 +1,3 @@
+#define SC_FILE_DESCRIPTION "SuperClaw Isolation Launcher"
+#define SC_ORIGINAL_FILENAME "native_isolation_launcher.exe"
+#include "version_info.inc"

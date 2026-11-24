@@ -1,0 +1,107 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-add-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "config": {
+      "oneOf": [
+        {
+          "additionalProperties": {},
+          "properties": {
+            "command": {
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "environment": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "timeout": {
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991,
+              "type": "integer"
+            },
+            "type": {
+              "const": "local",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "command"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": {},
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "headers": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "propertyNames": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "oauth": {
+              "anyOf": [
+                {
+                  "additionalProperties": {},
+                  "properties": {},
+                  "type": "object"
+                },
+                {
+                  "const": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "timeout": {
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991,
+              "type": "integer"
+            },
+            "type": {
+              "const": "remote",
+              "type": "string"
+            },
+            "url": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "url"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "name": {
+      "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "config"
+  ],
+  "title": "McpServerAddRequest",
+  "type": "object"
+}

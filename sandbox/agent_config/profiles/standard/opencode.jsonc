@@ -1,0 +1,196 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "experimental": {
+    "subagent_depth": 5
+  },
+  "agent": {
+    "build": {
+      "description": "Software engineering agent. Also analyzes masked files delegated by protected-file-agent.",
+      "hidden": true,
+      "mode": "subagent",
+      "model": "llmrouter/cloud-model",
+      "permission": {
+        "confirm_file_protection": "ask",
+        "external_directory": {
+          "*": "deny",
+          "/run/superclaw/runtime/*/opencode/agent/*": "allow",
+          "/tmp/*": "allow",
+          "/workspace/data_protection_workspace/mask_registries/**": "deny",
+          "/workspace/sensitive/**": "deny",
+          "*/channel/inbox/*": "allow"
+        },
+        "local_sensitive_read": "deny",
+        "run_protected_file_pipeline": "deny",
+        "skill": {
+          "*": "allow",
+          "customize-opencode": "deny",
+          "protected-file-*": "deny"
+        },
+        "task": {
+          "*": "allow",
+          "local-file-agent": "allow",
+          "protected-file-agent": "allow"
+        }
+      },
+      "prompt": "{file:./prompts/coding.txt}",
+      "steps": 100
+    },
+    "local-file-agent": {
+      "description": "An agent specialized answer questions related to local files. Use this agent to extract information from PDF, CSV, MD, DOCX, XLSX, and PPTX files. Must pass absolute file paths to this agent.",
+      "mode": "subagent",
+      "permission": {
+        "*": "deny",
+        "bash": "allow",
+        "doom_loop": "allow",
+        "edit": "allow",
+        "external_directory": {
+          "*": "deny",
+          "/workspace/tmp/pdf_md/**": "allow"
+        },
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "local_dr_query_table": "allow",
+        "local_dr_read_csv_xlsx": "allow",
+        "local_sensitive_read": "allow",
+        "local_dr_read_docx": "allow",
+        "local_dr_read_pptx": "allow",
+        "ocr": "allow",
+        "parse_pdf": "allow",
+        "read": "allow",
+        "skill": {
+          "docx-create": "allow",
+          "pptx-create": "allow"
+        },
+        "task": {
+          "*": "deny"
+        },
+        "todoread": "allow",
+        "todowrite": "allow"
+      },
+      "prompt": "{file:./prompts/local-file-agent.txt}",
+      "steps": 30,
+      "temperature": 0.1
+    },
+    "plan": {
+      "hidden": true,
+      "permission": {
+        "external_directory": {
+          "*": "deny"
+        }
+      }
+    },
+    "protected-file-agent": {
+      "description": "Use when the user asks to analyze a sensitive file (.csv, .xlsx, .xls, .parquet, .txt, .md, .html, .htm, .docx). Requires `confirm_file_protection` approval before invoking. Handles PII before analysis.",
+      "mode": "subagent",
+      "model": "llmrouter/local-model",
+      "permission": {
+        "*": "deny",
+        "doom_loop": "ask",
+        "external_directory": {
+          "/tmp/*": "allow"
+        },
+        "glob": "allow",
+        "list": "allow",
+        "question": "allow",
+        "run_protected_file_pipeline": "allow",
+        "review_masked_entities": "ask",
+        "task": {
+          "*": "deny",
+          "build": "allow"
+        }
+      },
+      "prompt": "{file:./prompts/protected_pipeline_agent.minimal.txt}",
+      "steps": 20
+    },
+    "superclaw-default": {
+      "external_directory": {
+        "/workspace/tmp/pdf_md/**": "allow"
+      },
+      "mode": "primary",
+      "permission": {
+        "*": "deny",
+        "automation_create": "ask",
+        "automation_list": "allow",
+        "automation_remove": "ask",
+        "bash": "allow",
+        "confirm_file_protection": "ask",
+        "edit": "allow",
+        "external_directory": {
+          "*": "deny",
+          "*/channel/inbox/*": "allow"
+        },
+        "get_mcp_status": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "ocr": "allow",
+        "parse_pdf": "allow",
+        "question": "allow",
+        "read": "allow",
+        "sc_fetch_url": "allow",
+        "sc_search_web": "allow",
+        "skill": {
+          "*": "allow",
+          "customize-opencode": "deny",
+          "protected-file-*": "deny",
+          "spreadsheet": "deny"
+        },
+        "task": {
+          "*": "deny",
+          "local-file-agent": "allow",
+          "protected-file-agent": "allow"
+        },
+        "todoread": "allow",
+        "todowrite": "allow",
+        "webfetch": "deny",
+        "websearch": "deny"
+      },
+      "prompt": "{file:./prompts/superclaw.minimal.txt}",
+      "steps": 30
+    }
+  },
+  "default_agent": "superclaw-default",
+  "model": "llmrouter/auto",
+  "permission": {
+    "webfetch": "deny",
+    "websearch": "deny"
+  },
+  "plugin": [
+    "opencode-scheduler"
+  ],
+  "provider": {
+    "llmrouter": {
+      "models": {
+        "auto": {
+          "name": "Auto Route",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        },
+        "cloud-model": {
+          "name": "Cloud (router-bypass)",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        },
+        "local-model": {
+          "name": "Local (router-bypass)",
+          "limit": {
+            "context": 262144,
+            "output": 8192
+          }
+        }
+      },
+      "name": "LLM Router",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "{env:LRM_API_KEY}",
+        "baseURL": "{env:LRM_API_BASE_URL}/v1",
+        "timeout": 600000
+      }
+    }
+  },
+  "share": "disabled"
+}

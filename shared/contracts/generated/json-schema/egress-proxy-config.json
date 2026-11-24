@@ -1,0 +1,203 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-proxy-config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowlist": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "channel": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "hosts": {
+                    "items": {
+                      "pattern": "^(?:\\*\\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$",
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "ports": {
+                    "items": {
+                      "maximum": 65535,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "hosts",
+                  "ports"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "shell": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "hosts": {
+                    "items": {
+                      "pattern": "^(?:\\*\\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$",
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "ports": {
+                    "items": {
+                      "maximum": 65535,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "hosts",
+                  "ports"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "shell",
+            "channel"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "approval": {
+      "additionalProperties": false,
+      "properties": {
+        "admin_secret": {
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "type": "string"
+        },
+        "approval_public_key": {
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "type": "string"
+        },
+        "boot_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_public_key",
+        "boot_id",
+        "admin_secret"
+      ],
+      "type": "object"
+    },
+    "audit": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object"
+    },
+    "mode": {
+      "enum": [
+        "log_only",
+        "enforce"
+      ],
+      "type": "string"
+    },
+    "pac": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "auto_config_url": {
+              "anyOf": [
+                {
+                  "maxLength": 4096,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "auto_detect": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "auto_config_url",
+            "auto_detect"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "session_key": {
+      "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+      "type": "string"
+    },
+    "upstream": {
+      "anyOf": [
+        {
+          "maxLength": 4096,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "upstream_unsupported": {
+      "anyOf": [
+        {
+          "enum": [
+            "unsupported_scheme",
+            "tls_to_proxy",
+            "credentials",
+            "missing_port",
+            "malformed",
+            "proxy_auto_config",
+            "loopback_upstream"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "audit",
+    "upstream",
+    "upstream_unsupported",
+    "pac",
+    "mode",
+    "allowlist"
+  ],
+  "title": "EgressProxyConfig",
+  "type": "object"
+}

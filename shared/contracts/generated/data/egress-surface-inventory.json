@@ -1,0 +1,891 @@
+{
+  "comment_marker": "egress-surface:",
+  "contract_version": 1,
+  "surfaces": [
+    {
+      "ga": "not_on_native_path",
+      "hosts": [
+        "github.com"
+      ],
+      "id": "supervisor_sidecar_download",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Downloads the sidecar manifest and binaries it was not given; OPENWORK_SIDECAR_BASE_URL may point elsewhere.",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_health_openwork",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Waits for openwork-server to start and probes its health.",
+      "service": "openwork_server",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_openwork_api",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Host authentication, the verify smoke checks and the approvals commands call the openwork-server API.",
+      "service": "openwork_server",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_health_opencode",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Probes, prewarms, drives and disposes the OpenCode runtime, by fetch and through the OpenCode SDK.",
+      "service": "opencode",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_health_opencode_router",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Probes opencode-router health, directly and through openwork-server.",
+      "service": "opencode_router",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "not_on_native_path",
+      "id": "supervisor_daemon_control",
+      "kind": "loopback",
+      "m1": "not_on_native_path",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "The CLI's daemon commands start or find the orchestrator daemon, wait for its health and call it; native runs serve, which does neither.",
+      "service": "supervisor_control",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_health_intent_classifier",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Waits for the intent classifier it started to be ready.",
+      "service": "intent_classifier",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "supervisor_health_hdr",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "supervisor",
+      "purpose": "Probes Hybrid Deep Research readiness.",
+      "service": "deep_research_sidecar",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "intent_classifier_lrm_chat",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "intent_classifier",
+      "process": "intent_classifier",
+      "purpose": "Classification and intake model calls through the LLM router.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "bootstrap"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "github.com"
+      ],
+      "id": "openwork_github_device_flow",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "GitHub OAuth device login.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "github.com",
+        "api.github.com"
+      ],
+      "id": "openwork_github_cli",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Spawns the gh CLI to check and store the GitHub sign-in (gh auth status, gh auth login --with-token).",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "api.github.com",
+        "raw.githubusercontent.com"
+      ],
+      "id": "openwork_skill_hub",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Reads the skill marketplace catalog and skill files.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "openwork_proxy_opencode",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Proxies the OpenCode API and event stream, and reloads the runtime.",
+      "service": "opencode",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "openwork_proxy_opencode_router",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Proxies and controls opencode-router, and reads its health for observability.",
+      "service": "opencode_router",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "openwork_proxy_intent_classifier",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Proxies intent classification and its debug view.",
+      "service": "intent_classifier",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "openwork_hdr_control",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Reads and cancels Hybrid Deep Research sessions.",
+      "service": "deep_research_sidecar",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "openwork_data_protection_restore",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Restores masked text in assistant replies through the privacy service, with its bearer.",
+      "service": "security_manager_data_plane",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "id": "openwork_supervisor_control",
+      "kind": "loopback",
+      "m1": "not_on_native_path",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Runtime versions, upgrade and edge model control; only the container path sets OPENWORK_CONTROL_BASE_URL.",
+      "service": "supervisor_control",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_blocked",
+      "id": "openwork_local_mcp_liveness",
+      "kind": "loopback",
+      "m1": "loopback_blocked",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "Sends a HEAD to each connected loopback MCP server's URL when the MCP list is read, and turns the server off if nothing answers.",
+      "service": "local_mcp_server",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "slack.com"
+      ],
+      "id": "opencode_router_slack_web_api",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Slack Web API: auth test, messages and files.",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "opencode_router_egress_proxy",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "The router's Slack and Telegram clients' agent to the egress proxy's channel port, from HTTPS_PROXY.",
+      "service": "egress_proxy_channel",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "slack.com",
+        "*.slack.com"
+      ],
+      "id": "opencode_router_slack_socket_mode",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Slack Socket Mode connection for inbound events.",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": "caller_chosen",
+      "id": "opencode_router_slack_proxy_connect",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "HTTP CONNECT tunnel through the proxy HTTPS_PROXY names, for Slack.",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "api.telegram.org"
+      ],
+      "id": "opencode_router_telegram_bot_api",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Telegram Bot API: receiving, sending and files.",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": "caller_chosen",
+      "id": "opencode_router_media_download",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Downloads inbound Telegram and Slack media from the URL the channel adapter supplies.",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "opencode_router_opencode",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Drives OpenCode sessions for channel messages through the OpenCode SDK.",
+      "service": "opencode",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "loopback_blocked",
+      "id": "opencode_router_intent_classifier",
+      "kind": "loopback",
+      "m1": "loopback_blocked",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Classifies inbound channel messages.",
+      "service": "intent_classifier",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "loopback_blocked",
+      "id": "opencode_router_lrm_usage",
+      "kind": "loopback",
+      "m1": "loopback_blocked",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Reads usage events to name the model behind a router alias in the reply footer.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "not_on_native_path",
+      "id": "opencode_router_channel_secret_adapter",
+      "kind": "loopback",
+      "m1": "not_on_native_path",
+      "owner": "channels",
+      "process": "opencode_router",
+      "purpose": "Resolves Slack credential references; only the container path sets SC_CHANNEL_SECRET_API_URL.",
+      "service": "channel_secret_adapter",
+      "source": "repo",
+      "tier": "channel"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "profile_tools_connector",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The Profile tools' shared Connector client: search and fetch_result for sc_search_web and sc_fetch_url, when the runtime has a Connector configuration.",
+      "service": "connector",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "profile_plugin_shell_proxy_state",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The shell_proxy_credential plugin asks the egress proxy's shell port whether it asks for approvals (GET /v1/approvals/state, no secret, nothing sent) before it puts a chat credential in a command's proxy environment.",
+      "service": "egress_proxy_shell",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": [
+        "api.tavily.com"
+      ],
+      "id": "sc_search_web_tavily_direct",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "Tavily search from the tool's Python helper when there is no Connector configuration.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": "dependency_defined",
+      "id": "sc_search_web_ddgs_direct",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The DDGS search fallback in the same helper.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "lrm_data_protection_mode",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "Reads the data protection mode before the protected-file dialog and in the default tool guard.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "lrm_local_ctx_size",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "Reads the local model's context size to cap read tool output.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "data_protection_file_pipeline",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "Preflight, protect, restore and query rewrite for protected files, in the tools and the terminal guard, with the privacy service's bearer.",
+      "service": "security_manager_data_plane",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "opencode_telemetry_ingest",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The LLM logger plugin posts telemetry to openwork-server.",
+      "service": "openwork_server",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "hdr_post_polish_sidecar",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The pro post-polish tool creates, runs and polls Hybrid Deep Research sessions.",
+      "service": "deep_research_sidecar",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "opencode_router_managed_tools",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "orchestrator",
+      "process": "opencode_runtime",
+      "purpose": "The send and status tools the supervisor generates call opencode-router.",
+      "service": "opencode_router",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_connector",
+      "hosts": [
+        "gmail.googleapis.com",
+        "www.googleapis.com",
+        "oauth2.googleapis.com",
+        "people.googleapis.com"
+      ],
+      "id": "gmail_google_apis",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The pro Gmail tools read and send mail, read the user's display name and refresh tokens through the Google API client.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_connector",
+      "hosts": [
+        "oauth2.googleapis.com"
+      ],
+      "id": "gmail_oauth_token_exchange",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_config",
+      "process": "openwork_server",
+      "purpose": "openwork-server's OAuth callback spawns the pro Gmail sync's --complete-auth, which exchanges the code at the credentials file's token URI.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_connector",
+      "hosts": [
+        "gmail.googleapis.com",
+        "www.googleapis.com",
+        "oauth2.googleapis.com"
+      ],
+      "id": "gmail_api_setup_check",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_config",
+      "process": "openwork_server",
+      "purpose": "During Gmail setup, openwork-server spawns the pro Gmail sync's --check-apis, which makes one read-only Gmail and one Calendar request with the new token to see whether the project has both APIs turned on.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": [
+        "pypi.org",
+        "files.pythonhosted.org"
+      ],
+      "id": "gmail_tools_uv_install",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The pro Gmail tools start email_sync.py with uv run, which installs missing packages from PyPI. On the native path they run the payload's agent Python instead (GMAIL_PYTHON, EG1-8).",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": "dependency_defined",
+      "id": "ocr_engine_uv_run",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The OCR tool starts its engine with uv run --frozen, which still installs the locked packages into OCR_ENGINE_VENV on first use, and RapidOCR downloads any model it cannot find. Only the container image sets OCR_ENGINE_DIR; the native payload ships the models.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": [
+        "pypi.org",
+        "files.pythonhosted.org"
+      ],
+      "id": "openwork_gmail_uv_install",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "openwork_server",
+      "process": "openwork_server",
+      "purpose": "openwork-server's Gmail routes start email_sync.py with uv run, which installs missing packages from PyPI. On the native path they run the payload's agent Python instead (GMAIL_PYTHON, EG1-8).",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "gmail_lrm_chat",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "opencode_runtime",
+      "purpose": "The pro email pipeline's model calls through the LLM router.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "disabled_by_environment",
+      "hosts": "dependency_defined",
+      "id": "opencode_autoupdate",
+      "kind": "external",
+      "m1": "disabled_by_environment",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's update check.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "disabled_by_environment",
+      "hosts": [
+        "models.dev"
+      ],
+      "id": "opencode_models_dev",
+      "kind": "external",
+      "m1": "disabled_by_environment",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's model catalog fetch.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "disabled_by_environment",
+      "hosts": "dependency_defined",
+      "id": "opencode_lsp_download",
+      "kind": "external",
+      "m1": "disabled_by_environment",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's language server downloads.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "denied_by_profile",
+      "hosts": "caller_chosen",
+      "id": "opencode_webfetch",
+      "kind": "external",
+      "m1": "denied_by_profile",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's built-in webfetch tool.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "denied_by_profile",
+      "hosts": "dependency_defined",
+      "id": "opencode_websearch",
+      "kind": "external",
+      "m1": "denied_by_profile",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's built-in websearch tool.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_mcp_gateway",
+      "hosts": "caller_chosen",
+      "id": "opencode_remote_mcp",
+      "kind": "external",
+      "m1": "denied_by_profile",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's connections to remote MCP servers; no Profile configures one.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": [
+        "api.githubcopilot.com",
+        "huggingface.co",
+        "mcp.stripe.com",
+        "access.stripe.com"
+      ],
+      "id": "opencode_catalog_remote_mcp",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "The UI catalog's one-click remote MCP servers (GitHub, Hugging Face, Stripe): OpenCode's MCP connection and its OAuth discovery, client registration and token exchange, through the runtime's proxy environment.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_blocked",
+      "id": "opencode_host_mcp_gateway",
+      "kind": "loopback",
+      "m1": "loopback_blocked",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's remote MCP client, and a tier browser MCP attached with --cdp-endpoint, reach the host MCP gateway.",
+      "service": "mcp_host_manager",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": "caller_chosen",
+      "id": "opencode_local_mcp",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "Local (stdio) MCP servers the owner adds in the app, started by OpenCode with the runtime's proxy environment. HTTPS goes through the egress proxy, Node's fetch included (NODE_USE_ENV_PROXY); a client that ignores the proxy variables connects directly.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "denied_by_profile",
+      "hosts": "dependency_defined",
+      "id": "opencode_session_share",
+      "kind": "external",
+      "m1": "denied_by_profile",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode's session sharing.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": "dependency_defined",
+      "id": "opencode_plugin_install",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "agent_runtime_upstream",
+      "process": "opencode_runtime",
+      "purpose": "OpenCode installs the npm plugins a Profile lists; the native payload seeds opencode-scheduler.",
+      "source": "upstream_opencode",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "hdr_lrm_chat",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "hdr_sidecar",
+      "process": "hdr_sidecar",
+      "purpose": "Completions, and the PII level, through the LLM router.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "hdr_lrm_models_ready",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "hdr_sidecar",
+      "process": "hdr_sidecar",
+      "purpose": "The managed readiness probe lists the LLM router's models.",
+      "service": "llmrouter_manager",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "hdr_connector_search",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "hdr_sidecar",
+      "process": "hdr_sidecar",
+      "purpose": "Managed web search through the Connector.",
+      "service": "connector",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": [
+        "api.tavily.com"
+      ],
+      "id": "hdr_tavily_search_direct",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "hdr_sidecar",
+      "process": "hdr_sidecar",
+      "purpose": "Tavily search when the sidecar has no Connector configuration.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "not_on_native_path",
+      "hosts": "dependency_defined",
+      "id": "hdr_ddgs_search_direct",
+      "kind": "external",
+      "m1": "not_on_native_path",
+      "owner": "hdr_sidecar",
+      "process": "hdr_sidecar",
+      "purpose": "The DDGS search fallback when the sidecar has no Connector configuration.",
+      "source": "repo",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "via_egress_proxy",
+      "hosts": "caller_chosen",
+      "id": "agent_shell",
+      "kind": "external",
+      "m1": "via_egress_proxy",
+      "owner": "agent_config",
+      "process": "agent_shell",
+      "purpose": "Network use by commands the agent runs: curl, pip, npm, git. HTTPS goes through the egress proxy (HTTPS_PROXY); plain HTTP is not proxied and goes direct until EG2-4.",
+      "source": "agent_command",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "loopback_allowed",
+      "id": "agent_shell_egress_proxy",
+      "kind": "loopback",
+      "m1": "loopback_allowed",
+      "owner": "agent_config",
+      "process": "agent_shell",
+      "purpose": "The hop those commands make to the egress proxy's shell port, set in their proxy environment.",
+      "service": "egress_proxy_shell",
+      "source": "agent_command",
+      "tier": "file_tool"
+    },
+    {
+      "ga": "outside_the_island",
+      "id": "toy_ui_openwork_api",
+      "kind": "loopback",
+      "m1": "outside_the_island",
+      "owner": "openwork_server",
+      "process": "owner_browser",
+      "purpose": "The toy UI page openwork-server serves calls its own origin from the owner's browser.",
+      "service": "openwork_server",
+      "source": "repo",
+      "tier": null
+    },
+    {
+      "ga": "outside_the_island",
+      "id": "developer_script_openwork",
+      "kind": "loopback",
+      "m1": "outside_the_island",
+      "owner": "orchestrator",
+      "process": "developer_script",
+      "purpose": "files-session.mjs waits for a local openwork-server and calls its API.",
+      "service": "openwork_server",
+      "source": "repo",
+      "tier": null
+    },
+    {
+      "ga": "outside_the_island",
+      "id": "developer_script_supervisor_daemon",
+      "kind": "loopback",
+      "m1": "outside_the_island",
+      "owner": "orchestrator",
+      "process": "developer_script",
+      "purpose": "router.mjs waits for a local supervisor daemon.",
+      "service": "supervisor_control",
+      "source": "repo",
+      "tier": null
+    },
+    {
+      "ga": "outside_the_island",
+      "id": "developer_script_channels_smoke",
+      "kind": "loopback",
+      "m1": "outside_the_island",
+      "owner": "channels",
+      "process": "developer_script",
+      "purpose": "The channels smoke.mjs drives a local OpenCode through createOpencodeClient at OPENCODE_URL.",
+      "service": "opencode",
+      "source": "repo",
+      "tier": null
+    },
+    {
+      "ga": "outside_the_island",
+      "hosts": "caller_chosen",
+      "id": "host_mcp_server_network",
+      "kind": "external",
+      "m1": "outside_the_island",
+      "owner": "mcp_host_manager",
+      "process": "host_mcp_server",
+      "purpose": "Network use by the MCP servers the user registered to run on the host, as the signed-in user.",
+      "source": "user_configured",
+      "tier": null
+    },
+    {
+      "ga": "outside_the_island",
+      "hosts": "caller_chosen",
+      "id": "host_browser_network",
+      "kind": "external",
+      "m1": "outside_the_island",
+      "owner": "mcp_host_manager",
+      "process": "host_browser",
+      "purpose": "The host MCP gateway's Edge loads what the agent's browser tool navigates to; the gateway starts it, and no code here names the pages.",
+      "source": "agent_command",
+      "tier": null
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-chat-grant-status.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowed": {
+      "type": "boolean"
+    },
+    "root_session_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+      "type": "string"
+    },
+    "session_ref": {
+      "pattern": "^sref_[0-9a-f]{16}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "root_session_id",
+    "session_ref",
+    "allowed"
+  ],
+  "title": "EgressChatGrantStatus",
+  "type": "object"
+}

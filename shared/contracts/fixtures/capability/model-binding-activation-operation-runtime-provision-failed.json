@@ -1,0 +1,11 @@
+{
+  "contract_version": 1,
+  "operation_id": "hub:activation-1",
+  "status": "failed",
+  "error": {
+    "code": "runtime_provision_failed",
+    "reason": "provision_elevation_declined",
+    "message": "Windows needs administrator approval to set up the sandbox (UAC), and the prompt was dismissed or timed out with nobody at the desk. Click Retry and approve the prompt."
+  },
+  "retryable": false
+}

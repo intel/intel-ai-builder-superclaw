@@ -1,0 +1,1720 @@
+{
+  "_comment": [
+    "Golden table for the NativePathSet workspace root set rules, read by both",
+    "shared/contracts/src/__tests__/native-path-contract.test.ts and",
+    "host/sandbox_manager/tests/unit/test_native_isolation_path_set_rules.py.",
+    "The cross-field rules necessarily exist twice, once as the Zod refinement in",
+    "shared/contracts/src/native-path-contract.ts and once as the hand-authored Python",
+    "module sandbox_manager.native_isolation.path_set_rules. This table is what keeps them",
+    "identical: each case is applied as a shallow override of `base`, and both suites",
+    "assert that the set of refusal reason codes equals `expected_reasons` exactly.",
+    "`expected_reasons` is compared as a sorted set, so ordering is not part of the",
+    "contract but membership is. An empty list means the descriptor must be accepted.",
+    "Reason codes are the closed enumeration in native-path-contract.ts, generated into",
+    "Python as contracts.workspace_root_refusal.Reason.",
+    "Several cases legitimately produce more than one code. Where that happens the note",
+    "says why, because it is a property of the rules rather than test noise."
+  ],
+  "base": {
+    "contract_version": 2,
+    "owner_sid": "S-1-5-21-1-2-3-1001",
+    "session_id": "session-1",
+    "payload_version": "1.2.3",
+    "workspace_roots": [
+      {
+        "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+        "path": "C:\\Users\\owner\\SuperClawProjects",
+        "policy_class": "managed_default",
+        "access_mode": "read_write",
+        "volume_verdict": "fixed_ntfs",
+        "ancestry_verdict": "no_reparse_point_observed",
+        "authorization": {
+          "kind": "installer_provisioned",
+          "grant_id": null,
+          "granted_at": null,
+          "revocable": false
+        }
+      }
+    ],
+    "config_root": "D:\\SuperClawBackend\\config",
+    "data_root": "D:\\SuperClawBackend\\data",
+    "logs_root": "D:\\SuperClawBackend\\logs",
+    "payload_root": "D:\\SuperClawBackend\\payload\\1.2.3",
+    "temp_root": "D:\\SuperClawBackend\\tmp\\session-1",
+    "protected_root": "C:\\ProgramData\\SuperClaw\\protected\\S-1-5-21-1-2-3-1001",
+    "isolation_root": "C:\\ProgramData\\SuperClaw\\isolation",
+    "denied_workspace_ancestors": {
+      "users_container_roots": ["C:\\Users"],
+      "owner_profile_root": "C:\\Users\\owner",
+      "local_app_data_root": "C:\\Users\\owner\\AppData\\Local",
+      "program_data_root": "C:\\ProgramData",
+      "windows_root": "C:\\Windows"
+    }
+  },
+  "cases": [
+    {
+      "name": "installer_provisioned_only_is_accepted",
+      "note": "A user who adds nothing gets a one-member set describing today's layout.",
+      "overrides": {},
+      "expected_reasons": []
+    },
+    {
+      "name": "a_wrong_contract_version_is_shape_fatal",
+      "note": "No cross-field rule explains a wrong version, and Zod 4 skips object refinements after an invalid_value issue, so both languages must report the safety-net code rather than an empty refusal.",
+      "overrides": { "contract_version": 1 },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "an_unknown_descriptor_field_is_shape_fatal",
+      "note": "Both shape layers forbid extra keys, and Zod 4 skips object refinements after an unrecognized_keys issue. Same safety-net code, for the same reason as a wrong version.",
+      "overrides": { "workspace_root": "D:\\Projects" },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "second_root_is_a_new_member_not_a_new_field",
+      "note": "Adding a root adds an array member. No descriptor field and no schema changes.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "read_only_grant_is_accepted",
+      "note": "user_granted_ro with a read_only access mode is consistent.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_fcc5a34f81d93bcbcf337cf3b32744d03a57f5ffe0058e9090a687357206338f",
+            "path": "D:\\Archive",
+            "policy_class": "user_granted_ro",
+            "access_mode": "read_only",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "extended_prefix_member_spelling_is_refused",
+      "note": "A legal spelling is not a canonical one. The extended prefix names the same directory and folds to the same id, which is exactly the problem: the member would say \\\\?\\D:\\Work while every rule reasoned about D:\\Work. It is refused, not rewritten.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "\\\\?\\D:\\Work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "lowercase_drive_letter_member_spelling_is_refused",
+      "note": "The other legal-but-not-canonical spelling. Same directory, same id, refused for the same reason.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "d:\\Work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "member_count_at_bound_is_accepted",
+      "note": "The declared maximum is inclusive.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_65a61f05ac4897a0112b1c5617d175c83878bb4efe572c4a00443b979a943941",
+            "path": "D:\\W1",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_de9ad90c2a7b23888bb6e7b523da8dbaaceccaa46ee4e298469cdd598495c3d1",
+            "path": "D:\\W2",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_5af294d13cce19ea06361075b6975d0cc10b35bc8835403a947212c10df0a7d9",
+            "path": "D:\\W3",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_c0b780b341b7ec57ee162334ad5ec9ac2de982b68efdd312adfb03720b2d921d",
+            "path": "D:\\W4",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_9166490a55f7dd8dd6249ed2b22855d3608c077547dde02980df13d881dbdee1",
+            "path": "D:\\W5",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_600133f7d49e4ad1848737084e048012db34c60adc0dc0ee270ca116df7e1672",
+            "path": "D:\\W6",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_dde9c000620e3670bc351082531585ded21a79fb82bdf867cc83baa72db2cbbd",
+            "path": "D:\\W7",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": []
+    },
+    {
+      "name": "two_members_overlap_each_other",
+      "note": "Category 1. One pairwise rule covers member against member.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_b069bf8b4cec30a6e1ded3fbf954413863a5a50a60721ec582066179bbb8f98e",
+            "path": "D:\\Work\\Nested",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_overlaps_member"]
+    },
+    {
+      "name": "member_under_a_fixed_managed_root",
+      "note": "Category 2. The member lives inside payload_root.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_f7be381f0a3e8bf515f6355f3a8aa8266dd8ab2f670150404d4876ad29b868dc",
+            "path": "D:\\SuperClawBackend\\payload\\1.2.3\\inner",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_overlaps_managed_root"]
+    },
+    {
+      "name": "member_is_the_payload_root",
+      "note": "Category 10. Equality with a fixed managed root, same generalized rule.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_54e8aecb0c9e849ca79aa47d6b7ae2101a6e7b8897066cd8a46bd54439b04e39",
+            "path": "D:\\SuperClawBackend\\payload\\1.2.3",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_overlaps_managed_root"]
+    },
+    {
+      "name": "two_fixed_managed_roots_overlap",
+      "note": "The same pairwise rule still covers fixed root against fixed root.",
+      "overrides": { "logs_root": "D:\\SuperClawBackend\\config" },
+      "expected_reasons": ["managed_roots_overlap"]
+    },
+    {
+      "name": "non_canonical_dot_dot_traversal",
+      "note": "Category 3. Derivation is not attempted for a path that has no canonical form.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:\\a\\..\\b",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "non_canonical_trailing_dot",
+      "note": "Category 3.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:\\Users\\owner\\Projects.",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "non_canonical_trailing_space",
+      "note": "Category 3.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:\\Users\\owner\\Projects ",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "non_canonical_forward_slashes",
+      "note": "Category 3.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:/Users/owner/Projects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "relative_path",
+      "note": "Category 4.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "relative\\root",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_not_canonical_local_windows"]
+    },
+    {
+      "name": "volume_root_plain",
+      "note": "Category 5. A whole volume gets its own reason code.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:\\",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_is_volume_root"]
+    },
+    {
+      "name": "volume_root_extended_prefix",
+      "note": "Category 5.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "\\\\?\\C:\\",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_is_volume_root"]
+    },
+    {
+      "name": "member_is_the_owner_profile_root",
+      "note": "Category 6. The host supplies the profile path; the contract never reads USERPROFILE. The profile also contains %LOCALAPPDATA%, and containment is tested in both directions, so that rule fires too.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_4107e7fe09f5c4ddd41d693ad99a8ec55537e78665e1e2c1aac21094137ab413",
+            "path": "C:\\Users\\owner",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": [
+        "member_is_owner_profile_root",
+        "member_under_local_app_data_root"
+      ]
+    },
+    {
+      "name": "member_under_local_app_data",
+      "note": "Category 7.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_06e7f86a420f0410fcebe0cd07f85fda34c81ddb85857ea38cffb7a19be58749",
+            "path": "C:\\Users\\owner\\AppData\\Local",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_under_local_app_data_root"]
+    },
+    {
+      "name": "member_under_program_data",
+      "note": "Category 8. Also overlaps protected_root and isolation_root, which live there, so the disjointness rule fires too.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_e2160e63e543d75704f69a46c9696af19d318d77b9305d0ada8b082cdaa7b48d",
+            "path": "C:\\ProgramData",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": [
+        "member_overlaps_managed_root",
+        "member_under_program_data_root"
+      ]
+    },
+    {
+      "name": "member_under_the_windows_directory",
+      "note": "Category 9.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_c53a4215accb368fae59e2e70468c7b6108bae9806e8aaa189eed9dc698b11cc",
+            "path": "C:\\Windows",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_under_windows_root"]
+    },
+    {
+      "name": "member_under_another_users_profile",
+      "note": "Category 11. Under the users container but not under the owner's own profile.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_18f7c827a456bc1c2ece2546de8e09e37b8fa4b1d251cf06ce37dd769ea83af8",
+            "path": "C:\\Users\\other\\Projects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_under_other_user_profile"]
+    },
+    {
+      "name": "volume_verdict_non_ntfs",
+      "note": "Category 12. The verdict is a caller-supplied input, never measured here.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "non_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["volume_verdict_non_ntfs"]
+    },
+    {
+      "name": "volume_verdict_removable",
+      "note": "Category 13.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "removable",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["volume_verdict_removable"]
+    },
+    {
+      "name": "volume_verdict_redirected",
+      "note": "Category 14.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "redirected",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["volume_verdict_redirected"]
+    },
+    {
+      "name": "volume_verdict_unknown_fails_closed",
+      "note": "Category 15. Absent evidence is refused rather than defaulted to a pass.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "unknown",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["volume_verdict_unknown"]
+    },
+    {
+      "name": "ancestor_reparse_point_observed",
+      "note": "Category 16. A point-in-time lstat observation, not a race-aware check.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["ancestor_reparse_point_observed"]
+    },
+    {
+      "name": "ancestry_verdict_unknown_fails_closed",
+      "note": "Category 16 companion. A walk that could not complete is refused.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "unknown",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["ancestry_verdict_unknown"]
+    },
+    {
+      "name": "member_count_above_bound",
+      "note": "Category 17. Nine members against a declared maximum of eight.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_65a61f05ac4897a0112b1c5617d175c83878bb4efe572c4a00443b979a943941",
+            "path": "D:\\W1",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_de9ad90c2a7b23888bb6e7b523da8dbaaceccaa46ee4e298469cdd598495c3d1",
+            "path": "D:\\W2",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_5af294d13cce19ea06361075b6975d0cc10b35bc8835403a947212c10df0a7d9",
+            "path": "D:\\W3",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_c0b780b341b7ec57ee162334ad5ec9ac2de982b68efdd312adfb03720b2d921d",
+            "path": "D:\\W4",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_9166490a55f7dd8dd6249ed2b22855d3608c077547dde02980df13d881dbdee1",
+            "path": "D:\\W5",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_600133f7d49e4ad1848737084e048012db34c60adc0dc0ee270ca116df7e1672",
+            "path": "D:\\W6",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_dde9c000620e3670bc351082531585ded21a79fb82bdf867cc83baa72db2cbbd",
+            "path": "D:\\W7",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_98302f1eae1ee8e4030e274575ae2b37c6e73102580c17e6a50a130003343d7d",
+            "path": "D:\\W8",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_count_above_bound"]
+    },
+    {
+      "name": "member_count_below_bound",
+      "note": "An empty set breaks the lower bound and has no managed_default, so both fire.",
+      "overrides": { "workspace_roots": [] },
+      "expected_reasons": ["managed_default_missing", "member_count_below_bound"]
+    },
+    {
+      "name": "zero_managed_default_members",
+      "note": "Category 18.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["managed_default_missing"]
+    },
+    {
+      "name": "two_managed_default_members",
+      "note": "Category 19.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_fcc5a34f81d93bcbcf337cf3b32744d03a57f5ffe0058e9090a687357206338f",
+            "path": "D:\\Archive",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["managed_default_duplicated"]
+    },
+    {
+      "name": "access_mode_inconsistent_with_policy_class",
+      "note": "Category 20. user_granted_ro must be read_only.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_fcc5a34f81d93bcbcf337cf3b32744d03a57f5ffe0058e9090a687357206338f",
+            "path": "D:\\Archive",
+            "policy_class": "user_granted_ro",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["access_mode_inconsistent_with_policy_class"]
+    },
+    {
+      "name": "user_grant_without_a_grant_record",
+      "note": "A user-granted root carrying the installer-provisioned record is inconsistent.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_fcc5a34f81d93bcbcf337cf3b32744d03a57f5ffe0058e9090a687357206338f",
+            "path": "D:\\Archive",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["authorization_inconsistent_with_policy_class"]
+    },
+    {
+      "name": "managed_default_carrying_a_user_grant",
+      "note": "The installer-provisioned root must not claim a user grant.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["authorization_inconsistent_with_policy_class"]
+    },
+    {
+      "name": "duplicate_root_id",
+      "note": "Category 21. The repeated id cannot also be the derivation of the second path.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Archive",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["duplicate_root_id", "root_id_not_derived_from_path"]
+    },
+    {
+      "name": "duplicate_canonical_path",
+      "note": "Category 22. Identical paths also share a derived id and trivially overlap.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": [
+        "duplicate_canonical_path",
+        "duplicate_root_id",
+        "member_overlaps_member"
+      ]
+    },
+    {
+      "name": "duplicate_canonical_path_by_case_alias",
+      "note": "Comparison is case-insensitive, so a case alias is the same canonical path. The alias differs in a component, not in the drive letter, because a lowercase drive letter is refused as a non-canonical spelling before this rule is reached.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f",
+            "path": "D:\\work",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": [
+        "duplicate_canonical_path",
+        "duplicate_root_id",
+        "member_overlaps_member"
+      ]
+    },
+    {
+      "name": "root_id_not_derived_from_path",
+      "note": "The id is host-derived, so a supplied id that does not match its path is refused.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "D:\\Work",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["root_id_not_derived_from_path"]
+    },
+    {
+      "name": "member_contains_the_local_app_data_root",
+      "note": "Containing a denied location grants everything inside it, so the rule tests containment in both directions. The default layout hid this because the fixed backend roots sit under %LOCALAPPDATA%; here they are on another volume, as a relocated state directory puts them.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_aed61bbfcb196ff68f56b2e3e90216a3b466a75af58753ba89c664860a1ee474",
+            "path": "C:\\Users\\owner\\AppData",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["member_under_local_app_data_root"]
+    },
+    {
+      "name": "member_contains_a_users_container_root",
+      "note": "A relocated profile container one level deeper, so the containing member is not a volume root. The member holds the relocated profiles, and with them the owner's %LOCALAPPDATA%, so both rules fire. It is the first of the two containers that matches; one refusal is emitted however many match.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0006ad178a00660f9de1f54aef99071cf0de7bf80595f446831de5ab13ed3439",
+            "path": "D:\\Company",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ],
+        "denied_workspace_ancestors": {
+          "users_container_roots": ["D:\\Company\\Profiles", "C:\\Users"],
+          "owner_profile_root": "D:\\Company\\Profiles\\owner",
+          "local_app_data_root": "D:\\Company\\Profiles\\owner\\AppData\\Local",
+          "program_data_root": "C:\\ProgramData",
+          "windows_root": "C:\\Windows"
+        }
+      },
+      "expected_reasons": [
+        "member_under_local_app_data_root",
+        "member_under_other_user_profile"
+      ]
+    },
+    {
+      "name": "member_in_the_system_users_directory_while_the_profile_is_relocated",
+      "note": "The owner's profile lives on another volume, so the parent of %USERPROFILE% is not C:\\Users - but C:\\Users still holds Default, Public, and every account that was not relocated. A single-valued container field could only name one of the two and naming the relocated one reopened this member.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_f41ab8eda5c6b0e1a2279c96f00298fa0f1fecbe85f5a1f81279f38f3ba49ba9",
+            "path": "D:\\Company\\Profiles\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_63da6e5ea8ede9b78992a2af5e394ccb4fe28462e497540ceb3bcc4f07bd1cb2",
+            "path": "C:\\Users\\Public",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ],
+        "denied_workspace_ancestors": {
+          "users_container_roots": ["D:\\Company\\Profiles", "C:\\Users"],
+          "owner_profile_root": "D:\\Company\\Profiles\\owner",
+          "local_app_data_root": "D:\\Company\\Profiles\\owner\\AppData\\Local",
+          "program_data_root": "C:\\ProgramData",
+          "windows_root": "C:\\Windows"
+        }
+      },
+      "expected_reasons": ["member_under_other_user_profile"]
+    },
+    {
+      "name": "short_name_alias_spelling_of_a_denied_ancestor",
+      "note": "C:\\PROGRA~3 is the live 8.3 alias of C:\\ProgramData. Accepting it would leave the denied-location rule comparing against a spelling nothing else uses.",
+      "overrides": {
+        "denied_workspace_ancestors": {
+          "users_container_roots": ["C:\\Users"],
+          "owner_profile_root": "C:\\Users\\owner",
+          "local_app_data_root": "C:\\Users\\owner\\AppData\\Local",
+          "program_data_root": "C:\\PROGRA~3",
+          "windows_root": "C:\\Windows"
+        }
+      },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "short_name_alias_spelling_of_one_users_container_root",
+      "note": "Every entry of the container list is checked, not just the first. An alias spelling in the second entry would compare against a spelling nothing else uses, so the whole list would silently stop matching the directory it names.",
+      "overrides": {
+        "denied_workspace_ancestors": {
+          "users_container_roots": ["C:\\Users", "D:\\COMPAN~1\\Profiles"],
+          "owner_profile_root": "C:\\Users\\owner",
+          "local_app_data_root": "C:\\Users\\owner\\AppData\\Local",
+          "program_data_root": "C:\\ProgramData",
+          "windows_root": "C:\\Windows"
+        }
+      },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "short_name_alias_spelling_of_a_fixed_managed_root",
+      "note": "The alias spelling of a fixed root would compare as a different directory from every other root, so disjointness would pass on two names for one place.",
+      "overrides": { "config_root": "D:\\SUPERC~1\\config" },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "short_name_alias_member_under_a_denied_ancestor",
+      "note": "The long spelling of this member refuses with member_overlaps_managed_root and member_under_program_data_root. The alias spelling must not be the way around them.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "C:\\PROGRA~3\\SuperClaw\\isolation",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "short_name_alias_member_aliasing_another_member",
+      "note": "Read-only on the long spelling and read-write on the alias would be two members naming one directory, with the stricter access mode simply bypassed.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_d5f21034ae8da9f1e1bf28e2fcfd15d0a5ba858a3fb2f26d0573a3cb966952d7",
+            "path": "D:\\Data\\ProjectArchive",
+            "policy_class": "user_granted_ro",
+            "access_mode": "read_only",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          },
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "D:\\Data\\PROJEC~1",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "short_name_alias_member_with_no_retained_base",
+      "note": "Once nothing of the long name survives generation the alias is bare, as in ~1. An earlier pattern required at least one character before the tilde and accepted this spelling.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_0000000000000000000000000000000000000000000000000000000000000000",
+            "path": "D:\\Data\\~1",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["path_uses_short_name_alias"]
+    },
+    {
+      "name": "a_shape_fatal_version_hides_a_second_managed_default",
+      "note": "A shape-fatal failure wins outright in both languages: the version is not one this contract can parse, so no verdict about field semantics is reported alongside it. Without this case the two tiers could disagree here and every other case would still pass.",
+      "overrides": {
+        "contract_version": 1,
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_d5f21034ae8da9f1e1bf28e2fcfd15d0a5ba858a3fb2f26d0573a3cb966952d7",
+            "path": "D:\\Data\\ProjectArchive",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "an_unknown_field_hides_a_duplicated_member",
+      "note": "Same rule, reached by an unknown key rather than a wrong literal. The duplicated member would refuse on its own id and on its own path, and neither code is reported.",
+      "overrides": {
+        "workspace_root": "D:\\Projects",
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "an_unreadable_vocabulary_hides_an_overlap_with_a_managed_root",
+      "note": "A verdict outside its closed vocabulary is unreadable rather than merely wrong, so the member it describes states no fact this contract can weigh. The second member is isolation_root and sits under program_data_root, and neither code is reported.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_xfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_f3eac4035634395da4818b15b0aea07a0083de7a11b9bbc7529a56d7949a605e",
+            "path": "C:\\ProgramData\\SuperClaw\\isolation",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "a_field_of_the_wrong_type_hides_a_duplicated_member",
+      "note": "A number where a path belongs is not a spelling this contract can evaluate, so the same rule applies as for a wrong version. A fourth route to the verdict, because each of these is a different Zod issue kind and a different Pydantic error type.",
+      "overrides": {
+        "config_root": 7,
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "a_member_path_failing_the_grammar_is_not_shape_fatal",
+      "note": "The other side of the same line, and why it is drawn at parseability rather than at any failure at all. A path with forward slashes is a well-typed string whose content is wrong: it carries its own code, and the cross-field rules still run and still report the duplicated id.",
+      "overrides": {
+        "workspace_roots": [
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "C:\\Users\\owner\\SuperClawProjects",
+            "policy_class": "managed_default",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "installer_provisioned",
+              "grant_id": null,
+              "granted_at": null,
+              "revocable": false
+            }
+          },
+          {
+            "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e",
+            "path": "D:/Data/Archive",
+            "policy_class": "user_granted_rw",
+            "access_mode": "read_write",
+            "volume_verdict": "fixed_ntfs",
+            "ancestry_verdict": "no_reparse_point_observed",
+            "authorization": {
+              "kind": "user_grant",
+              "grant_id": "wsg_a1b2c3d4e5f6",
+              "granted_at": "2026-08-27T00:00:00Z",
+              "revocable": true
+            }
+          }
+        ]
+      },
+      "expected_reasons": ["duplicate_root_id", "path_not_canonical_local_windows"]
+    }
+  ],
+  "derivations": [
+    { "path": "C:\\Users\\owner\\SuperClawProjects", "root_id": "wsr_270c688bbccfca6ac3bae2a66850516f55f4e4561b546e742d560d7748f7ea3e" },
+    { "path": "D:\\Work", "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f" },
+    { "path": "d:\\work", "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f" },
+    { "path": "\\\\?\\D:\\Work", "root_id": "wsr_2e445c9aaa76d584de0810adb325f9fb6f71569f5a5d36b025890be63c08ff8f" },
+    { "path": "D:\\Work\\Nested", "root_id": "wsr_b069bf8b4cec30a6e1ded3fbf954413863a5a50a60721ec582066179bbb8f98e" },
+    { "path": "C:\\Users\\owner", "root_id": "wsr_4107e7fe09f5c4ddd41d693ad99a8ec55537e78665e1e2c1aac21094137ab413" },
+    { "path": "C:\\Windows", "root_id": "wsr_c53a4215accb368fae59e2e70468c7b6108bae9806e8aaa189eed9dc698b11cc" }
+  ]
+}

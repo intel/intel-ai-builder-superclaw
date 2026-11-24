@@ -1,0 +1,266 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-mutation-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "config": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "command": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "environment": {
+                    "additionalProperties": {
+                      "const": "[redacted]",
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "timeout": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "type": {
+                    "const": "local",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "command"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "headers": {
+                    "additionalProperties": {
+                      "const": "[redacted]",
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "oauth": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {},
+                        "type": "object"
+                      },
+                      {
+                        "const": false,
+                        "type": "boolean"
+                      }
+                    ]
+                  },
+                  "timeout": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "type": {
+                    "const": "remote",
+                    "type": "string"
+                  },
+                  "url": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "url"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "disabledByTools": {
+            "type": "boolean"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "execution": {
+            "enum": [
+              "sandbox",
+              "host"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "config.project",
+              "config.global",
+              "config.remote"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "error": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "connected",
+                  "disabled",
+                  "failed",
+                  "needs_auth",
+                  "needs_client_registration",
+                  "connecting"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "status"
+            ],
+            "type": "object"
+          },
+          "transport": {
+            "enum": [
+              "local",
+              "remote"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "transport",
+          "config",
+          "enabled",
+          "source"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "operations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "durationMs": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST",
+              "DELETE"
+            ],
+            "type": "string"
+          },
+          "operation": {
+            "enum": [
+              "connect",
+              "remove",
+              "logout"
+            ],
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "result": {
+            "enum": [
+              "success",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "step": {
+            "enum": [
+              "persist",
+              "reload",
+              "connect",
+              "disconnect",
+              "auth-remove"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "enum": [
+              "instance-runtime",
+              "workspace-config"
+            ],
+            "type": "string"
+          },
+          "transport": {
+            "enum": [
+              "local",
+              "remote"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation",
+          "step",
+          "target",
+          "result",
+          "durationMs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "items",
+    "operations"
+  ],
+  "title": "McpServerMutationResponse",
+  "type": "object"
+}

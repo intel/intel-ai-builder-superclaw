@@ -1,0 +1,164 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-pending-approval-list.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approvals": {
+      "items": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "annotations": {
+                "additionalProperties": false,
+                "properties": {
+                  "destructive": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "open_world": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "read_only": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "read_only",
+                  "destructive",
+                  "open_world"
+                ],
+                "type": "object"
+              },
+              "approval_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+                "type": "string"
+              },
+              "arguments_preview": {
+                "maxLength": 512,
+                "minLength": 1,
+                "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+                "type": "string"
+              },
+              "expires_at": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+                "type": "string"
+              },
+              "grant_scopes": {
+                "items": {
+                  "enum": [
+                    "once",
+                    "until_restart",
+                    "always"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 3,
+                "minItems": 1,
+                "type": "array"
+              },
+              "kind": {
+                "const": "tool_call",
+                "type": "string"
+              },
+              "requested_at": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+                "type": "string"
+              },
+              "server": {
+                "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$",
+                "type": "string"
+              },
+              "title": {
+                "maxLength": 512,
+                "minLength": 1,
+                "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+                "type": "string"
+              },
+              "tool": {
+                "maxLength": 512,
+                "minLength": 1,
+                "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "approval_id",
+              "requested_at",
+              "expires_at",
+              "grant_scopes",
+              "server",
+              "tool",
+              "annotations"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "approval_id": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+                "type": "string"
+              },
+              "expires_at": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+                "type": "string"
+              },
+              "grant_scopes": {
+                "items": {
+                  "enum": [
+                    "once",
+                    "until_restart"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 2,
+                "minItems": 1,
+                "type": "array"
+              },
+              "kind": {
+                "const": "browser_origin",
+                "type": "string"
+              },
+              "origin": {
+                "maxLength": 512,
+                "minLength": 1,
+                "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+                "type": "string"
+              },
+              "requested_at": {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "approval_id",
+              "requested_at",
+              "expires_at",
+              "grant_scopes",
+              "origin"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "maxItems": 64,
+      "type": "array"
+    }
+  },
+  "required": [
+    "approvals"
+  ],
+  "title": "HostMcpPendingApprovalList",
+  "type": "object"
+}

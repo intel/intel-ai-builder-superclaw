@@ -1,0 +1,285 @@
+{
+  "description": [
+    "The bypass list the Sandbox Manager binds to `local_proxy_bypass`, which the broker passes to a role as NO_PROXY.",
+    "A value is its entries joined by `,`, with nothing trimmed. It is ASCII, at most `max_length` bytes, and starts with `loopback_entries` in that order.",
+    "Each entry after those is a name of at least two labels, optionally with a leading `.` for a domain suffix; an IPv4 address with an optional prefix length from 8 to 32; or an IPv6 address, without a zone, with an optional prefix length from 7 to 128. A label is 1 to 63 letters, digits or `-`, and does not start or end with `-`. A prefix length is digits only.",
+    "The broker refuses a whole value that breaks any rule (`values`). The Sandbox Manager builds a value from the loopback entries and the entries it was given, drops each entry `entries` refuses, keeps each one it accepts exactly as written, and so binds only values the broker accepts.",
+    "One step comes before that on the Sandbox Manager's side: it reads the host's NO_PROXY, where `a.corp.example, b.corp.example` is a common spelling, so it trims the whitespace around each host entry before judging it. The value it binds never contains whitespace, and the broker still trims nothing."
+  ],
+  "loopback_entries": [
+    "127.0.0.1",
+    "localhost",
+    "::1"
+  ],
+  "max_length": 4096,
+  "entries": [
+    {
+      "input": "host.corp.example",
+      "expected": "accept"
+    },
+    {
+      "input": ".corp.example",
+      "expected": "accept",
+      "why": "a leading dot is a domain suffix"
+    },
+    {
+      "input": "a.b",
+      "expected": "accept",
+      "why": "two labels is the minimum"
+    },
+    {
+      "input": "HOST.Corp.Example",
+      "expected": "accept",
+      "why": "accepted, and carried, as written"
+    },
+    {
+      "input": "xn--bcher-kva.example",
+      "expected": "accept"
+    },
+    {
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example",
+      "expected": "accept",
+      "why": "a 63-character label"
+    },
+    {
+      "input": "192.168.1.10",
+      "expected": "accept"
+    },
+    {
+      "input": "10.0.0.0/8",
+      "expected": "accept"
+    },
+    {
+      "input": "10.0.0.1/8",
+      "expected": "accept",
+      "why": "the address under a prefix need not be the network address"
+    },
+    {
+      "input": "192.168.1.0/24",
+      "expected": "accept"
+    },
+    {
+      "input": "1.2.3.4/32",
+      "expected": "accept"
+    },
+    {
+      "input": "fe80::1",
+      "expected": "accept"
+    },
+    {
+      "input": "fc00::/7",
+      "expected": "accept"
+    },
+    {
+      "input": "2001:db8::/32",
+      "expected": "accept"
+    },
+    {
+      "input": "::ffff:10.0.0.1",
+      "expected": "accept"
+    },
+    {
+      "input": "*",
+      "expected": "refuse",
+      "why": "every host"
+    },
+    {
+      "input": "*.corp.example",
+      "expected": "refuse",
+      "why": "no wildcard label"
+    },
+    {
+      "input": ".",
+      "expected": "refuse"
+    },
+    {
+      "input": "",
+      "expected": "refuse",
+      "why": "an empty entry, as two commas in a row make"
+    },
+    {
+      "input": "corp",
+      "expected": "refuse",
+      "why": "one label: curl, Python and Go read a bare name as that domain and all of its subdomains"
+    },
+    {
+      "input": ".corp",
+      "expected": "refuse",
+      "why": "a one-label suffix"
+    },
+    {
+      "input": ".com",
+      "expected": "refuse",
+      "why": "a top-level domain"
+    },
+    {
+      "input": " host.corp.example",
+      "expected": "refuse",
+      "why": "nothing is trimmed"
+    },
+    {
+      "input": "host.corp.example ",
+      "expected": "refuse",
+      "why": "nothing is trimmed"
+    },
+    {
+      "input": "host.corp.example:443",
+      "expected": "refuse",
+      "why": "no port"
+    },
+    {
+      "input": "10.0.0.1:443",
+      "expected": "refuse",
+      "why": "no port"
+    },
+    {
+      "input": "[::1]",
+      "expected": "refuse",
+      "why": "no brackets"
+    },
+    {
+      "input": "http://host.corp.example",
+      "expected": "refuse",
+      "why": "no scheme"
+    },
+    {
+      "input": "0.0.0.0/0",
+      "expected": "refuse",
+      "why": "wider than /8"
+    },
+    {
+      "input": "10.0.0.0/7",
+      "expected": "refuse",
+      "why": "wider than /8"
+    },
+    {
+      "input": "10.0.0.0/+8",
+      "expected": "refuse",
+      "why": "a prefix length is digits only"
+    },
+    {
+      "input": "10.0.0.0/",
+      "expected": "refuse",
+      "why": "an empty prefix length"
+    },
+    {
+      "input": "1.2.3.4/33",
+      "expected": "refuse",
+      "why": "longer than the address"
+    },
+    {
+      "input": "::/0",
+      "expected": "refuse",
+      "why": "wider than /7"
+    },
+    {
+      "input": "fc00::/6",
+      "expected": "refuse",
+      "why": "wider than /7"
+    },
+    {
+      "input": "::1/129",
+      "expected": "refuse",
+      "why": "longer than the address"
+    },
+    {
+      "input": "fe80::1%eth0",
+      "expected": "refuse",
+      "why": "no zone"
+    },
+    {
+      "input": "-bad.corp.example",
+      "expected": "refuse",
+      "why": "a label does not start with -"
+    },
+    {
+      "input": "bad-.corp.example",
+      "expected": "refuse",
+      "why": "a label does not end with -"
+    },
+    {
+      "input": "a..corp.example",
+      "expected": "refuse",
+      "why": "an empty label"
+    },
+    {
+      "input": "host_name.corp.example",
+      "expected": "refuse",
+      "why": "letters, digits and - only"
+    },
+    {
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example",
+      "expected": "refuse",
+      "why": "a 64-character label"
+    },
+    {
+      "input": "bücher.example",
+      "expected": "refuse",
+      "why": "ASCII only"
+    }
+  ],
+  "values": [
+    {
+      "input": "127.0.0.1,localhost,::1",
+      "expected": "accept",
+      "why": "the loopback entries alone"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,host.corp.example,.corp.example,10.0.0.0/8,192.168.1.10,fc00::/7,fe80::1",
+      "expected": "accept"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,bbbb.example",
+      "expected": "accept",
+      "why": "exactly max_length bytes"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,a.example,bbbbb.example",
+      "expected": "refuse",
+      "why": "one byte over max_length"
+    },
+    {
+      "input": "",
+      "expected": "refuse"
+    },
+    {
+      "input": "direct",
+      "expected": "refuse"
+    },
+    {
+      "input": "host.corp.example",
+      "expected": "refuse",
+      "why": "no loopback entries"
+    },
+    {
+      "input": "localhost,127.0.0.1,::1",
+      "expected": "refuse",
+      "why": "the loopback entries come first, in this order"
+    },
+    {
+      "input": "127.0.0.1,localhost",
+      "expected": "refuse",
+      "why": "all three loopback entries"
+    },
+    {
+      "input": "127.0.0.1, localhost, ::1",
+      "expected": "refuse",
+      "why": "nothing is trimmed"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,host.corp.example,corp",
+      "expected": "refuse",
+      "why": "one entry outside the grammar refuses the value"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,host.corp.example,",
+      "expected": "refuse",
+      "why": "a trailing comma is an empty entry"
+    },
+    {
+      "input": "127.0.0.1,localhost,::1,bücher.example",
+      "expected": "refuse",
+      "why": "ASCII only"
+    }
+  ]
+}

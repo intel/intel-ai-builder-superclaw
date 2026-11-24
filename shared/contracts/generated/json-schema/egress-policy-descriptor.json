@@ -1,0 +1,479 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-policy-descriptor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "address_sets": {
+      "additionalProperties": false,
+      "properties": {
+        "internal": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "address_family": {
+                "enum": [
+                  "ipv4",
+                  "ipv6"
+                ],
+                "type": "string"
+              },
+              "first": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "last": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "address_family",
+              "first",
+              "last"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "loopback": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "address_family": {
+                "enum": [
+                  "ipv4",
+                  "ipv6"
+                ],
+                "type": "string"
+              },
+              "first": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "last": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "address_family",
+              "first",
+              "last"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "non_loopback": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "address_family": {
+                "enum": [
+                  "ipv4",
+                  "ipv6"
+                ],
+                "type": "string"
+              },
+              "first": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "last": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "address_family",
+              "first",
+              "last"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "loopback",
+        "non_loopback",
+        "internal"
+      ],
+      "type": "object"
+    },
+    "contract_version": {
+      "const": 4,
+      "type": "number"
+    },
+    "loopback_endpoints": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "endpoint": {
+            "enum": [
+              "llmrouter_manager",
+              "sandbox_manager",
+              "security_manager_data_plane",
+              "service_hub",
+              "openwork_server",
+              "opencode",
+              "intent_classifier",
+              "deep_research_sidecar",
+              "opencode_router",
+              "connector",
+              "egress_proxy_shell",
+              "egress_proxy_channel"
+            ],
+            "type": "string"
+          },
+          "loopback_disposition": {
+            "enum": [
+              "allowlistable",
+              "denied",
+              "denied_pending_authenticated_exception",
+              "allowlistable_with_credential"
+            ],
+            "type": "string"
+          },
+          "plane": {
+            "enum": [
+              "host_control",
+              "host_data",
+              "island_internal"
+            ],
+            "type": "string"
+          },
+          "ports": {
+            "items": {
+              "maximum": 65535,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "reachable_from": {
+            "items": {
+              "enum": [
+                "bootstrap",
+                "file_tool",
+                "network_connector",
+                "channel"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "endpoint",
+          "ports",
+          "plane",
+          "loopback_disposition",
+          "reachable_from"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "policy_version": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "posture": {
+      "enum": [
+        "permissive",
+        "enforcing"
+      ],
+      "type": "string"
+    },
+    "primary_layer": {
+      "additionalProperties": false,
+      "properties": {
+        "absence_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "permissive_release_ships_no_rules"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authority": {
+          "const": "primary",
+          "type": "string"
+        },
+        "mechanism": {
+          "const": "wfp",
+          "type": "string"
+        },
+        "presence": {
+          "enum": [
+            "enforcing",
+            "log_only",
+            "declared_absent"
+          ],
+          "type": "string"
+        },
+        "rules": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "block",
+                "type": "string"
+              },
+              "address_set": {
+                "enum": [
+                  "loopback",
+                  "non_loopback",
+                  "internal"
+                ],
+                "type": "string"
+              },
+              "port_match": {
+                "additionalProperties": false,
+                "properties": {
+                  "match_mode": {
+                    "enum": [
+                      "every_port",
+                      "block_complement_of_allowed_ports"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "match_mode"
+                ],
+                "type": "object"
+              },
+              "protocol": {
+                "const": "any",
+                "type": "string"
+              },
+              "rule_class": {
+                "enum": [
+                  "external_outbound_block",
+                  "loopback_non_allowlisted_block",
+                  "internal_outbound_block",
+                  "icmp_connect_block",
+                  "icmp_resource_assignment_block",
+                  "name_resolution_port_block",
+                  "file_sharing_port_block",
+                  "upstream_proxy_permit"
+                ],
+                "type": "string"
+              },
+              "tiers": {
+                "items": {
+                  "enum": [
+                    "bootstrap",
+                    "file_tool",
+                    "network_connector",
+                    "channel"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "rule_class",
+              "action",
+              "protocol",
+              "address_set",
+              "tiers",
+              "port_match"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "authority",
+        "mechanism",
+        "presence",
+        "absence_reason",
+        "rules"
+      ],
+      "type": "object"
+    },
+    "required_host_preconditions": {
+      "items": {
+        "enum": [
+          "base_filtering_engine_running",
+          "dynamic_port_range_known",
+          "declared_ports_outside_dynamic_port_range",
+          "sublayer_weight_uncontested"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "supplementary_layer": {
+      "additionalProperties": false,
+      "properties": {
+        "absence_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "permissive_release_ships_no_rules"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authority": {
+          "const": "supplementary",
+          "type": "string"
+        },
+        "filters": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "block",
+                "type": "string"
+              },
+              "blocked_ports": {
+                "items": {
+                  "maximum": 65535,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "filter_class": {
+                "enum": [
+                  "external_outbound_block",
+                  "loopback_non_allowlisted_block",
+                  "internal_outbound_block",
+                  "icmp_connect_block",
+                  "icmp_resource_assignment_block",
+                  "name_resolution_port_block",
+                  "file_sharing_port_block",
+                  "upstream_proxy_permit"
+                ],
+                "type": "string"
+              },
+              "protocols": {
+                "items": {
+                  "enum": [
+                    "any",
+                    "tcp",
+                    "udp",
+                    "icmpv4",
+                    "icmpv6"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "tiers": {
+                "items": {
+                  "enum": [
+                    "bootstrap",
+                    "file_tool",
+                    "network_connector",
+                    "channel"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "filter_class",
+              "action",
+              "protocols",
+              "blocked_ports",
+              "tiers"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "mechanism": {
+          "const": "wfp",
+          "type": "string"
+        },
+        "presence": {
+          "enum": [
+            "filters_installed",
+            "declared_absent"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "authority",
+        "mechanism",
+        "presence",
+        "absence_reason",
+        "filters"
+      ],
+      "type": "object"
+    },
+    "tier_policies": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "allows_host_dynamic_port_range": {
+            "type": "boolean"
+          },
+          "disposition": {
+            "enum": [
+              "deny_external_allow_declared_loopback",
+              "not_expressed_by_this_layer",
+              "allow_external_block_internal_allow_declared_loopback"
+            ],
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "tier",
+          "disposition",
+          "allows_host_dynamic_port_range"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "policy_version",
+    "posture",
+    "address_sets",
+    "loopback_endpoints",
+    "tier_policies",
+    "required_host_preconditions",
+    "primary_layer",
+    "supplementary_layer"
+  ],
+  "title": "EgressPolicyDescriptor",
+  "type": "object"
+}

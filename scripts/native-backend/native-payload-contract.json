@@ -1,0 +1,469 @@
+{
+  "contract_version": 1,
+  "boundary": "BuildChannel",
+  "description": "Windows-native clean-install payload requirements. This contract is independent of build-native-backend.ps1 and does not replace the versioned integrity manifest.",
+  "feature_authorization": "A payload grade declares only which components must be present. The agent roster and product feature switches belong to the active Product Profile (sandbox/agent_config/profiles/*/profile.json feature_flags and opencode.jsonc); a payload grade neither declares nor authorizes them.",
+  "runtime_probe_timeout_seconds": 300,
+  "toolchain": {
+    "uv": {
+      "version": "0.9.16",
+      "commit": "a63e5b62e",
+      "url": "https://github.com/astral-sh/uv/releases/download/0.9.16/uv-x86_64-pc-windows-msvc.zip",
+      "sha256": "e498a1d5983da7727af96b63ddfcd52ee883173552664ad0b629b3d4c7a46e91"
+    },
+    "node": {
+      "version": "24.21.0",
+      "url": "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip",
+      "sha256": "158f7685b44de51f6c0df1d153526cbcd3e1bc739a8dfc607721cef75de9e541"
+    },
+    "python": {
+      "implementation": "cpython",
+      "version": "3.12.10",
+      "distribution": "cpython-3.12.10-windows-x86_64-none",
+      "provider": "astral-sh/python-build-standalone",
+      "build": "20250529",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250529/cpython-3.12.10%2B20250529-x86_64-pc-windows-msvc-install_only_stripped.tar.gz",
+      "sha256": "ca22a9a9e64ecab6d0b5de7cdf8b679ccaa41e9def6aaa2b4aaa6bb23ec7aaba"
+    },
+    "gh": {
+      "version": "2.102.0",
+      "url": "https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_windows_amd64.zip",
+      "sha256": "ae64e556ecc240b200f7eba60d550e4bb60d78e860e69dd88c449405b86067f4"
+    },
+    "shell": {
+      "brush": {
+        "crate": "brush-shell",
+        "version": "0.4.0",
+        "crate_sha256": "9f0f5029188d3e14cbcd1c43d1ece3d65e74543b079622338b873e1e59317737",
+        "patched_crates": [
+          {
+            "crate": "brush-core",
+            "version": "0.5.0",
+            "sha256": "967a82f3b1bf090db686d5fb86424b19725073828532a42f960d5a13bff14ecb",
+            "patch": "shell-patches/brush-core-windows-heredoc.patch"
+          }
+        ],
+        "features": [
+          "experimental-bundled-coreutils"
+        ],
+        "license_file": "shell-licenses/brush-shell.LICENSE",
+        "release_profile": {
+          "opt-level": "z",
+          "lto": "fat",
+          "codegen-units": "1",
+          "strip": "symbols",
+          "panic": "abort"
+        }
+      },
+      "tools": [
+        {
+          "id": "uutils-grep",
+          "version": "0.2.0",
+          "url": "https://github.com/uutils/grep/releases/download/0.2.0/uu_grep-x86_64-pc-windows-msvc.zip",
+          "sha256": "b364af18fb6367b41b6489a9d2f1e92c8fa80dc37af8aa4fece3293015f03871",
+          "members": {
+            "grep.exe": "grep.exe",
+            "LICENSE": "licenses/uutils-grep.LICENSE"
+          }
+        },
+        {
+          "id": "uutils-sed",
+          "version": "0.3.0",
+          "url": "https://github.com/uutils/sed/releases/download/0.3.0/sed-x86_64-pc-windows-msvc.zip",
+          "sha256": "6bacdbee1a281e0bf8784b932d3665237694243c8f7d9331d6526e88fbc4c374",
+          "members": {
+            "sed.exe": "sed.exe",
+            "LICENSE": "licenses/uutils-sed.LICENSE"
+          }
+        },
+        {
+          "id": "uutils-findutils",
+          "version": "0.10.0",
+          "url": "https://github.com/uutils/findutils/releases/download/0.10.0/findutils-x86_64-pc-windows-msvc.zip",
+          "sha256": "d056b1151f70fdb0c5e6ab216a153ac7161d84afc6764766a6ab92ab441d16fc",
+          "members": {
+            "find.exe": "find.exe",
+            "xargs.exe": "xargs.exe",
+            "LICENSE": "licenses/uutils-findutils.LICENSE"
+          }
+        },
+        {
+          "id": "goawk",
+          "version": "1.32.0",
+          "url": "https://github.com/benhoyt/goawk/releases/download/v1.32.0/goawk_v1.32.0_windows_amd64.zip",
+          "sha256": "2cebd8d64a8eaf84b2787edec8c0274760166e077bc2bdbb69d41537b56cf32c",
+          "members": {
+            "goawk.exe": "goawk.exe",
+            "LICENSE.txt": "licenses/goawk.LICENSE"
+          }
+        },
+        {
+          "id": "ripgrep",
+          "version": "15.2.0",
+          "url": "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15.2.0-x86_64-pc-windows-msvc.zip",
+          "sha256": "71b2fef860abe467217a538ff31de02f5258807c0129f771846f87bd029aafc5",
+          "members": {
+            "ripgrep-15.2.0-x86_64-pc-windows-msvc/rg.exe": "rg.exe",
+            "ripgrep-15.2.0-x86_64-pc-windows-msvc/LICENSE-MIT": "licenses/ripgrep.LICENSE"
+          }
+        },
+        {
+          "id": "uutils-coreutils",
+          "version": "0.12.0",
+          "url": "https://github.com/uutils/coreutils/releases/download/0.12.0/coreutils-0.12.0-x86_64-pc-windows-msvc.zip",
+          "sha256": "45d6760c136ef42cdba1e2dbb492b0858be98099d6c7fb3e300a3adcfbc54cfe",
+          "members": {
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/cat.exe": "cat.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/cp.exe": "cp.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/echo.exe": "echo.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/head.exe": "head.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/ls.exe": "ls.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/mkdir.exe": "mkdir.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/mv.exe": "mv.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/rm.exe": "rm.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/tail.exe": "tail.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/touch.exe": "touch.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/wc.exe": "wc.exe",
+            "coreutils-0.12.0-x86_64-pc-windows-msvc/LICENSE": "licenses/uutils-coreutils.LICENSE"
+          }
+        }
+      ]
+    }
+  },
+  "release_stage_policy": {
+    "status": "closed",
+    "build_script": "scripts/native-backend/build-native-backend.ps1",
+    "required_copy_mode": "/MIR",
+    "forbidden_exclusion": "/XD py",
+    "evidence": "Installer staging mirrors the complete universal payload, including every locked Python environment."
+  },
+  "dependency_locks": {
+    "native-python-payload": {
+      "project": "scripts/native-backend/python-payload/pyproject.toml",
+      "lock": "scripts/native-backend/python-payload/uv.lock",
+      "components": [
+        "agent-python",
+        "readers-ocr",
+        "intent-classifier"
+      ]
+    },
+    "hybrid-dr": {
+      "project": "packaging/installer/resources/hdr-sidecar/pyproject.toml",
+      "lock": "packaging/installer/resources/hdr-sidecar/uv.lock",
+      "components": [
+        "hybrid-dr"
+      ]
+    }
+  },
+  "components": {
+    "core-runtime": {
+      "description": "Native services, OpenCode, pinned POSIX shell and its tools, the offline OpenCode dependency tree, the pinned node and uv that catalog stdio MCP servers start through, and the pinned GitHub CLI.",
+      "required_files": [
+        "openwork.exe",
+        "openwork-server.exe",
+        "opencode-router.exe",
+        "opencode.exe",
+        "shell/sh.exe",
+        "shell/bash.exe",
+        "shell/rg.exe",
+        "shell/grep.exe",
+        "shell/sed.exe",
+        "shell/find.exe",
+        "shell/xargs.exe",
+        "shell/awk.exe",
+        "shell/goawk.exe",
+        "shell/cat.exe",
+        "shell/cp.exe",
+        "shell/echo.exe",
+        "shell/head.exe",
+        "shell/ls.exe",
+        "shell/mkdir.exe",
+        "shell/mv.exe",
+        "shell/rm.exe",
+        "shell/tail.exe",
+        "shell/touch.exe",
+        "shell/wc.exe",
+        "shell/licenses/brush-shell.LICENSE",
+        "shell/licenses/ripgrep.LICENSE",
+        "shell/licenses/uutils-grep.LICENSE",
+        "shell/licenses/uutils-sed.LICENSE",
+        "shell/licenses/uutils-findutils.LICENSE",
+        "shell/licenses/goawk.LICENSE",
+        "shell/licenses/uutils-coreutils.LICENSE",
+        "config-source/package.json",
+        "config-source/package-lock.json",
+        "config-source/node_modules/@opencode-ai/plugin/package.json",
+        "tools/node/node.exe",
+        "tools/node/npm.cmd",
+        "tools/node/npx.cmd",
+        "tools/node/node_modules/npm/bin/npm-cli.js",
+        "tools/node/node_modules/npm/bin/npx-cli.js",
+        "tools/uv/uv.exe",
+        "tools/uv/uvx.exe",
+        "gh/bin/gh.exe",
+        "gh/LICENSE"
+      ],
+      "size_roots": [
+        "openwork.exe",
+        "openwork-server.exe",
+        "opencode-router.exe",
+        "opencode.exe",
+        "shell",
+        "config-source",
+        "tools",
+        "gh"
+      ]
+    },
+    "python-runtime": {
+      "description": "One SHA-verified python-build-standalone CPython base shared by all isolated component launchers.",
+      "required_files": [
+        "py/runtime/BUILD",
+        "py/runtime/python.exe",
+        "py/runtime/python3.dll",
+        "py/runtime/python312.dll",
+        "py/runtime/vcruntime140.dll",
+        "py/runtime/vcruntime140_1.dll",
+        "py/runtime/Lib/encodings/__init__.py",
+        "py/runtime/Lib/ssl.py",
+        "py/runtime/DLLs/_ssl.pyd",
+        "py/runtime/DLLs/libssl-3-x64.dll",
+        "py/runtime/DLLs/libcrypto-3-x64.dll",
+        "py/runtime-provenance.json"
+      ],
+      "size_roots": [
+        "py/runtime",
+        "py/runtime-provenance.json"
+      ]
+    },
+    "task-python-launcher": {
+      "description": "Payload-owned forwarders for bare python/pip on the file_tool runtime's PATH (#3897, fix for #3876): resolve the file_tool tier's writable task venv through VIRTUAL_ENV, falling back to the agent-python component's interpreter when the tier hasn't prepared one. Built from repo source (scripts/native-backend/shell-shims/venv-launcher), not downloaded.",
+      "required_files": [
+        "py/venv-launcher/python.exe",
+        "py/venv-launcher/python3.exe",
+        "py/venv-launcher/pip.exe"
+      ],
+      "size_roots": [
+        "py/venv-launcher"
+      ]
+    },
+    "agent-python": {
+      "description": "General OpenCode helper component with an isolated site-packages tree over the shared portable runtime. Release parity includes the container's complete agent library set, not only Tavily/DDGS, and the Gmail tools' Google client libraries (EG1-8).",
+      "interpreter": "py/agent-python-venv/Scripts/python.exe",
+      "required_files": [
+        "py/agent-python-venv/Scripts/python3.exe",
+        "py/agent-python-venv/Scripts/python3.dll",
+        "py/agent-python-venv/Scripts/python312.dll",
+        "py/agent-python-venv/Scripts/vcruntime140.dll",
+        "py/agent-python-venv/Scripts/vcruntime140_1.dll",
+        "py/agent-python-venv/Scripts/python312._pth",
+        "py/agent-python-venv/Lib/site-packages/googleapiclient/discovery_cache/documents/gmail.v1.json",
+        "py/agent-python-venv/Lib/site-packages/googleapiclient/discovery_cache/documents/calendar.v3.json",
+        "py/agent-python-venv/Lib/site-packages/googleapiclient/discovery_cache/documents/people.v1.json",
+        "python-locks/native-python-payload/pyproject.toml",
+        "python-locks/native-python-payload/uv.lock"
+      ],
+      "imports": [
+        "openai",
+        "dotenv",
+        "tavily",
+        "ddgs",
+        "requests",
+        "pptx",
+        "openpyxl",
+        "docx",
+        "pandas",
+        "numpy",
+        "scipy",
+        "matplotlib",
+        "seaborn",
+        "pytest",
+        "pip",
+        "sklearn",
+        "googleapiclient.discovery",
+        "google.oauth2.credentials",
+        "google_auth_oauthlib.flow",
+        "google_auth_httplib2",
+        "rapidfuzz",
+        "arrow",
+        "tzlocal",
+        "certifi",
+        "pydantic",
+        "pptx.util",
+        "docx.oxml",
+        "docx.oxml.ns",
+        "docx.text.paragraph",
+        "docx.table",
+        "sandbox_manager.connector",
+        "sandbox_manager.dpapi_connector_reader",
+        "contracts.broker_connector_client_config"
+      ],
+      "origin_modules": [
+        "sandbox_manager.connector",
+        "contracts.broker_connector_client_config"
+      ],
+      "size_roots": [
+        "py/agent-python-venv"
+      ]
+    },
+    "readers-ocr": {
+      "description": "Isolated PDF, Office, table, and RapidOCR/ONNX packages over the shared portable runtime, used by tools available at every grade.",
+      "interpreter": "py/readers-venv/Scripts/python.exe",
+      "required_files": [
+        "py/readers-venv/Scripts/python3.dll",
+        "py/readers-venv/Scripts/python312.dll",
+        "py/readers-venv/Scripts/vcruntime140.dll",
+        "py/readers-venv/Scripts/vcruntime140_1.dll",
+        "py/readers-venv/Scripts/python312._pth",
+        "readers/extract_text.py",
+        "readers/extract_text_impl.py",
+        "python-locks/native-python-payload/pyproject.toml",
+        "python-locks/native-python-payload/uv.lock"
+      ],
+      "imports": [
+        "llama_index.core",
+        "fsspec",
+        "docx",
+        "pypdfium2",
+        "pdfplumber",
+        "pptx",
+        "openpyxl",
+        "pandas",
+        "rapidocr",
+        "onnxruntime",
+        "cv2",
+        "numpy",
+        "extract_text_impl",
+        "pdf_reader",
+        "docx_reader",
+        "pptx_reader",
+        "xlsx_reader",
+        "csv_reader"
+      ],
+      "scripts": [
+        "readers/extract_text.py"
+      ],
+      "origin_modules": [
+        "extract_text_impl",
+        "pdf_reader",
+        "docx_reader",
+        "pptx_reader",
+        "xlsx_reader",
+        "csv_reader"
+      ],
+      "required_globs": [
+        "py/readers-venv/Lib/site-packages/rapidocr/**/*.onnx"
+      ],
+      "size_roots": [
+        "py/readers-venv",
+        "readers"
+      ]
+    },
+    "intent-classifier": {
+      "description": "Intent-classifier service with isolated packages over the shared portable runtime; required when classification is enabled.",
+      "interpreter": "py/classifier-venv/Scripts/python.exe",
+      "imports": [
+        "fastapi",
+        "uvicorn",
+        "uvicorn.loops.auto",
+        "uvicorn.protocols.http.auto",
+        "uvicorn.protocols.websockets.auto",
+        "uvicorn.lifespan.on",
+        "httpx",
+        "pydantic"
+      ],
+      "scripts": [
+        "intent-classifier/intent_classifier_server.py"
+      ],
+      "required_files": [
+        "py/classifier-venv/Scripts/python3.dll",
+        "py/classifier-venv/Scripts/python312.dll",
+        "py/classifier-venv/Scripts/vcruntime140.dll",
+        "py/classifier-venv/Scripts/vcruntime140_1.dll",
+        "py/classifier-venv/Scripts/python312._pth",
+        "intent-classifier/intent_classifier_server.py",
+        "python-locks/native-python-payload/pyproject.toml",
+        "python-locks/native-python-payload/uv.lock"
+      ],
+      "size_roots": [
+        "py/classifier-venv",
+        "intent-classifier"
+      ]
+    },
+    "hybrid-dr": {
+      "description": "Hybrid Deep Research isolated packages over the shared portable runtime, including the module, pipeline config, and prompt resources.",
+      "interpreter": "py/hybrid-dr-venv/Scripts/python.exe",
+      "required_files": [
+        "py/hybrid-dr-venv/Scripts/python3.dll",
+        "py/hybrid-dr-venv/Scripts/python312.dll",
+        "py/hybrid-dr-venv/Scripts/vcruntime140.dll",
+        "py/hybrid-dr-venv/Scripts/vcruntime140_1.dll",
+        "py/hybrid-dr-venv/Scripts/python312._pth",
+        "python-locks/hybrid-dr/pyproject.toml",
+        "python-locks/hybrid-dr/uv.lock"
+      ],
+      "imports": [
+        "hybrid_dr_orchestrator.api.serve",
+        "uvicorn.loops.auto",
+        "uvicorn.protocols.http.auto",
+        "uvicorn.protocols.websockets.auto",
+        "uvicorn.lifespan.on"
+      ],
+      "origin_modules": [
+        "hybrid_dr_orchestrator",
+        "hybrid_dr_orchestrator.api.serve"
+      ],
+      "required_globs": [
+        "py/hybrid-dr-venv/Lib/site-packages/hybrid_dr_orchestrator/pipeline_config.json",
+        "py/hybrid-dr-venv/Lib/site-packages/hybrid_dr_orchestrator/prompts/*.md"
+      ],
+      "size_roots": [
+        "py/hybrid-dr-venv"
+      ]
+    }
+  },
+  "complete_release_components": [
+    "core-runtime",
+    "python-runtime",
+    "task-python-launcher",
+    "agent-python",
+    "readers-ocr",
+    "intent-classifier",
+    "hybrid-dr"
+  ],
+  "grades": {
+    "minimal": {
+      "components": [
+        "core-runtime",
+        "python-runtime",
+        "task-python-launcher",
+        "agent-python",
+        "readers-ocr"
+      ]
+    },
+    "full": {
+      "components": [
+        "core-runtime",
+        "python-runtime",
+        "task-python-launcher",
+        "agent-python",
+        "readers-ocr",
+        "intent-classifier"
+      ]
+    },
+    "full-hdr": {
+      "components": [
+        "core-runtime",
+        "python-runtime",
+        "task-python-launcher",
+        "agent-python",
+        "readers-ocr",
+        "intent-classifier",
+        "hybrid-dr"
+      ]
+    }
+  },
+  "release_dev_policy": {
+    "release": "The installer carries the complete universal component superset, one portable CPython base, and isolated component site-packages. Missing packaged interpreters fail before spawn; a payload grade controls only which components must be present.",
+    "development": "Only a payload without a canonical complete manifest may resolve repo-tree scripts or system Python. Final release verification requires byte-for-byte file-set parity with release staging."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-call-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "enum": [
+    "denied",
+    "approval_timeout",
+    "session_locked",
+    "server_unavailable",
+    "cancelled",
+    "stopped_by_user",
+    "cancelled_by_user"
+  ],
+  "title": "HostMcpCallRefusal",
+  "type": "string"
+}

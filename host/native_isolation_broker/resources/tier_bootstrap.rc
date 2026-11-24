@@ -1,0 +1,3 @@
+#define SC_FILE_DESCRIPTION "SuperClaw Tier Bootstrap"
+#define SC_ORIGINAL_FILENAME "native_isolation_tier_bootstrap.exe"
+#include "version_info.inc"

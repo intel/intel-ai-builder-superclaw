@@ -1,0 +1,19 @@
+[package]
+name = "awk-shim"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "awk.exe for the native payload shell: goawk with LF output."
+
+[[bin]]
+name = "awk"
+path = "src/main.rs"
+
+[dependencies]
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

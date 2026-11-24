@@ -1,0 +1,9 @@
+{
+  "_comment_1": "router_model_map: maps the trained-panel model names (in the shipped latent_factor_artefacts.pkl's available_models) to LRM's cloud-model / local-model aliases.",
+  "_comment_2": "Panel: ['Qwen3.5-4B', 'Qwen3.5-9B', 'cloud', 'qwen3-coder-next', 'qwen3.6-35b']. The four qwen* labels are local SKUs; 'cloud' is the cloud-side panel slot. Keys MUST match panel names exactly (case-sensitive) - otherwise the adapter returns RouterFailure('router_predicted_unmapped').",
+  "Qwen3.5-4B": "local-model",
+  "Qwen3.5-9B": "local-model",
+  "qwen3.6-35b": "local-model",
+  "qwen3-coder-next": "local-model",
+  "cloud": "cloud-model"
+}

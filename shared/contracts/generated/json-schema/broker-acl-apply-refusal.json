@@ -1,0 +1,50 @@
+{
+  "$id": "https://different.ai/openwork-contracts/broker-acl-apply-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "operation_id": {
+      "pattern": "^sm:[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "unsupported_contract_version",
+              "operation_id_invalid",
+              "plan_shape_invalid",
+              "coverage_bound_exceeded",
+              "win32_permission_denied",
+              "apply_shape_invalid"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "operation_id",
+    "refusals"
+  ],
+  "title": "BrokerAclApplyRefusal",
+  "type": "object"
+}

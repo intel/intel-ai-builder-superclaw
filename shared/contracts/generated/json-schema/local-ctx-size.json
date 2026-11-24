@@ -1,0 +1,55 @@
+{
+  "$id": "https://different.ai/openwork-contracts/local-ctx-size.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "applied": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ctx_size": {
+      "anyOf": [
+        {
+          "maximum": 262144,
+          "minimum": 1024,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "restarted": {
+      "type": "boolean"
+    },
+    "source": {
+      "enum": [
+        "env",
+        "store",
+        "registry",
+        "booster",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "supported": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "ctx_size",
+    "applied",
+    "source",
+    "supported"
+  ],
+  "title": "LocalCtxSize",
+  "type": "object"
+}

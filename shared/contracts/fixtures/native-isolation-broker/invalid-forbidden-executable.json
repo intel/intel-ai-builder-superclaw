@@ -1,0 +1,10 @@
+{
+  "contract_version": 1,
+  "manifest_version": 1,
+  "manifest_digest": "3a6e4d3e98904c7939f4515789c330a27f022c036f90257176fcfec0656c8520",
+  "launch_role": "test_fixed_sleep_child",
+  "workspace_root_id": null,
+  "path_bindings": [],
+  "scalar_bindings": [],
+  "executable": "C:\\Windows\\System32\\cmd.exe"
+}

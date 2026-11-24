@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profile": "lite",
+  "display_name": "SuperClaw Lite",
+  "description": "Primarily relies on a cloud-hosted chat model.",
+  "required_sidecars": [],
+  "feature_flags": {
+    "intent_classifier": false,
+    "local_tts": false,
+    "local_vision": false,
+    "hybrid_coding_agent": true,
+    "hybrid_deep_research_agent": false,
+    "email_agent": false,
+    "skills_ui": true,
+    "agent_authoring": true,
+    "voice_input": true,
+    "mcp_local_command": true,
+    "mcp_tool_permissions": true,
+    "mcp_host_execution": true,
+    "host_browser": true
+  }
+}

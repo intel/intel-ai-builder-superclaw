@@ -1,0 +1,25 @@
+{
+  "$id": "https://different.ai/openwork-contracts/slack-install-complete-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "app_token": {
+      "pattern": "^[\\x21-\\x7e]{1,512}$",
+      "type": "string"
+    },
+    "directory": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "app_token"
+  ],
+  "title": "SlackInstallCompleteRequest",
+  "type": "object"
+}

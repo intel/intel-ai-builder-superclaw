@@ -1,0 +1,83 @@
+{
+  "registry_version": 1,
+  "capability_contract_version": 1,
+  "bundles": [
+    {
+      "bundle_id": "local-27b",
+      "backend": "llama",
+      "chat_model_id": "qwen3.8-27b",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "full-hdr",
+      "compatible_product_profiles": [
+        "pro"
+      ],
+      "priority": 500
+    },
+    {
+      "bundle_id": "local-35b",
+      "backend": "llama",
+      "chat_model_id": "qwen3.6-35b-a3b",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "full-hdr",
+      "compatible_product_profiles": [
+        "pro"
+      ],
+      "priority": 400
+    },
+    {
+      "bundle_id": "local-gemma4-26b-a4b",
+      "backend": "llama",
+      "chat_model_id": "gemma-4-26b-a4b-it",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "full-hdr",
+      "compatible_product_profiles": [
+        "pro"
+      ],
+      "priority": 399
+    },
+    {
+      "bundle_id": "local-4b",
+      "backend": "llama",
+      "chat_model_id": "qwen3.5-4b",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "minimal",
+      "compatible_product_profiles": [
+        "standard"
+      ],
+      "priority": 200
+    },
+    {
+      "bundle_id": "local-gemma-4e4b",
+      "backend": "llama",
+      "chat_model_id": "gemma4-e4b-it",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "minimal",
+      "compatible_product_profiles": [
+        "standard"
+      ],
+      "priority": 190
+    },
+    {
+      "bundle_id": "edge-qwen3-coder-next-80b",
+      "backend": "edge",
+      "chat_model_id": "Qwen3-Coder-Next",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "full-hdr",
+      "compatible_product_profiles": [
+        "pro"
+      ],
+      "priority": 90
+    },
+    {
+      "bundle_id": "edge-qwen3.8-flash-next",
+      "backend": "edge",
+      "chat_model_id": "Qwen3.8-Flash-Next",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "full-hdr",
+      "compatible_product_profiles": [
+        "pro"
+      ],
+      "priority": 100
+    }
+  ]
+}

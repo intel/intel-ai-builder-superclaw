@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  // Tests pull in the local `bun:test` shim at `src/bun-test.d.ts` instead of
+  // the full `bun-types` package — see that file for rationale (DOM `fetch`
+  // vs Bun `fetch` conflict). `compilerOptions.types` is intentionally
+  // unchanged from the parent.
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/bun-test.d.ts",
+    // Ambient Web Speech globals used by lib/voice-input.ts, which tests import.
+    // Ambient declarations are not pulled in transitively, only by include.
+    "src/app/lib/speech-recognition.d.ts"
+  ],
+  // Override the parent's `exclude` (which excludes test files); we want
+  // exactly the opposite scope here.
+  "exclude": []
+}

@@ -1,0 +1,19 @@
+--- a/src/interp.rs
++++ b/src/interp.rs
+@@ -1977,6 +1977,16 @@ fn setup_open_file_with_contents(contents: &str) -> Result<OpenFile, error::Erro
+         nix::fcntl::fcntl(reader.as_fd(), nix::fcntl::FcntlArg::F_SETPIPE_SZ(len))?;
+     }
+ 
++    // A Windows pipe holds 4 KiB and cannot be resized, so a larger here-document blocks in
++    // write_all before any reader exists. Feed it from a thread instead.
++    if cfg!(windows) {
++        let bytes = bytes.to_vec();
++        std::thread::spawn(move || {
++            let _ = writer.write_all(&bytes);
++        });
++        return Ok(reader.into());
++    }
++
+     writer.write_all(bytes)?;
+     drop(writer);
+ 

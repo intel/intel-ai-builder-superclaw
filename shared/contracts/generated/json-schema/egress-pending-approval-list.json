@@ -1,0 +1,92 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-pending-approval-list.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approvals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "connector.fetch_result",
+              "connector.mcp_call",
+              "connector.gmail_send",
+              "proxy.connect_domain",
+              "proxy.connect_unlisted",
+              "router.send_new_target"
+            ],
+            "type": "string"
+          },
+          "approval_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "audience": {
+            "enum": [
+              "connector",
+              "egress_proxy",
+              "router"
+            ],
+            "type": "string"
+          },
+          "caller": {
+            "enum": [
+              "shell",
+              "channel",
+              "agent"
+            ],
+            "type": "string"
+          },
+          "expires_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+            "type": "string"
+          },
+          "grant_scopes": {
+            "items": {
+              "enum": [
+                "once",
+                "all_for_chat"
+              ],
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "requested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+            "type": "string"
+          },
+          "session_ref": {
+            "pattern": "^sref_[0-9a-f]{16}$",
+            "type": "string"
+          },
+          "target": {
+            "maxLength": 512,
+            "minLength": 1,
+            "pattern": "^[^\\p{Cc}\\p{Cf}]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "approval_id",
+          "audience",
+          "action",
+          "caller",
+          "target",
+          "requested_at",
+          "expires_at"
+        ],
+        "type": "object"
+      },
+      "maxItems": 64,
+      "type": "array"
+    }
+  },
+  "required": [
+    "approvals"
+  ],
+  "title": "EgressPendingApprovalList",
+  "type": "object"
+}

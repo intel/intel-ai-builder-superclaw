@@ -1,0 +1,54 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-browser-config-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "downloads_dir": {
+      "pattern": "^[A-Za-z]:\\\\[^\\p{Cc}<>:\"|?*]*$",
+      "type": "string"
+    },
+    "origin_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "allow": {
+          "items": {
+            "pattern": "^https?:\\/\\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*(?::[1-9][0-9]{0,4})?$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "default": {
+          "enum": [
+            "allow",
+            "ask",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "deny": {
+          "items": {
+            "pattern": "^https?:\\/\\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*(?::[1-9][0-9]{0,4})?$",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "default",
+        "allow",
+        "deny"
+      ],
+      "type": "object"
+    },
+    "upload_roots": {
+      "items": {
+        "pattern": "^[A-Za-z]:\\\\[^\\p{Cc}<>:\"|?*]*$",
+        "type": "string"
+      },
+      "maxItems": 8,
+      "type": "array"
+    }
+  },
+  "title": "HostBrowserConfigRequest",
+  "type": "object"
+}

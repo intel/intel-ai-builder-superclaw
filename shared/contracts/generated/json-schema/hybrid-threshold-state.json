@@ -1,0 +1,43 @@
+{
+  "$id": "https://different.ai/openwork-contracts/hybrid-threshold-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "applied": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "source": {
+      "enum": [
+        "env",
+        "store",
+        "default"
+      ],
+      "type": "string"
+    },
+    "supported": {
+      "type": "boolean"
+    },
+    "threshold": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "threshold",
+    "applied",
+    "source",
+    "supported"
+  ],
+  "title": "HybridThresholdState",
+  "type": "object"
+}

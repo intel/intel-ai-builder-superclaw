@@ -1,0 +1,21 @@
+{
+  "contract_version": 1,
+  "correlation_operation_id": "hub:activation-1",
+  "prepare_operation_id": "lrm:prepare-1",
+  "target_bundle": {
+    "backend": "llama",
+    "bundle_id": "local-35b",
+    "chat_model_id": "qwen-35b",
+    "embedding_model_id": "kalm",
+    "capability_grade": "full",
+    "capability_contract_version": 1,
+    "registry_version": 1
+  },
+  "candidate_revision": 4,
+  "expected_bundle_revision": 3,
+  "bundle_revision": 4,
+  "idempotency_key": "commit-1",
+  "state": "succeeded",
+  "pct": 100,
+  "message": "bundle committed"
+}

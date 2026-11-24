@@ -1,0 +1,60 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-approval-decision-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "approval_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        "decision": {
+          "const": "approve",
+          "type": "string"
+        },
+        "grant_scope": {
+          "enum": [
+            "once",
+            "all_for_chat"
+          ],
+          "type": "string"
+        },
+        "outcome": {
+          "const": "granted",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_id",
+        "decision",
+        "outcome"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "approval_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "type": "string"
+        },
+        "decision": {
+          "const": "deny",
+          "type": "string"
+        },
+        "outcome": {
+          "const": "denied",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_id",
+        "decision",
+        "outcome"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "EgressApprovalDecisionResult"
+}

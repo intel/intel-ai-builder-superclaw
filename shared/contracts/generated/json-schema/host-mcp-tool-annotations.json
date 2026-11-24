@@ -1,0 +1,32 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-tool-annotations.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "destructive": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "open_world": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "read_only": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "read_only",
+    "destructive",
+    "open_world"
+  ],
+  "title": "HostMcpToolAnnotations",
+  "type": "object"
+}

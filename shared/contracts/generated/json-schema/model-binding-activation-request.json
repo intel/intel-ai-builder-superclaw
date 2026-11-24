@@ -1,0 +1,121 @@
+{
+  "$id": "https://different.ai/openwork-contracts/model-binding-activation-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "expected_bundle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "idempotency_key": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "intent": {
+          "const": "download_and_connect",
+          "type": "string"
+        },
+        "target_bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "user_confirmed_download": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contract_version",
+        "intent",
+        "target_bundle_id",
+        "candidate_revision",
+        "user_confirmed_download",
+        "expected_bundle_revision",
+        "idempotency_key"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "expected_bundle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "idempotency_key": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "intent": {
+          "const": "connect",
+          "type": "string"
+        },
+        "target_bundle_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "intent",
+        "target_bundle_id",
+        "candidate_revision",
+        "expected_bundle_revision",
+        "idempotency_key"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": 1,
+          "type": "number"
+        },
+        "expected_bundle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "idempotency_key": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "intent": {
+          "const": "disconnect",
+          "type": "string"
+        }
+      },
+      "required": [
+        "contract_version",
+        "intent",
+        "expected_bundle_revision",
+        "idempotency_key"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "ModelBindingActivationRequest"
+}

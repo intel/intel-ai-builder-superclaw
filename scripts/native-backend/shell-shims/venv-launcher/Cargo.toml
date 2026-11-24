@@ -1,0 +1,31 @@
+[package]
+name = "venv-launcher-shim"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "python.exe/python3.exe/pip.exe for the native payload's py/venv-launcher: resolve the file_tool tier's writable task venv ahead of the read-only payload interpreter (#3897)."
+
+[lib]
+name = "venv_launcher_shim"
+path = "src/lib.rs"
+
+[[bin]]
+name = "python"
+path = "src/bin/python.rs"
+
+[[bin]]
+name = "python3"
+path = "src/bin/python3.rs"
+
+[[bin]]
+name = "pip"
+path = "src/bin/pip.rs"
+
+[dependencies]
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

@@ -1,0 +1,498 @@
+{
+  "$id": "https://different.ai/openwork-contracts/isolation-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "backend_mode": {
+      "enum": [
+        "native"
+      ],
+      "type": "string"
+    },
+    "contract_version": {
+      "const": 3,
+      "type": "number"
+    },
+    "isolation_attestation": {
+      "additionalProperties": false,
+      "properties": {
+        "covered_policy_categories": {
+          "items": {
+            "enum": [
+              "identity",
+              "filesystem",
+              "egress"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "last_pass_at": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probe_set_id": {
+          "anyOf": [
+            {
+              "pattern": "^pst_[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "stale"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "verdict",
+        "probe_set_id",
+        "last_pass_at",
+        "covered_policy_categories"
+      ],
+      "type": "object"
+    },
+    "isolation_egress_policy_version": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "boundary_state": {
+              "enum": [
+                "primary_enforcing",
+                "declared_permissive_no_rules",
+                "primary_rules_do_not_cover_every_tier",
+                "primary_logging_only",
+                "supplementary_only_not_a_boundary",
+                "removed_by_uninstall"
+              ],
+              "type": "string"
+            },
+            "enforced_tiers": {
+              "items": {
+                "enum": [
+                  "bootstrap",
+                  "file_tool",
+                  "network_connector",
+                  "channel"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "loopback_open_tcp_range": {
+              "additionalProperties": false,
+              "properties": {
+                "first": {
+                  "maximum": 65535,
+                  "minimum": 1025,
+                  "type": "integer"
+                },
+                "last": {
+                  "maximum": 65535,
+                  "minimum": 1025,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "first",
+                "last"
+              ],
+              "type": "object"
+            },
+            "readback": {
+              "additionalProperties": false,
+              "properties": {
+                "read_at": {
+                  "anyOf": [
+                    {
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "verdict": {
+                  "enum": [
+                    "matches_plan",
+                    "drifted",
+                    "not_read"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "verdict",
+                "read_at"
+              ],
+              "type": "object"
+            },
+            "version_label": {
+              "pattern": "^v[1-9][0-9]*\\/(?:permissive|enforcing)$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "version_label",
+            "boundary_state",
+            "enforced_tiers",
+            "readback"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isolation_level": {
+      "enum": [
+        "user",
+        "user_open_egress",
+        "restricted",
+        "minimal",
+        "not_established"
+      ],
+      "type": "string"
+    },
+    "isolation_policy_version": {
+      "anyOf": [
+        {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "isolation_tier_evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "acl_readback": {
+            "enum": [
+              "matches_shipped_descriptor",
+              "drifted",
+              "not_read"
+            ],
+            "type": "string"
+          },
+          "identity": {
+            "enum": [
+              "owner_kernel_verified",
+              "not_verified"
+            ],
+            "type": "string"
+          },
+          "job": {
+            "enum": [
+              "tier_reported_verified",
+              "not_reported"
+            ],
+            "type": "string"
+          },
+          "observed_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?Z$",
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "tier",
+          "identity",
+          "acl_readback",
+          "job",
+          "observed_at"
+        ],
+        "type": "object"
+      },
+      "maxItems": 4,
+      "type": "array"
+    },
+    "isolation_token_shape": {
+      "enum": [
+        "restricted_all_access",
+        "write_restricted_synthetic",
+        "write_restricted_logon",
+        "unrestricted_hardened",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "isolation_warnings": {
+      "items": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "workspace_root_degraded",
+                "type": "string"
+              },
+              "reason": {
+                "enum": [
+                  "path_not_canonical_local_windows",
+                  "path_is_volume_root",
+                  "path_uses_short_name_alias",
+                  "root_id_not_derived_from_path",
+                  "duplicate_root_id",
+                  "duplicate_canonical_path",
+                  "member_count_below_bound",
+                  "member_count_above_bound",
+                  "managed_default_missing",
+                  "managed_default_duplicated",
+                  "access_mode_inconsistent_with_policy_class",
+                  "authorization_inconsistent_with_policy_class",
+                  "managed_roots_overlap",
+                  "member_overlaps_managed_root",
+                  "member_overlaps_member",
+                  "member_is_owner_profile_root",
+                  "member_under_other_user_profile",
+                  "member_under_local_app_data_root",
+                  "member_under_program_data_root",
+                  "member_under_windows_root",
+                  "volume_verdict_non_ntfs",
+                  "volume_verdict_removable",
+                  "volume_verdict_redirected",
+                  "volume_verdict_unknown",
+                  "ancestor_reparse_point_observed",
+                  "ancestry_verdict_unknown",
+                  "descriptor_shape_invalid"
+                ],
+                "type": "string"
+              },
+              "root_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^wsr_[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "root_id",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "token_hardening_unverified",
+                "type": "string"
+              },
+              "token_shape": {
+                "enum": [
+                  "unrestricted_hardened",
+                  "unknown"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "token_shape"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "policy_attestation_not_passing",
+                "type": "string"
+              },
+              "verdict": {
+                "enum": [
+                  "fail",
+                  "stale"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "verdict"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "isolation_level_not_established",
+                "type": "string"
+              },
+              "reason": {
+                "enum": [
+                  "native_isolation_not_applied",
+                  "policy_version_unavailable",
+                  "attestation_not_passing",
+                  "tier_launch_evidence_incomplete"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "reason"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "egress_policy_drifted",
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "egress_upstream_unsupported",
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "unsupported_scheme",
+                  "tls_to_proxy",
+                  "credentials",
+                  "missing_port",
+                  "malformed",
+                  "proxy_auto_config",
+                  "loopback_upstream"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "kind"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "host_mcp_execution_enabled",
+                "type": "string"
+              },
+              "host_browser_active": {
+                "type": "boolean"
+              },
+              "host_server_count": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "code",
+              "host_server_count",
+              "host_browser_active"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "loopback_dynamic_range_open",
+                "type": "string"
+              },
+              "first": {
+                "maximum": 65535,
+                "minimum": 1025,
+                "type": "integer"
+              },
+              "last": {
+                "maximum": 65535,
+                "minimum": 1025,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "code",
+              "first",
+              "last"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "isolation_workspace_root_classes": {
+      "items": {
+        "enum": [
+          "managed_default",
+          "user_granted_rw",
+          "user_granted_ro"
+        ],
+        "type": "string"
+      },
+      "maxItems": 8,
+      "type": "array"
+    },
+    "isolation_workspace_root_count": {
+      "maximum": 8,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "contract_version",
+    "backend_mode",
+    "isolation_level",
+    "isolation_policy_version",
+    "isolation_egress_policy_version",
+    "isolation_warnings",
+    "isolation_token_shape",
+    "isolation_attestation",
+    "isolation_workspace_root_count",
+    "isolation_workspace_root_classes",
+    "isolation_tier_evidence"
+  ],
+  "title": "IsolationReportShape",
+  "type": "object"
+}

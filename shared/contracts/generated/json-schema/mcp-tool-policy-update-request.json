@@ -1,0 +1,53 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-tool-policy-update-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "tool": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool",
+        "action"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "allow",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "tools": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "tools",
+        "action"
+      ],
+      "type": "object"
+    }
+  ],
+  "title": "McpToolPolicyUpdateRequest"
+}

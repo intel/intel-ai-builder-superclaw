@@ -1,0 +1,80 @@
+{
+  "$id": "https://different.ai/openwork-contracts/slack-senders-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowed": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "enum": [
+              "app",
+              "env"
+            ],
+            "type": "string"
+          },
+          "user_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "source"
+        ],
+        "type": "object"
+      },
+      "maxItems": 4096,
+      "type": "array"
+    },
+    "pending": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "attempts": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "first_seen_at": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "identity_id": {
+            "maxLength": 256,
+            "type": "string"
+          },
+          "last_seen_at": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "user_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "identity_id",
+          "first_seen_at",
+          "last_seen_at",
+          "attempts"
+        ],
+        "type": "object"
+      },
+      "maxItems": 256,
+      "type": "array"
+    }
+  },
+  "required": [
+    "allowed",
+    "pending"
+  ],
+  "title": "SlackSendersResult",
+  "type": "object"
+}

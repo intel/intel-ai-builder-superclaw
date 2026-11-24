@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "protection-service"
+version = "0.1.0"
+description = "Stateless HTTP service: redact PII from tabular files AND sanitize PII in free-form text. Restore placeholders later. The client owns the LLM call."
+requires-python = ">=3.11.5"
+dependencies = [
+    "superclaw-host-observability",
+    "pandas>=2.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.24",
+    "pydantic>=2.0",
+    "python-multipart>=0.0.9",
+    "pyyaml>=6.0",
+    # openpyxl is the engine pandas uses for .xlsx; required for /v1/redact.
+    "openpyxl>=3.1",
+    # pyarrow is the engine pandas uses for .parquet read/write; pandas has
+    # no built-in Parquet support, so this is required for the .parquet
+    # branches of file_protection.io (load_table / save_dataframe) and
+    # file_protection.restore (restore_file with parquet output).
+    "pyarrow>=14.0",
+    # Document backends for free-form file redaction (file_protection.documents):
+    #   beautifulsoup4 parses HTML and lets us mask text nodes only, leaving
+    #     tags/attributes intact so the markup stays valid.
+    #   python-docx reads/writes Word .docx, masking run text in place so
+    #     paragraph/run formatting is preserved.
+    # .txt / .md need no third-party library (handled with the stdlib).
+    "beautifulsoup4>=4.12",
+    "python-docx>=1.1",
+    # Fuzzy single-token matching for POST /v1/session/query/rewrite's
+    # opt-in tier-3 pass (file_protection.rewrite). Already vetted elsewhere
+    # in this repo (sandbox/agent_config/profiles/pro/tools/gmail).
+    "rapidfuzz>=3.0.0",
+    # Text-sanitize ML stack. The bundled models under models/ are OpenVINO IR,
+    # loaded via openvino.Core in text_protection._openvino_backend. Do NOT
+    # re-add torch or optimum[intel]: optimum.intel imports torch at module
+    # scope for a transformers wrapper this code no longer uses, costing ~360 MB
+    # of payload. transformers stays for AutoTokenizer only, which is torch-free.
+    # spacy<3.8.14: 3.8.14 has no cp314 (Windows) wheel yet; 3.8.13 does and
+    # imports cleanly on Python 3.14 (verified in an isolated env 2026-07-14).
+    "spacy>=3.7.0,<3.8.14",
+    "transformers>=4.35.0",
+    "tokenizers>=0.15",
+    "onnxruntime>=1.17",
+    "numpy>=1.21.0",
+    "openvino>=2025.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+
+[project.scripts]
+protection-service = "protection_service.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["protection_service*", "file_protection*", "text_protection*", "common*"]
+
+[tool.uv.sources]
+superclaw-host-observability = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "heavy_models: requires OpenVINO NER + spaCy on disk",
+    "slow: long-running test, skipped on the fast lane",
+    "model_delivery: uses the real model-presence check instead of assuming both models are on disk",
+    "windows_only: requires a real Windows host (NTFS junctions)",
+]
+addopts = "-q -m 'not heavy_models and not slow'"

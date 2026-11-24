@@ -1,0 +1,10 @@
+// The UAC consent dialog shows FileDescription as the program name, so the elevated broker carries the
+// product name rather than a component name.
+#define SC_FILE_DESCRIPTION "SuperClaw"
+#define SC_ORIGINAL_FILENAME "native_isolation_broker.exe"
+#include "version_info.inc"
+
+// UAC shows the first icon group, and a generic icon when there is none, so this must stay the lowest
+// ID. Keep the file identical to apps/desktop/src-tauri/icons/icon.ico; it is a copy because this crate
+// may not depend on another repository package.
+1 ICON "superclaw.ico"

@@ -1,0 +1,677 @@
+{
+  "note": "Golden refusal table for the agent runtime descriptor. Read by shared/contracts/src/__tests__/agent-runtime-descriptor.test.ts and host/sandbox_manager/tests/unit/test_agent_runtime_rules.py, so both implementations answer the same table. Each case replaces whole top-level fields of `base` and lists every reason the descriptor must be refused for.",
+  "base": {
+    "contract_version": 1,
+    "runtime_id": "opencode",
+    "runtime_version_pin": { "source": "payload_manifest", "field": "payload_version" },
+    "members": [
+      {
+        "path": "main.exe",
+        "role": "supervisor_executable",
+        "requirement": "required",
+        "isolation_tier": "bootstrap",
+        "access": { "read": true, "execute": true }
+      },
+      {
+        "path": "runtime.exe",
+        "role": "runtime_executable",
+        "requirement": "required",
+        "isolation_tier": "file_tool",
+        "access": { "read": true, "execute": true }
+      },
+      {
+        "path": "shell/sh.exe",
+        "role": "shell_executable",
+        "requirement": "required_when_verified",
+        "isolation_tier": "file_tool",
+        "access": { "read": true, "execute": true }
+      },
+      {
+        "path": "config-source/opencode.jsonc",
+        "role": "config_source",
+        "requirement": "required",
+        "isolation_tier": "bootstrap",
+        "access": { "read": true, "execute": false }
+      }
+    ],
+    "launch": {
+      "program_member": "main.exe",
+      "argv_groups": [
+        { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+        { "tokens": ["--runtime-bin", "{{member:runtime.exe}}"], "present_member": null }
+      ],
+      "env_template": { "RUNTIME_CONFIG_DIR": "{{state_config_dir}}/opencode" }
+    },
+    "readiness_probe": {
+      "kind": "http_get",
+      "host_placeholder": "loopback_host",
+      "port_placeholder": "supervisor_port",
+      "path": "/health",
+      "timeout_seconds": 60,
+      "poll_interval_seconds": 0.5
+    },
+    "shutdown": { "kind": "process_tree_kill", "grace_seconds": 5, "job_object_backstop": true },
+    "adapters": { "config_projection": "opencode_jsonc_extract", "guard": "native_pinned_shell" }
+  },
+  "cases": [
+    {
+      "name": "the base descriptor",
+      "note": "The synthetic base must be legal, else every other case proves nothing.",
+      "overrides": {},
+      "expected_reasons": []
+    },
+    {
+      "name": "a runtime with no members",
+      "note": "A payload-backed runtime that declares nothing cannot be checked against a payload.",
+      "overrides": { "members": [] },
+      "expected_reasons": ["member_list_empty"]
+    },
+    {
+      "name": "the same path declared twice",
+      "note": "Two roles for one file make the requirement and the access of that file ambiguous.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          },
+          {
+            "path": "hooks/probe.py",
+            "role": "sidecar_script",
+            "requirement": "required_when_verified",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          },
+          {
+            "path": "hooks/probe.py",
+            "role": "sidecar_script",
+            "requirement": "required_when_verified",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["duplicate_member_path"]
+    },
+    {
+      "name": "a member path spelled for one platform",
+      "note": "Member paths are payload-relative POSIX so the same descriptor resolves everywhere.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          },
+          {
+            "path": "hooks\\probe.py",
+            "role": "sidecar_script",
+            "requirement": "required_when_verified",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["member_path_not_posix_relative"]
+    },
+    {
+      "name": "two supervisors",
+      "note": "A singleton role names one file; two of them make the launch program ambiguous.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "main-alt.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["member_role_must_be_unique"]
+    },
+    {
+      "name": "an unreadable member",
+      "note": "A declared member the runtime may not read is a member it cannot use.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": false, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["member_not_readable"]
+    },
+    {
+      "name": "an executable role that may not execute",
+      "note": "The role says the file is run; the access must agree or the launch is a lie.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": false }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["executable_role_not_marked_executable"]
+    },
+    {
+      "name": "config data marked executable",
+      "note": "Execute on a data member widens the payload's attack surface for nothing.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          }
+        ]
+      },
+      "expected_reasons": ["non_executable_role_marked_executable"]
+    },
+    {
+      "name": "a role filed under the wrong isolation tier",
+      "note": "The tier is derived from the role, so a hand-written mismatch is a typo, not a choice.",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["member_tier_inconsistent_with_role"]
+    },
+    {
+      "name": "a launch program that is not a declared member",
+      "note": "The spawned program must be covered by the same member rules as everything else.",
+      "overrides": {
+        "launch": {
+          "program_member": "ghost.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["program_member_not_declared"]
+    },
+    {
+      "name": "a launch program declared non-executable",
+      "overrides": {
+        "launch": {
+          "program_member": "config-source/opencode.jsonc",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["program_member_not_executable"]
+    },
+    {
+      "name": "a launch program that a payload may omit",
+      "note": "Nothing launches at all without it, so it cannot be conditionally present.",
+      "overrides": {
+        "launch": {
+          "program_member": "shell/sh.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["program_member_relaxable"]
+    },
+    {
+      "name": "an argv token outside the template grammar",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": ["--home", "{{user_home}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["template_token_shape_invalid"]
+    },
+    {
+      "name": "an argv token naming an undeclared member",
+      "note": "Every path the launch passes must be a member, or the payload check cannot cover it.",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": ["--router-bin", "{{member:router.exe}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["template_references_undeclared_member"]
+    },
+    {
+      "name": "an empty argv group",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": [], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["launch_group_empty"]
+    },
+    {
+      "name": "a guard naming an undeclared member",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": ["--fast"], "present_member": "ghost.exe" }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["launch_group_guard_member_undeclared"]
+    },
+    {
+      "name": "a guard on a member every payload has",
+      "note": "Guarding an unconditional member hides a missing required file behind a skipped flag.",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": ["--runtime-bin", "{{member:runtime.exe}}"], "present_member": "runtime.exe" }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["launch_group_guard_member_unconditional"]
+    },
+    {
+      "name": "an omittable member passed unconditionally",
+      "note": "Without a guard the flag points at a file an unverified payload may not have.",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null },
+            { "tokens": ["--shell-bin", "{{member:shell/sh.exe}}"], "present_member": null }
+          ],
+          "env_template": {}
+        }
+      },
+      "expected_reasons": ["launch_group_relaxable_member_unguarded"]
+    },
+    {
+      "name": "an env name outside the portable shape",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": { "runtime-config": "{{state_config_dir}}" }
+        }
+      },
+      "expected_reasons": ["env_name_shape_invalid"]
+    },
+    {
+      "name": "an env name ending in a newline",
+      "note": "Python's `$` matches before one trailing newline and JavaScript's does not, so an unanchored mirror accepts here what the source of truth refuses.",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": { "RUNTIME_CONFIG_DIR\n": "{{state_config_dir}}" }
+        }
+      },
+      "expected_reasons": ["env_name_shape_invalid"]
+    },
+    {
+      "name": "a member path ending in a newline",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe\n",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["member_path_not_posix_relative"]
+    },
+    {
+      "name": "an argv token ending in a newline",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            {
+              "tokens": ["serve", "--openwork-port", "{{supervisor_port}}", "{{state_config_dir}}\n"],
+              "present_member": null
+            }
+          ],
+          "env_template": { "RUNTIME_CONFIG_DIR": "{{state_config_dir}}" }
+        }
+      },
+      "expected_reasons": ["template_token_shape_invalid"]
+    },
+    {
+      "name": "a secret-bearing env name",
+      "note": "A descriptor ships in the repo, so it may not be where a token is named.",
+      "overrides": {
+        "launch": {
+          "program_member": "main.exe",
+          "argv_groups": [
+            { "tokens": ["serve", "--openwork-port", "{{supervisor_port}}"], "present_member": null }
+          ],
+          "env_template": { "OPENWORK_HOST_TOKEN": "{{state_config_dir}}" }
+        }
+      },
+      "expected_reasons": ["env_name_secret_bearing"]
+    },
+    {
+      "name": "a descriptor that fixes the runtime port",
+      "note": "The runtime port is chosen per boot and supplied by the caller. A fixed number here would be a second answer to where the runtime listens.",
+      "overrides": { "declared_ports": { "runtime_port": 4096 } },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    },
+    {
+      "name": "a readiness probe on a port the launch never passes",
+      "note": "Otherwise readiness watches a listener nothing was asked to open.",
+      "overrides": {
+        "readiness_probe": {
+          "kind": "http_get",
+          "host_placeholder": "loopback_host",
+          "port_placeholder": "runtime_port",
+          "path": "/health",
+          "timeout_seconds": 60,
+          "poll_interval_seconds": 0.5
+        }
+      },
+      "expected_reasons": ["readiness_probe_port_not_passed_to_launch"]
+    },
+    {
+      "name": "a projection adapter that does not match the runtime",
+      "overrides": {
+        "adapters": { "config_projection": "none", "guard": "native_pinned_shell" }
+      },
+      "expected_reasons": ["config_projection_adapter_inconsistent_with_runtime_id"]
+    },
+    {
+      "name": "an extract adapter with nothing to extract from",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "shell/sh.exe",
+            "role": "shell_executable",
+            "requirement": "required_when_verified",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          }
+        ]
+      },
+      "expected_reasons": ["config_projection_requires_config_source_member"]
+    },
+    {
+      "name": "a pinned-shell guard with no shell to pin",
+      "overrides": {
+        "members": [
+          {
+            "path": "main.exe",
+            "role": "supervisor_executable",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "runtime.exe",
+            "role": "runtime_executable",
+            "requirement": "required",
+            "isolation_tier": "file_tool",
+            "access": { "read": true, "execute": true }
+          },
+          {
+            "path": "config-source/opencode.jsonc",
+            "role": "config_source",
+            "requirement": "required",
+            "isolation_tier": "bootstrap",
+            "access": { "read": true, "execute": false }
+          }
+        ]
+      },
+      "expected_reasons": ["guard_adapter_requires_shell_member"]
+    },
+    {
+      "name": "a shutdown grace longer than the bound",
+      "overrides": {
+        "shutdown": { "kind": "process_tree_kill", "grace_seconds": 900, "job_object_backstop": true }
+      },
+      "expected_reasons": ["shutdown_grace_out_of_bounds"]
+    },
+    {
+      "name": "a runtime id outside the closed enumeration",
+      "note": "Shape-fatal, so it reports the shape reason alone and no cross-field guesses.",
+      "overrides": { "runtime_id": "podman" },
+      "expected_reasons": ["descriptor_shape_invalid"]
+    }
+  ]
+}

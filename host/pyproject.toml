@@ -1,0 +1,64 @@
+# uv workspace root for SuperClaw Windows-host services.
+#
+# ServiceHub spawns each child with `sys.executable -m <entrypoint>` (see
+# servicehub/supervisor/process_manager.py), so the child runs under
+# ServiceHub's own interpreter. Making servicehub and llmrouter_manager
+# members of one workspace resolves them into a single shared `.venv`, so
+# ServiceHub's interpreter can import `llmrouter_manager` and the spawn of
+# `python -m llmrouter_manager --host <bind> --port <port>` succeeds.
+#
+# This is a *virtual* workspace root (no [project] of its own). Sync the whole
+# workspace with:
+#
+#     uv sync --all-packages
+#
+# then run the hub (which will spawn llmrouter_manager per service_cfg.json):
+#
+#     uv run python -m servicehub --port 19000 --hub-token dev
+#
+# backend-manager (the legacy, pre-rename manager) is intentionally NOT a
+# member — sandbox_manager is its supported successor and is registered as a
+# ServiceHub child in servicehub/service_cfg.json.
+
+[tool.uv.workspace]
+members = [
+  "servicehub",
+  "llmrouter_manager",
+  "sandbox_manager",
+  "sandbox_policy",
+  "privacy_manager/llm_pipeline",
+  "privacy_manager/data_protection",
+  "tts_manager",
+  "asr_manager",
+  "mcp_host_manager",
+  "observability",
+  "../shared/contracts/generated/python",
+]
+
+[tool.uv]
+# Resolution-level settings are read only from the workspace root; member
+# `[tool.uv]` tables are ignored for locking. Pin security-sensitive transitive
+# HTTP dependencies so a future lock refresh cannot regress below a fix.
+constraint-dependencies = ["starlette>=1.3.1", "aiohttp>=3.14.4", "urllib3>=2.8.0", "filelock>=4.2.1", "certifi>=2026.10.19", "anyio>=4.14.2", "multidict>=6.9.1", "setuptools>=84.1.0", "soupsieve>=4.0.0", "opentelemetry-api>=1.45.2", "opentelemetry-sdk>=1.45.2", "opentelemetry-exporter-otlp-proto-http>=1.45.2"]
+# tts_manager runs Kokoro on onnxruntime (no torch, no kokoro-onnx) and pulls
+# misaki without extras. misaki's `[en]` extra (not used) is what would add the
+# OPTIONAL transformer POS tagger (spacy-curated-transformers ->
+# curated-transformers -> torch); kokoro_helper.py uses `en.G2P(trf=False)` (the
+# small en_core_web_sm spaCy model) either way. These overrides are defensive:
+# they keep torch out of uv.lock if anything pulls those two packages back in.
+override-dependencies = [
+  "spacy-curated-transformers; sys_platform == 'never'",
+  "curated-transformers; sys_platform == 'never'",
+]
+
+[tool.uv.sources]
+# Defensive pin: nothing depends on torch any more, but if it is reintroduced
+# this keeps it on the CPU-only index. Without the pin, torch resolves from
+# PyPI and drags ~19 nvidia-*/triton packages into uv.lock.
+torch = [{ index = "pytorch-cpu" }]
+superclaw-contracts = { workspace = true }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

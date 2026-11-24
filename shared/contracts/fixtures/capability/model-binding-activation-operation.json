@@ -1,0 +1,10 @@
+{
+  "contract_version": 1,
+  "operation_id": "hub:activation-1",
+  "status": "applying",
+  "stage": "preparing",
+  "progress": {
+    "pct": 40,
+    "lrm_prepare_operation_id": "lrm:prepare-1"
+  }
+}

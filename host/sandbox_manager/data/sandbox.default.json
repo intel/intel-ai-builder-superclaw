@@ -1,0 +1,5 @@
+{
+  "_comment": "Default sandbox runtime configuration. Copy to <DATA_DIR>/sandbox.json to override without touching source.",
+  "sandbox_port": 8787,
+  "workspace_container_path": "/workspace"
+}

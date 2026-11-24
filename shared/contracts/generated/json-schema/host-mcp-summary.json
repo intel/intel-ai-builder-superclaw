@@ -1,0 +1,21 @@
+{
+  "$id": "https://different.ai/openwork-contracts/host-mcp-summary.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "host_browser_active": {
+      "type": "boolean"
+    },
+    "host_server_count": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "host_server_count",
+    "host_browser_active"
+  ],
+  "title": "HostMcpSummary",
+  "type": "object"
+}

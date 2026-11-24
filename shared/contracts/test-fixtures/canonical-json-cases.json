@@ -1,0 +1,54 @@
+{
+  "_comment": [
+    "Golden table for the canonical JSON every contract digest is taken over: keys sorted,",
+    "no whitespace, UTF-8, and non-ASCII text written as itself rather than as \\u escapes.",
+    "TypeScript (canonicalEgressPolicyJson, canonicalAclPolicyJson), the broker's serde_json and",
+    "the provision wire already write it that way; Python's json.dumps escapes non-ASCII unless",
+    "ensure_ascii=False, which made the same value hash differently there. Read by",
+    "shared/contracts/src/__tests__/canonical-json.test.ts, host/sandbox_policy/tests/test_canonical_json.py",
+    "and the broker's tests. Keys are ASCII, as every contract key is, so ordering by UTF-16 code unit",
+    "and by code point agree. Lone surrogates are not text and are left out."
+  ],
+  "cases": [
+    {
+      "name": "ascii",
+      "value": {
+        "b": [
+          1,
+          2,
+          {
+            "d": null,
+            "c": true
+          }
+        ],
+        "a": "plain"
+      },
+      "canonical_json": "{\"a\":\"plain\",\"b\":[1,2,{\"c\":true,\"d\":null}]}",
+      "sha256": "91beb12a1e11179c1082230aac8a11954ba1d7891edc1538bef3ab48c42272df"
+    },
+    {
+      "name": "non_ascii_values",
+      "value": {
+        "latin": "permissivé",
+        "cjk": "隔离",
+        "astral": "😀",
+        "separators": "  "
+      },
+      "canonical_json": "{\"astral\":\"😀\",\"cjk\":\"隔离\",\"latin\":\"permissivé\",\"separators\":\"  \"}",
+      "sha256": "16f019f9d1e96bcd592c1b4803dca60f53b622dd936969e1b30799bfc80711f1"
+    },
+    {
+      "name": "escapes",
+      "value": {
+        "quote": "\"",
+        "backslash": "\\",
+        "control": "\u0001\u001f",
+        "short": "\b\f\n\r\t",
+        "delete": "",
+        "slash": "/"
+      },
+      "canonical_json": "{\"backslash\":\"\\\\\",\"control\":\"\\u0001\\u001f\",\"delete\":\"\",\"quote\":\"\\\"\",\"short\":\"\\b\\f\\n\\r\\t\",\"slash\":\"/\"}",
+      "sha256": "5570310620cdea44776b21e547cc57dd7cbda7e7d0dbc9aadc6d0bfe1bb078b3"
+    }
+  ]
+}

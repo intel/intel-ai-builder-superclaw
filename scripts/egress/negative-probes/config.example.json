@@ -1,0 +1,24 @@
+{
+  "_comment": [
+    "Example config for scripts/egress/negative-probes/run.ps1. Copy it, fill the values for the machine and",
+    "network under test, and keep the copy outside the repository: it names internal addresses.",
+    "proxy: the egress proxy's shell and channel listener ports of THIS start (egress-loopback-ports.ts: four",
+    "fixed candidates each; the sandbox manager log names the ones in use).",
+    "listed_url / unlisted_url: https URLs; the first host is on the shell allowlist, the second is not.",
+    "direct_tcp: a public address and port, for the direct-egress cases.",
+    "connector.upstream: every upstream proxy and PAC endpoint the enforcing plan permitted (address and port),",
+    "empty when the host has none. connector.internal_other: an internal address and port that answers the",
+    "owner but is not one of them. connector.direct_expected: true when this network lets a connector reach",
+    "direct_tcp (no upstream), false to skip that case."
+  ],
+  "proxy": { "shell_port": 18856, "channel_port": 18860 },
+  "listed_url": "https://api.example.com/",
+  "unlisted_url": "https://unlisted.example.net/",
+  "direct_tcp": { "address": "203.0.113.10", "port": 443 },
+  "host_control_port": 18821,
+  "connector": {
+    "upstream": [{ "address": "10.0.0.9", "port": 3128 }],
+    "internal_other": { "address": "10.0.0.20", "port": 445 },
+    "direct_expected": false
+  }
+}

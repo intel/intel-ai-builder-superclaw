@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "protection-service"
+version = "0.1.0"
+description = "Stateless HTTP service: redact PII from tabular files AND sanitize PII in free-form text. Restore placeholders later. The client owns the LLM call."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.24",
+    "pydantic>=2.0",
+    "python-multipart>=0.0.9",
+    "pyyaml>=6.0",
+    # openpyxl is the engine pandas uses for .xlsx; required for /v1/redact.
+    "openpyxl>=3.1",
+    # pyarrow is the engine pandas uses for .parquet read/write; pandas has
+    # no built-in Parquet support, so this is required for the .parquet
+    # branches of file_protection.io (load_table / save_dataframe) and
+    # file_protection.restore (restore_file with parquet output).
+    "pyarrow>=14.0",
+    # Document backends for free-form file redaction (file_protection.documents):
+    #   beautifulsoup4 parses HTML and lets us mask text nodes only, leaving
+    #     tags/attributes intact so the markup stays valid.
+    #   python-docx reads/writes Word .docx, masking run text in place so
+    #     paragraph/run formatting is preserved.
+    # .txt / .md need no third-party library (handled with the stdlib).
+    "beautifulsoup4>=4.12",
+    "python-docx>=1.1",
+    # Text-sanitize ML stack. We use ONNX Runtime as the inference engine
+    # and `transformers` only for AutoTokenizer (model classes are not
+    # imported), so torch + optimum + openvino stay out of the runtime.
+    #
+    # Choose ONE onnxruntime variant per partner deployment (they conflict
+    # at install time):
+    #   onnxruntime              CPU-only on all platforms.
+    #   onnxruntime-openvino     Intel CPU/iGPU/Arc/NPU. Linux + Windows.
+    #   onnxruntime-directml     Vendor-agnostic GPU on Windows.
+    #   onnxruntime-gpu          NVIDIA CUDA. Linux + Windows.
+    #   onnxruntime-silicon      Apple Silicon CoreML EP. macOS arm64.
+    #
+    # The default ``onnxruntime`` declared here gives a working CPU
+    # baseline; the build script swaps in the right variant per platform.
+    "spacy>=3.7.0",
+    "transformers>=4.35.0",
+    "tokenizers>=0.15",
+    "onnxruntime>=1.17",
+    "numpy>=1.21.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+]
+# Intel GPU / NPU acceleration via OpenVINO. NOT in base ``dependencies``
+# on purpose: the base install is a CPU-only baseline (plain ``onnxruntime``),
+# and the accelerator EP is chosen per deployment (see the onnxruntime comment
+# above). These three packages are ADDITIVE to the base stack (they do not
+# conflict with ``onnxruntime``): ``openvino`` provides the device probe that
+# ``device: AUTO`` gates on (``onnx_providers._openvino_devices``), and
+# ``optimum-intel`` provides the ``OVModelFor*`` loaders the OpenVINO backend
+# uses (``text_protection/_openvino_backend.py``). ``optimum-intel`` imports
+# ``torch`` at module load, so it is required even though the runtime never
+# runs a torch model. Install the CPU torch wheel to keep it small:
+#
+#   pip install -e .[openvino] --extra-index-url https://download.pytorch.org/whl/cpu
+#
+# Without this extra, ``device: AUTO`` cannot see the Intel GPU/NPU and
+# silently resolves to CPU (see onnx_providers._resolve_auto). Versions track
+# the bundled Windows build (openvino 2026.2 / optimum-intel 1.27 / torch 2.12).
+openvino = [
+    "openvino>=2025.0",
+    "optimum[intel]>=1.20",
+    "torch>=2.2",
+]
+
+[project.scripts]
+protection-service = "protection_service.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["protection_service*", "file_protection*", "text_protection*", "common*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "heavy_models: requires OpenVINO NER + spaCy on disk",
+    "slow: long-running test, skipped on the fast lane",
+]
+addopts = "-q -m 'not heavy_models and not slow'"

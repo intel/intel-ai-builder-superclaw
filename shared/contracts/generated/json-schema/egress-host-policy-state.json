@@ -1,0 +1,55 @@
+{
+  "$id": "https://different.ai/openwork-contracts/egress-host-policy-state.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_filtering_engine_running": {
+      "type": "boolean"
+    },
+    "other_sublayers_at_our_weight": {
+      "items": {
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "tcp_dynamic_port_ranges": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "address_family": {
+            "enum": [
+              "ipv4",
+              "ipv6"
+            ],
+            "type": "string"
+          },
+          "first": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "last": {
+            "maximum": 65535,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "address_family",
+          "first",
+          "last"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "base_filtering_engine_running",
+    "tcp_dynamic_port_ranges",
+    "other_sublayers_at_our_weight"
+  ],
+  "title": "EgressHostPolicyState",
+  "type": "object"
+}

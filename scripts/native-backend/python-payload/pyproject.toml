@@ -1,0 +1,61 @@
+[project]
+name = "superclaw-native-python-payload"
+version = "0.1.0"
+description = "Locked dependency sets for the Windows-native release payload"
+requires-python = "==3.12.10"
+dependencies = []
+
+[project.optional-dependencies]
+agent-python = [
+    # The Connector verifies approval grants (Ed25519) from this environment (EG1-7, D5).
+    "cryptography==50.0.0",
+    "ddgs",
+    "matplotlib",
+    "numpy",
+    "openai",
+    "openpyxl",
+    "pandas",
+    "pip",
+    "pytest",
+    "python-docx",
+    "python-dotenv",
+    "python-pptx",
+    "requests",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "tavily-python",
+    # The Gmail tools (EG1-8) run from this environment on native: the dependencies of
+    # sandbox/agent_config/profiles/pro/tools/gmail/pyproject.toml, kept in step by
+    # test_verify_native_payload.py. The container still runs them with `uv run` there.
+    "arrow>=1.3.0",
+    "google-api-python-client>=2.194.0",
+    "google-auth>=2.49.2",
+    "google-auth-httplib2>=0.3.1",
+    "google-auth-oauthlib>=1.3.1",
+    "rapidfuzz>=3.0.0",
+    "tzlocal>=5.0",
+    "urllib3>=2.8.0",
+]
+readers = [
+    "fsspec",
+    "llama-index-core>=0.14.0",
+    "onnxruntime",
+    "openpyxl",
+    "pandas",
+    "pdfplumber",
+    "pypdfium2",
+    "python-docx",
+    "python-pptx",
+    "rapidocr",
+]
+classifier = [
+    "fastapi>=0.110.0",
+    "httpx>=0.27.0",
+    "uvicorn[standard]>=0.29.0",
+]
+
+[tool.uv]
+package = false
+# The Gmail project's floor for google-auth's pyasn1 (EG1-8).
+constraint-dependencies = ["pyasn1>=0.6.5", "certifi>=2026.10.19", "pillow>=13.0.0", "brotli>=1.2.1", "brotlicffi>=1.2.1.0", "aiohttp>=3.14.4", "urllib3>=2.8.0", "httpx2>=2.12.0", "nltk>=3.10.4", "banks>=2.5.1", "oauthlib>=4.0.1", "opentelemetry-api>=1.45.2", "multidict>=6.9.1", "setuptools>=84.1.0"]

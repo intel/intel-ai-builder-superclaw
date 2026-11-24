@@ -1,0 +1,156 @@
+{
+  "$id": "https://different.ai/openwork-contracts/acl-policy-drift-report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "findings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "locator": {
+            "additionalProperties": false,
+            "properties": {
+              "managed_root_scope": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "backend_root",
+                      "payload_container_root",
+                      "temp_container_root",
+                      "config_root",
+                      "data_root",
+                      "logs_root",
+                      "payload_root",
+                      "temp_root",
+                      "protected_root",
+                      "isolation_root"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "policy_class": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "managed_default",
+                      "user_granted_rw",
+                      "user_granted_ro"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "relative_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "root_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^wsr_[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "tier": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "bootstrap",
+                      "file_tool",
+                      "network_connector",
+                      "channel"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "policy_class",
+              "managed_root_scope",
+              "tier",
+              "root_id",
+              "relative_path"
+            ],
+            "type": "object"
+          },
+          "reason": {
+            "enum": [
+              "policy_version_mismatch",
+              "owner_sid_mismatch",
+              "observation_absent",
+              "observation_duplicated",
+              "dacl_not_protected",
+              "dacl_not_canonically_ordered",
+              "required_ace_absent",
+              "unexpected_ace_present",
+              "delete_child_granted_on_workspace_root",
+              "recovery_principal_absent",
+              "root_not_in_plan",
+              "root_absent",
+              "root_is_reparse_point",
+              "tier_subtree_not_in_plan",
+              "tier_opening_not_in_plan",
+              "placeholder_absent",
+              "placeholder_is_reparse_point",
+              "placeholder_not_empty",
+              "placeholder_deny_ace_absent",
+              "placeholder_not_in_plan"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "locator",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "policy_version": {
+      "maximum": 9007199254740991,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "verdict": {
+      "enum": [
+        "no_drift_observed",
+        "drift_detected"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_version",
+    "policy_version",
+    "verdict",
+    "findings"
+  ],
+  "title": "AclPolicyDriftReport",
+  "type": "object"
+}

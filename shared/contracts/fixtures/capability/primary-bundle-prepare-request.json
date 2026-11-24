@@ -1,0 +1,10 @@
+{
+  "contract_version": 1,
+  "correlation_operation_id": "hub:activation-1",
+  "target_bundle_id": "local-35b",
+  "intent": "download_and_connect",
+  "candidate_revision": 4,
+  "expected_bundle_revision": 3,
+  "user_confirmed_download": true,
+  "idempotency_key": "prepare-1"
+}

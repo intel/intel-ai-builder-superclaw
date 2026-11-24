@@ -1,0 +1,34 @@
+{
+  "_comment": [
+    "Golden table for the Connector v2 rule that a search query must not carry a URL.",
+    "Read by shared/contracts/src/__tests__/connector-ipc.test.ts and by the Connector's own tests,",
+    "which apply the published CONNECTOR_IPC_RULES.search_query_url_pattern rather than a second",
+    "grammar. A query the pattern matches is answered search_query_carries_url without reaching a provider.",
+    "The rule is lexical and ASCII-only: it refuses `://` and a dotted host followed by an optional",
+    "port and a slash. The notes below record the edges it decides on purpose."
+  ],
+  "cases": [
+    { "query": "Intel native AI", "carries_url": false },
+    { "query": "https://intel.com", "carries_url": true },
+    { "query": "file:///etc/passwd", "carries_url": true },
+    { "query": "intel.com/products", "carries_url": true },
+    { "query": "see intel.com/products please", "carries_url": true },
+    { "query": "(intel.com/x)", "carries_url": true },
+    { "query": "Intel.COM/x", "carries_url": true },
+    { "query": "evil.com:8080/x", "carries_url": true },
+    { "query": "//evil.com/x", "carries_url": true },
+    { "query": "intel.com", "carries_url": false, "note": "a bare host is a search term, not a URL" },
+    { "query": "C++/CLI", "carries_url": false },
+    { "query": "1/2 cup", "carries_url": false },
+    { "query": "3.5/5 rating", "carries_url": false, "note": "the last label has to start with a letter" },
+    { "query": "v1.2/release notes", "carries_url": false },
+    { "query": "U.S./China trade", "carries_url": false },
+    {
+      "query": "node.js/express tutorial",
+      "carries_url": true,
+      "note": "refused although it is not a URL: the rule has no list of real top-level domains"
+    },
+    { "query": "localhost/admin", "carries_url": false, "note": "a single-label host is not matched" },
+    { "query": "例子.中国/路径", "carries_url": false, "note": "the character classes are ASCII only" }
+  ]
+}

@@ -1,0 +1,85 @@
+[package]
+name = "superclaw"
+version = "0.11.169"
+description = "SuperClaw"
+authors = ["Intel"]
+edition = "2021"
+default-run = "SuperClaw"
+
+[lib]
+name = "superclaw"
+
+[[bin]]
+name = "SuperClaw"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+json5 = "0.4"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter", "time"] }
+tracing-appender = "0.2"
+time = { version = "0.3", features = ["formatting", "macros"] }
+notify = "6.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+tauri-plugin-deep-link = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-http = "2.5.6"
+tauri-plugin-notification = "2"
+tauri-plugin-opener = "2.5.3"
+tauri-plugin-shell = "2"
+uuid = { version = "1", features = ["v4"] }
+ureq = { version = "2.10", features = ["json"] }
+url = "2"
+gethostname = "0.4"
+local-ip-address = "0.5"
+walkdir = "2.5"
+same-file = "1.0"
+zip = "9"
+base64 = "0.22"
+sha2 = "0.10"
+
+[profile.dev]
+# Keeps file/line for panics+backtraces, drops variable/type tables. `--debug`
+# is the default build path (build-superclaw.ps1), where full PDB dominates link
+# time. Revert to `true` only if you need a native debugger to inspect locals.
+debug = "line-tables-only"
+
+[profile.release]
+panic = "abort"
+codegen-units = 16  # parallel codegen; removed single-unit constraint for faster compile
+lto = "thin"        # thin LTO: ~same optimisation, 40-60% faster link than lto=true
+opt-level = "s"
+strip = true
+
+[target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
+tauri-plugin-process = "2.3.1"
+tauri-plugin-single-instance = { version = "2", features = ["deep-link"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSProcessInfo", "NSString"] }
+
+[target."cfg(windows)".dependencies]
+webview2-com = "0.38.2"
+windows-sys = { version = "0.61.2", features = [
+  "Win32_Foundation",
+  "Win32_NetworkManagement_IpHelper",
+  "Win32_Networking_WinSock",
+  "Win32_Security",
+  "Win32_Security_Authorization",
+  "Win32_Security_Cryptography",
+  "Win32_Security_WinTrust",
+  "Win32_System_Environment",
+  "Win32_System_Registry",
+  "Win32_System_SystemInformation",
+  "Win32_System_Threading",
+  "Win32_NetworkManagement_IpHelper",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
+] }

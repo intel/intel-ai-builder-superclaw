@@ -1,0 +1,261 @@
+{
+  "$id": "https://different.ai/openwork-contracts/agent-runtime-descriptor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adapters": {
+      "additionalProperties": false,
+      "properties": {
+        "config_projection": {
+          "enum": [
+            "opencode_jsonc_extract",
+            "none"
+          ],
+          "type": "string"
+        },
+        "guard": {
+          "enum": [
+            "native_pinned_shell",
+            "none"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "config_projection",
+        "guard"
+      ],
+      "type": "object"
+    },
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "launch": {
+      "additionalProperties": false,
+      "properties": {
+        "argv_groups": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "present_member": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "tokens": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "tokens",
+              "present_member"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "env_template": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "program_member": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "program_member",
+        "argv_groups",
+        "env_template"
+      ],
+      "type": "object"
+    },
+    "members": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "access": {
+            "additionalProperties": false,
+            "properties": {
+              "execute": {
+                "type": "boolean"
+              },
+              "read": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "read",
+              "execute"
+            ],
+            "type": "object"
+          },
+          "isolation_tier": {
+            "enum": [
+              "bootstrap",
+              "file_tool",
+              "network_connector",
+              "channel"
+            ],
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "requirement": {
+            "enum": [
+              "required",
+              "required_when_verified"
+            ],
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "supervisor_executable",
+              "token_service_executable",
+              "runtime_executable",
+              "connector_executable",
+              "shell_executable",
+              "sidecar_script",
+              "config_source",
+              "plugin_dependency_metadata",
+              "agent_manifest"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "role",
+          "requirement",
+          "isolation_tier",
+          "access"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "readiness_probe": {
+      "additionalProperties": false,
+      "properties": {
+        "host_placeholder": {
+          "enum": [
+            "loopback_host",
+            "supervisor_port",
+            "runtime_port"
+          ],
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "http_get"
+          ],
+          "type": "string"
+        },
+        "path": {
+          "pattern": "^\\/[A-Za-z0-9/_-]*$",
+          "type": "string"
+        },
+        "poll_interval_seconds": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "port_placeholder": {
+          "enum": [
+            "loopback_host",
+            "supervisor_port",
+            "runtime_port"
+          ],
+          "type": "string"
+        },
+        "timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "host_placeholder",
+        "port_placeholder",
+        "path",
+        "timeout_seconds",
+        "poll_interval_seconds"
+      ],
+      "type": "object"
+    },
+    "runtime_id": {
+      "enum": [
+        "opencode",
+        "mock"
+      ],
+      "type": "string"
+    },
+    "runtime_version_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "enum": [
+            "payload_version"
+          ],
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "payload_manifest"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "field"
+      ],
+      "type": "object"
+    },
+    "shutdown": {
+      "additionalProperties": false,
+      "properties": {
+        "grace_seconds": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "job_object_backstop": {
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "process_tree_kill"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "grace_seconds",
+        "job_object_backstop"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "contract_version",
+    "runtime_id",
+    "runtime_version_pin",
+    "members",
+    "launch",
+    "readiness_probe",
+    "shutdown",
+    "adapters"
+  ],
+  "title": "AgentRuntimeDescriptor",
+  "type": "object"
+}

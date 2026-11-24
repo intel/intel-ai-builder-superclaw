@@ -1,0 +1,184 @@
+{
+  "cases": [
+    {
+      "name": "canonical drive path",
+      "value": "C:\\Users\\Owner\\SuperClawProjects",
+      "accepted": true
+    },
+    {
+      "name": "lowercase drive and components",
+      "value": "c:\\users\\owner\\project",
+      "accepted": true
+    },
+    {
+      "name": "supported extended drive path",
+      "value": "\\\\?\\D:\\Very\\Long\\Path",
+      "accepted": true
+    },
+    {
+      "name": "long local path",
+      "value": "C:\\segment0001\\segment0002\\segment0003\\segment0004\\segment0005\\segment0006\\segment0007\\segment0008\\segment0009\\segment0010\\segment0011\\segment0012\\segment0013\\segment0014\\segment0015\\segment0016\\segment0017\\segment0018\\segment0019\\segment0020\\segment0021\\segment0022\\segment0023\\segment0024\\segment0025\\segment0026",
+      "accepted": true
+    },
+    {
+      "name": "relative path",
+      "value": "Users\\Owner\\Project",
+      "accepted": false
+    },
+    {
+      "name": "rootless drive path",
+      "value": "C:Project",
+      "accepted": false
+    },
+    {
+      "name": "drive root without managed component",
+      "value": "C:\\",
+      "accepted": false
+    },
+    {
+      "name": "UNC share",
+      "value": "\\\\server\\share\\project",
+      "accepted": false
+    },
+    {
+      "name": "extended UNC share",
+      "value": "\\\\?\\UNC\\server\\share\\project",
+      "accepted": false
+    },
+    {
+      "name": "device namespace",
+      "value": "\\\\.\\C:\\project",
+      "accepted": false
+    },
+    {
+      "name": "volume GUID namespace",
+      "value": "\\\\?\\Volume{12345678-1234-1234-1234-123456789abc}\\project",
+      "accepted": false
+    },
+    {
+      "name": "parent traversal",
+      "value": "C:\\root\\..\\secret",
+      "accepted": false
+    },
+    {
+      "name": "current traversal",
+      "value": "C:\\root\\.\\child",
+      "accepted": false
+    },
+    {
+      "name": "alternate data stream",
+      "value": "C:\\root\\file.txt:stream",
+      "accepted": false
+    },
+    {
+      "name": "extra drive colon",
+      "value": "C::\\root",
+      "accepted": false
+    },
+    {
+      "name": "NUL",
+      "value": "C:\\root\u0000\\child",
+      "accepted": false
+    },
+    {
+      "name": "forward separator ambiguity",
+      "value": "C:\\root/child",
+      "accepted": false
+    },
+    {
+      "name": "empty component",
+      "value": "C:\\root\\\\child",
+      "accepted": false
+    },
+    {
+      "name": "trailing separator empty component",
+      "value": "C:\\root\\",
+      "accepted": false
+    },
+    {
+      "name": "trailing component dot",
+      "value": "C:\\root\\child.",
+      "accepted": false
+    },
+    {
+      "name": "trailing component space",
+      "value": "C:\\root\\child ",
+      "accepted": false
+    },
+    {
+      "name": "reserved DOS name",
+      "value": "C:\\root\\CON",
+      "accepted": false
+    },
+    {
+      "name": "reserved DOS name with extension",
+      "value": "C:\\root\\lpt1.txt",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias of a top-level directory",
+      "value": "C:\\PROGRA~3",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias below the volume root",
+      "value": "C:\\PROGRA~3\\SuperClaw\\isolation",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias with a three-character extension",
+      "value": "D:\\Data\\ARCHIV~1.TXT",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias with a four-digit ordinal",
+      "value": "C:\\PRO~1000\\data",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias with a six-digit ordinal",
+      "value": "C:\\P~100000\\data",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias whose retained base contains a tilde",
+      "value": "D:\\Data\\FO~OBA~1",
+      "accepted": false
+    },
+    {
+      "name": "8.3 short-name alias with no retained base",
+      "value": "C:\\~1\\data",
+      "accepted": false
+    },
+    {
+      "name": "long name shaped exactly like a four-digit-ordinal alias",
+      "value": "C:\\backup~2024\\data",
+      "accepted": false
+    },
+    {
+      "name": "long name too long to be a short-name alias",
+      "value": "C:\\ProjectArchive~1\\data",
+      "accepted": true
+    },
+    {
+      "name": "tilde with a base too long for eight characters is not an alias",
+      "value": "C:\\ABCDEFG~1\\data",
+      "accepted": true
+    },
+    {
+      "name": "tilde with a non-numeric tail is not an alias",
+      "value": "C:\\FOO~BAR\\data",
+      "accepted": true
+    },
+    {
+      "name": "tilde whose digits are not final is not an alias",
+      "value": "C:\\FOO~1BAR\\data",
+      "accepted": true
+    },
+    {
+      "name": "tilde with a four-character extension is not an alias",
+      "value": "C:\\FOO~1.TEXT\\data",
+      "accepted": true
+    }
+  ]
+}

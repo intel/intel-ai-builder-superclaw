@@ -1,0 +1,787 @@
+{
+  "$id": "https://different.ai/openwork-contracts/acl-policy-observation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "descendant_convergence_required": {
+      "type": "boolean"
+    },
+    "managed_root_observations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "is_reparse_point": {
+            "type": "boolean"
+          },
+          "managed_root_scope": {
+            "enum": [
+              "backend_root",
+              "payload_container_root",
+              "temp_container_root",
+              "config_root",
+              "data_root",
+              "logs_root",
+              "payload_root",
+              "temp_root",
+              "protected_root",
+              "isolation_root"
+            ],
+            "type": "string"
+          },
+          "present": {
+            "type": "boolean"
+          },
+          "security": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "aces": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "ace_kind": {
+                          "enum": [
+                            "allow",
+                            "deny"
+                          ],
+                          "type": "string"
+                        },
+                        "inheritance": {
+                          "enum": [
+                            "this_object_only",
+                            "this_object_and_children",
+                            "children_only"
+                          ],
+                          "type": "string"
+                        },
+                        "principal": {
+                          "enum": [
+                            "host_user",
+                            "local_system",
+                            "administrators",
+                            "sandbox_tier_bootstrap",
+                            "sandbox_tier_file_tool",
+                            "sandbox_tier_network_connector",
+                            "sandbox_tier_channel"
+                          ],
+                          "type": "string"
+                        },
+                        "rights": {
+                          "items": {
+                            "enum": [
+                              "FILE_READ_DATA",
+                              "FILE_WRITE_DATA",
+                              "FILE_APPEND_DATA",
+                              "FILE_READ_EA",
+                              "FILE_WRITE_EA",
+                              "FILE_EXECUTE",
+                              "FILE_DELETE_CHILD",
+                              "FILE_READ_ATTRIBUTES",
+                              "FILE_WRITE_ATTRIBUTES",
+                              "DELETE",
+                              "READ_CONTROL",
+                              "WRITE_DAC",
+                              "WRITE_OWNER",
+                              "SYNCHRONIZE"
+                            ],
+                            "type": "string"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "ace_kind",
+                        "principal",
+                        "rights",
+                        "inheritance"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "dacl_protected": {
+                    "type": "boolean"
+                  },
+                  "owner_sid": {
+                    "anyOf": [
+                      {
+                        "pattern": "^S-1-(?:\\d+-)+\\d+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "policy_version": {
+                    "anyOf": [
+                      {
+                        "maximum": 9007199254740991,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "owner_sid",
+                  "policy_version",
+                  "dacl_protected",
+                  "aces"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tier_opening_observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "present": {
+                  "type": "boolean"
+                },
+                "relative_path": {
+                  "pattern": "^[A-Za-z0-9_+-]+(?:\\.[A-Za-z0-9_+-]+)*(?:\\/[A-Za-z0-9_+-]+(?:\\.[A-Za-z0-9_+-]+)*)*$",
+                  "type": "string"
+                },
+                "security": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "aces": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "ace_kind": {
+                                "enum": [
+                                  "allow",
+                                  "deny"
+                                ],
+                                "type": "string"
+                              },
+                              "inheritance": {
+                                "enum": [
+                                  "this_object_only",
+                                  "this_object_and_children",
+                                  "children_only"
+                                ],
+                                "type": "string"
+                              },
+                              "principal": {
+                                "enum": [
+                                  "host_user",
+                                  "local_system",
+                                  "administrators",
+                                  "sandbox_tier_bootstrap",
+                                  "sandbox_tier_file_tool",
+                                  "sandbox_tier_network_connector",
+                                  "sandbox_tier_channel"
+                                ],
+                                "type": "string"
+                              },
+                              "rights": {
+                                "items": {
+                                  "enum": [
+                                    "FILE_READ_DATA",
+                                    "FILE_WRITE_DATA",
+                                    "FILE_APPEND_DATA",
+                                    "FILE_READ_EA",
+                                    "FILE_WRITE_EA",
+                                    "FILE_EXECUTE",
+                                    "FILE_DELETE_CHILD",
+                                    "FILE_READ_ATTRIBUTES",
+                                    "FILE_WRITE_ATTRIBUTES",
+                                    "DELETE",
+                                    "READ_CONTROL",
+                                    "WRITE_DAC",
+                                    "WRITE_OWNER",
+                                    "SYNCHRONIZE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "ace_kind",
+                              "principal",
+                              "rights",
+                              "inheritance"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "dacl_protected": {
+                          "type": "boolean"
+                        },
+                        "owner_sid": {
+                          "anyOf": [
+                            {
+                              "pattern": "^S-1-(?:\\d+-)+\\d+$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "policy_version": {
+                          "anyOf": [
+                            {
+                              "maximum": 9007199254740991,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "owner_sid",
+                        "policy_version",
+                        "dacl_protected",
+                        "aces"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tier": {
+                  "enum": [
+                    "bootstrap",
+                    "file_tool",
+                    "network_connector",
+                    "channel"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "tier",
+                "relative_path",
+                "present",
+                "security"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "tier_subtree_observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "convergence": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "coverage_bound_exceeded": {
+                      "type": "boolean"
+                    },
+                    "duration_ms": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "repaired": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "retryable_skips": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "skipped": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "skipped_entries": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "path": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "reason": {
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "path",
+                          "reason"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "skipped_entries_truncated": {
+                      "type": "boolean"
+                    },
+                    "visited": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "visited",
+                    "repaired",
+                    "skipped",
+                    "duration_ms",
+                    "skipped_entries",
+                    "skipped_entries_truncated"
+                  ],
+                  "type": "object"
+                },
+                "present": {
+                  "type": "boolean"
+                },
+                "security": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "aces": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "ace_kind": {
+                                "enum": [
+                                  "allow",
+                                  "deny"
+                                ],
+                                "type": "string"
+                              },
+                              "inheritance": {
+                                "enum": [
+                                  "this_object_only",
+                                  "this_object_and_children",
+                                  "children_only"
+                                ],
+                                "type": "string"
+                              },
+                              "principal": {
+                                "enum": [
+                                  "host_user",
+                                  "local_system",
+                                  "administrators",
+                                  "sandbox_tier_bootstrap",
+                                  "sandbox_tier_file_tool",
+                                  "sandbox_tier_network_connector",
+                                  "sandbox_tier_channel"
+                                ],
+                                "type": "string"
+                              },
+                              "rights": {
+                                "items": {
+                                  "enum": [
+                                    "FILE_READ_DATA",
+                                    "FILE_WRITE_DATA",
+                                    "FILE_APPEND_DATA",
+                                    "FILE_READ_EA",
+                                    "FILE_WRITE_EA",
+                                    "FILE_EXECUTE",
+                                    "FILE_DELETE_CHILD",
+                                    "FILE_READ_ATTRIBUTES",
+                                    "FILE_WRITE_ATTRIBUTES",
+                                    "DELETE",
+                                    "READ_CONTROL",
+                                    "WRITE_DAC",
+                                    "WRITE_OWNER",
+                                    "SYNCHRONIZE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "ace_kind",
+                              "principal",
+                              "rights",
+                              "inheritance"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "dacl_protected": {
+                          "type": "boolean"
+                        },
+                        "owner_sid": {
+                          "anyOf": [
+                            {
+                              "pattern": "^S-1-(?:\\d+-)+\\d+$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "policy_version": {
+                          "anyOf": [
+                            {
+                              "maximum": 9007199254740991,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "owner_sid",
+                        "policy_version",
+                        "dacl_protected",
+                        "aces"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tier": {
+                  "enum": [
+                    "bootstrap",
+                    "file_tool",
+                    "network_connector",
+                    "channel"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "tier",
+                "present",
+                "security"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "managed_root_scope",
+          "present",
+          "is_reparse_point",
+          "security",
+          "tier_subtree_observations",
+          "tier_opening_observations"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "workspace_root_observations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "is_reparse_point": {
+            "type": "boolean"
+          },
+          "placeholders": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "is_empty": {
+                  "type": "boolean"
+                },
+                "is_reparse_point": {
+                  "type": "boolean"
+                },
+                "present": {
+                  "type": "boolean"
+                },
+                "relative_path": {
+                  "pattern": "^[A-Za-z0-9_+-]+(?:\\.[A-Za-z0-9_+-]+)*(?:\\/[A-Za-z0-9_+-]+(?:\\.[A-Za-z0-9_+-]+)*)*$",
+                  "type": "string"
+                },
+                "security": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "aces": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "ace_kind": {
+                                "enum": [
+                                  "allow",
+                                  "deny"
+                                ],
+                                "type": "string"
+                              },
+                              "inheritance": {
+                                "enum": [
+                                  "this_object_only",
+                                  "this_object_and_children",
+                                  "children_only"
+                                ],
+                                "type": "string"
+                              },
+                              "principal": {
+                                "enum": [
+                                  "host_user",
+                                  "local_system",
+                                  "administrators",
+                                  "sandbox_tier_bootstrap",
+                                  "sandbox_tier_file_tool",
+                                  "sandbox_tier_network_connector",
+                                  "sandbox_tier_channel"
+                                ],
+                                "type": "string"
+                              },
+                              "rights": {
+                                "items": {
+                                  "enum": [
+                                    "FILE_READ_DATA",
+                                    "FILE_WRITE_DATA",
+                                    "FILE_APPEND_DATA",
+                                    "FILE_READ_EA",
+                                    "FILE_WRITE_EA",
+                                    "FILE_EXECUTE",
+                                    "FILE_DELETE_CHILD",
+                                    "FILE_READ_ATTRIBUTES",
+                                    "FILE_WRITE_ATTRIBUTES",
+                                    "DELETE",
+                                    "READ_CONTROL",
+                                    "WRITE_DAC",
+                                    "WRITE_OWNER",
+                                    "SYNCHRONIZE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "minItems": 1,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "ace_kind",
+                              "principal",
+                              "rights",
+                              "inheritance"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "dacl_protected": {
+                          "type": "boolean"
+                        },
+                        "owner_sid": {
+                          "anyOf": [
+                            {
+                              "pattern": "^S-1-(?:\\d+-)+\\d+$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "policy_version": {
+                          "anyOf": [
+                            {
+                              "maximum": 9007199254740991,
+                              "minimum": 1,
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "owner_sid",
+                        "policy_version",
+                        "dacl_protected",
+                        "aces"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "relative_path",
+                "present",
+                "is_reparse_point",
+                "is_empty",
+                "security"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "present": {
+            "type": "boolean"
+          },
+          "root_id": {
+            "pattern": "^wsr_[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "security": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "aces": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "ace_kind": {
+                          "enum": [
+                            "allow",
+                            "deny"
+                          ],
+                          "type": "string"
+                        },
+                        "inheritance": {
+                          "enum": [
+                            "this_object_only",
+                            "this_object_and_children",
+                            "children_only"
+                          ],
+                          "type": "string"
+                        },
+                        "principal": {
+                          "enum": [
+                            "host_user",
+                            "local_system",
+                            "administrators",
+                            "sandbox_tier_bootstrap",
+                            "sandbox_tier_file_tool",
+                            "sandbox_tier_network_connector",
+                            "sandbox_tier_channel"
+                          ],
+                          "type": "string"
+                        },
+                        "rights": {
+                          "items": {
+                            "enum": [
+                              "FILE_READ_DATA",
+                              "FILE_WRITE_DATA",
+                              "FILE_APPEND_DATA",
+                              "FILE_READ_EA",
+                              "FILE_WRITE_EA",
+                              "FILE_EXECUTE",
+                              "FILE_DELETE_CHILD",
+                              "FILE_READ_ATTRIBUTES",
+                              "FILE_WRITE_ATTRIBUTES",
+                              "DELETE",
+                              "READ_CONTROL",
+                              "WRITE_DAC",
+                              "WRITE_OWNER",
+                              "SYNCHRONIZE"
+                            ],
+                            "type": "string"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "ace_kind",
+                        "principal",
+                        "rights",
+                        "inheritance"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "dacl_protected": {
+                    "type": "boolean"
+                  },
+                  "owner_sid": {
+                    "anyOf": [
+                      {
+                        "pattern": "^S-1-(?:\\d+-)+\\d+$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "policy_version": {
+                    "anyOf": [
+                      {
+                        "maximum": 9007199254740991,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "owner_sid",
+                  "policy_version",
+                  "dacl_protected",
+                  "aces"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "root_id",
+          "present",
+          "is_reparse_point",
+          "security",
+          "placeholders"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "workspace_root_observations",
+    "managed_root_observations"
+  ],
+  "title": "AclPolicyObservation",
+  "type": "object"
+}

@@ -1,0 +1,345 @@
+{
+  "admin_errors": {
+    "admin_authentication_failed": {
+      "message": "The admin secret is missing or wrong.",
+      "status": 401
+    },
+    "approval_not_pending": {
+      "message": "No pending approval has that id.",
+      "status": 404
+    },
+    "grant_rejected": {
+      "message": "The grant was not accepted.",
+      "status": 400
+    },
+    "grant_superseded": {
+      "message": "The chat was switched off while this grant was handled; decide again.",
+      "status": 409
+    },
+    "invalid_request": {
+      "message": "The request is not one this endpoint accepts.",
+      "status": 400
+    }
+  },
+  "chat_vector": {
+    "canonical_payload": "{\"action\":\"connector.fetch_result\",\"approval_id\":\"approval-golden-0004\",\"audience\":\"connector\",\"boot_id\":\"sm-boot-golden-0001\",\"contract_version\":1,\"expires_at_ms\":1800000090000,\"grant_id\":\"grant-golden-0004\",\"issued_at_ms\":1800000000000,\"request_digest\":\"dc692518116ebd48a870570c53df2aac07f559f8c8f7c6517ee181bc9052edbf\",\"scope\":{\"kind\":\"all_for_chat\"}}",
+    "grant": {
+      "action": "connector.fetch_result",
+      "approval_id": "approval-golden-0004",
+      "audience": "connector",
+      "boot_id": "sm-boot-golden-0001",
+      "contract_version": 1,
+      "expires_at_ms": 1800000090000,
+      "grant_id": "grant-golden-0004",
+      "issued_at_ms": 1800000000000,
+      "request_digest": "dc692518116ebd48a870570c53df2aac07f559f8c8f7c6517ee181bc9052edbf",
+      "scope": {
+        "kind": "all_for_chat"
+      }
+    },
+    "token": "eyJhY3Rpb24iOiJjb25uZWN0b3IuZmV0Y2hfcmVzdWx0IiwiYXBwcm92YWxfaWQiOiJhcHByb3ZhbC1nb2xkZW4tMDAwNCIsImF1ZGllbmNlIjoiY29ubmVjdG9yIiwiYm9vdF9pZCI6InNtLWJvb3QtZ29sZGVuLTAwMDEiLCJjb250cmFjdF92ZXJzaW9uIjoxLCJleHBpcmVzX2F0X21zIjoxODAwMDAwMDkwMDAwLCJncmFudF9pZCI6ImdyYW50LWdvbGRlbi0wMDA0IiwiaXNzdWVkX2F0X21zIjoxODAwMDAwMDAwMDAwLCJyZXF1ZXN0X2RpZ2VzdCI6ImRjNjkyNTE4MTE2ZWJkNDhhODcwNTcwYzUzZGYyYWFjMDdmNTU5ZjhjOGY3YzY1MTdlZTE4MWJjOTA1MmVkYmYiLCJzY29wZSI6eyJraW5kIjoiYWxsX2Zvcl9jaGF0In19.2qhx9ApYIvW3ssU36UEmeLwmZLC2AUFhYmmqZI9GYdgQsKHGE_m3cWA6hJ5OIwmRi10Q6vgIxoW1oRK-EWFzAg"
+  },
+  "contract_version": 1,
+  "proxy_rules": {
+    "hold_ms": 120000,
+    "key_label": "superclaw-egress-proxy-session-key-v1",
+    "mac_label": "superclaw-egress-proxy-session-v1\n",
+    "never_covered_classes": [
+      "loopback",
+      "link_local",
+      "host_self",
+      "private",
+      "other_non_public"
+    ],
+    "ref_label": "superclaw-egress-proxy-session-ref-v1\n",
+    "refusal_reasons": [
+      "no_interactive_approver",
+      "approval_denied",
+      "approval_expired",
+      "approval_unavailable",
+      "approval_queue_full"
+    ],
+    "scopes_known_chat": [
+      "once",
+      "all_for_chat"
+    ],
+    "scopes_unknown_chat": [
+      "once"
+    ],
+    "session_id_pattern": "^[A-Za-z0-9_-]{1,128}$",
+    "state_path": "/v1/approvals/state",
+    "target_max_chars": 265,
+    "unknown_session_ref": "sref_unknown",
+    "username_prefix": "sc1"
+  },
+  "proxy_vector": {
+    "caller_key_b64": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+    "canonical_payload": "{\"action\":\"proxy.connect_unlisted\",\"approval_id\":\"approval-golden-0003\",\"audience\":\"egress_proxy\",\"boot_id\":\"sm-boot-golden-0001\",\"contract_version\":1,\"expires_at_ms\":1800000090000,\"grant_id\":\"grant-golden-0003\",\"issued_at_ms\":1800000000000,\"request_digest\":\"0bb8d9d3c97e726f3fc17d04522428177f323d9f837914aded13fb8ba9d49cfd\",\"scope\":{\"kind\":\"all_for_chat\"}}",
+    "credentials": [
+      {
+        "flavor": "desktop",
+        "mac": "vH1m-G2FpqPsNCPo1iTNE1MY4o21AGjecvK1Lt68W-w",
+        "session_id": "ses_golden0001",
+        "session_ref": "sref_9a59ec8361e9787f",
+        "username": "sc1.d.ses_golden0001"
+      },
+      {
+        "flavor": "channel",
+        "mac": "bi5ZOj7wdV_HeTuiqSLzGfqZ8uCPl1-b3a-SuORmqok",
+        "session_id": "ses_golden0002",
+        "session_ref": "sref_d3a09b0fc6037f79",
+        "username": "sc1.c.ses_golden0002"
+      }
+    ],
+    "digest_rows": [
+      {
+        "digest": "0bb8d9d3c97e726f3fc17d04522428177f323d9f837914aded13fb8ba9d49cfd",
+        "host": "example.com",
+        "port": 443,
+        "session_ref": "sref_9a59ec8361e9787f"
+      },
+      {
+        "digest": "11926dbbc896098a25478a3c946561c560e0f4ae2827a6f6be2ff79427d62b1f",
+        "host": "files.example.org",
+        "port": 8443,
+        "session_ref": "sref_d3a09b0fc6037f79"
+      },
+      {
+        "digest": "7371923a3a3a3352bd22f845d491b67e240c2c04c8293263cf9f1ab3317bbeb6",
+        "host": "example.com",
+        "port": 443,
+        "session_ref": "sref_unknown"
+      }
+    ],
+    "grant": {
+      "action": "proxy.connect_unlisted",
+      "approval_id": "approval-golden-0003",
+      "audience": "egress_proxy",
+      "boot_id": "sm-boot-golden-0001",
+      "contract_version": 1,
+      "expires_at_ms": 1800000090000,
+      "grant_id": "grant-golden-0003",
+      "issued_at_ms": 1800000000000,
+      "request_digest": "0bb8d9d3c97e726f3fc17d04522428177f323d9f837914aded13fb8ba9d49cfd",
+      "scope": {
+        "kind": "all_for_chat"
+      }
+    },
+    "public_key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg",
+    "session_key": "OtbVGW05EgNIw_RHJgIu1ZGFAuXkmhrg02UAy3hrviM",
+    "test_only": true,
+    "token": "eyJhY3Rpb24iOiJwcm94eS5jb25uZWN0X3VubGlzdGVkIiwiYXBwcm92YWxfaWQiOiJhcHByb3ZhbC1nb2xkZW4tMDAwMyIsImF1ZGllbmNlIjoiZWdyZXNzX3Byb3h5IiwiYm9vdF9pZCI6InNtLWJvb3QtZ29sZGVuLTAwMDEiLCJjb250cmFjdF92ZXJzaW9uIjoxLCJleHBpcmVzX2F0X21zIjoxODAwMDAwMDkwMDAwLCJncmFudF9pZCI6ImdyYW50LWdvbGRlbi0wMDAzIiwiaXNzdWVkX2F0X21zIjoxODAwMDAwMDAwMDAwLCJyZXF1ZXN0X2RpZ2VzdCI6IjBiYjhkOWQzYzk3ZTcyNmYzZmMxN2QwNDUyMjQyODE3N2YzMjNkOWY4Mzc5MTRhZGVkMTNmYjhiYTlkNDljZmQiLCJzY29wZSI6eyJraW5kIjoiYWxsX2Zvcl9jaGF0In19.SEtWtX68YnniduWFxRveaoHjnkby-d9U394RJ1Mjkv9c5I-0R1qdBqUBAZICthJuFQ1IRni1MLDbkiG36vFxDg"
+  },
+  "router_errors": {
+    "approval_denied": {
+      "message": "The message was not sent: the approval in the SuperClaw desktop app was denied.",
+      "status": 403
+    },
+    "approval_expired": {
+      "message": "The message was not sent: sending to a new conversation needs approval in the SuperClaw desktop app, and it was not approved in time.",
+      "status": 408
+    },
+    "approval_queue_full": {
+      "message": "The message was not sent: too many approvals are waiting in the SuperClaw desktop app.",
+      "status": 429
+    },
+    "approval_unavailable": {
+      "message": "The message was not sent: approvals are not available, so this conversation cannot be approved.",
+      "status": 503
+    },
+    "scoped_token_forbidden": {
+      "message": "This credential may only read status and send messages.",
+      "status": 403
+    }
+  },
+  "router_rules": {
+    "conversation_id_max_chars": 256,
+    "digest_input_keys": [
+      "channel",
+      "conversation_id"
+    ],
+    "no_approval_reasons": [
+      "current_conversation",
+      "bound_conversation"
+    ],
+    "scoped_routes": [
+      {
+        "method": "GET",
+        "path": "/bindings"
+      },
+      {
+        "method": "GET",
+        "path": "/identities/slack"
+      },
+      {
+        "method": "GET",
+        "path": "/identities/telegram"
+      },
+      {
+        "method": "POST",
+        "path": "/send"
+      }
+    ],
+    "scoped_send_rejects": [
+      "autoBind"
+    ],
+    "target_max_chars": 265
+  },
+  "router_vector": {
+    "canonical_payload": "{\"action\":\"router.send_new_target\",\"approval_id\":\"approval-golden-0002\",\"audience\":\"router\",\"boot_id\":\"sm-boot-golden-0001\",\"contract_version\":1,\"expires_at_ms\":1800000090000,\"grant_id\":\"grant-golden-0002\",\"issued_at_ms\":1800000000000,\"request_digest\":\"247ec9111de407eca7cb38a79f2e2fb112e5328391b6418b3f47a199ce96f954\",\"scope\":{\"kind\":\"once\"}}",
+    "digest_rows": [
+      {
+        "canonical_input": "{\"channel\":\"slack\",\"conversation_id\":\"C0123456789\"}",
+        "channel": "slack",
+        "conversation_id": "C0123456789",
+        "digest": "247ec9111de407eca7cb38a79f2e2fb112e5328391b6418b3f47a199ce96f954"
+      },
+      {
+        "canonical_input": "{\"channel\":\"telegram\",\"conversation_id\":\"-1001234567890\"}",
+        "channel": "telegram",
+        "conversation_id": "-1001234567890",
+        "digest": "603228ff0948edceda621d5140340636119cd961f650596aa3358cab8f4445b2"
+      },
+      {
+        "canonical_input": "{\"channel\":\"slack\",\"conversation_id\":\"C0123456789/1700000000.000100\"}",
+        "channel": "slack",
+        "conversation_id": "C0123456789/1700000000.000100",
+        "digest": "90f9cf5cd3751fb3273282b4c6b10c3204782aab525ba68940d9c096d58d1a9e"
+      }
+    ],
+    "grant": {
+      "action": "router.send_new_target",
+      "approval_id": "approval-golden-0002",
+      "audience": "router",
+      "boot_id": "sm-boot-golden-0001",
+      "contract_version": 1,
+      "expires_at_ms": 1800000090000,
+      "grant_id": "grant-golden-0002",
+      "issued_at_ms": 1800000000000,
+      "request_digest": "247ec9111de407eca7cb38a79f2e2fb112e5328391b6418b3f47a199ce96f954",
+      "scope": {
+        "kind": "once"
+      }
+    },
+    "test_only": true,
+    "token": "eyJhY3Rpb24iOiJyb3V0ZXIuc2VuZF9uZXdfdGFyZ2V0IiwiYXBwcm92YWxfaWQiOiJhcHByb3ZhbC1nb2xkZW4tMDAwMiIsImF1ZGllbmNlIjoicm91dGVyIiwiYm9vdF9pZCI6InNtLWJvb3QtZ29sZGVuLTAwMDEiLCJjb250cmFjdF92ZXJzaW9uIjoxLCJleHBpcmVzX2F0X21zIjoxODAwMDAwMDkwMDAwLCJncmFudF9pZCI6ImdyYW50LWdvbGRlbi0wMDAyIiwiaXNzdWVkX2F0X21zIjoxODAwMDAwMDAwMDAwLCJyZXF1ZXN0X2RpZ2VzdCI6IjI0N2VjOTExMWRlNDA3ZWNhN2NiMzhhNzlmMmUyZmIxMTJlNTMyODM5MWI2NDE4YjNmNDdhMTk5Y2U5NmY5NTQiLCJzY29wZSI6eyJraW5kIjoib25jZSJ9fQ.LCqCJutjuIbiqz-877be8zb--EiD6Uada3czMVkOrY29RXwMa35obBstAjDt6H1I_yJkebXsO59Uta-5YgDZCg"
+  },
+  "rules": {
+    "admin_max_pending": 64,
+    "admin_max_request_bytes": 4096,
+    "admin_max_wait_ms": 20000,
+    "admin_secret_chars": 43,
+    "admin_secret_header": "X-SuperClaw-Admin-Secret",
+    "admin_target_max_chars": 4097,
+    "decode_failure_reasons": [
+      "malformed_token",
+      "bad_signature",
+      "invalid_grant",
+      "not_canonical"
+    ],
+    "max_lifetime_ms": 120000,
+    "max_token_chars": 2048,
+    "public_key_chars": 43,
+    "signature_chars": 86,
+    "signing_label": "superclaw-approval-grant-v1\n",
+    "verifier": {
+      "admin_authenticates_before_parsing_body": true,
+      "approval_id_is_lookup_key": true,
+      "base64url": {
+        "padding": false,
+        "reencode_and_compare": true
+      },
+      "canonical_form_compares": "validated_model",
+      "canonical_json": {
+        "ensure_ascii": false,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "sort_keys": true
+      },
+      "integer_fields_strict": true,
+      "once_set_retained_until": "expires_at_ms",
+      "request_digest_equals_held_request": true,
+      "time_window": {
+        "expires_at_exclusive": true,
+        "issued_at_inclusive": true,
+        "skew_ms": 0
+      }
+    },
+    "verifier_checks": [
+      "token_form",
+      "signature",
+      "schema",
+      "canonical_form",
+      "audience",
+      "boot_id",
+      "time_window",
+      "approval_id",
+      "request_digest",
+      "scope",
+      "once_unused"
+    ]
+  },
+  "session_ref": {
+    "label": "superclaw-egress-proxy-session-ref-v1\n",
+    "vector": {
+      "session_id": "ses_golden0001",
+      "session_ref": "sref_9a59ec8361e9787f"
+    }
+  },
+  "vector": {
+    "canonical_payload": "{\"action\":\"connector.fetch_result\",\"approval_id\":\"approval-golden-0001\",\"audience\":\"connector\",\"boot_id\":\"sm-boot-golden-0001\",\"contract_version\":1,\"expires_at_ms\":1800000090000,\"grant_id\":\"grant-golden-0001\",\"issued_at_ms\":1800000000000,\"request_digest\":\"dc692518116ebd48a870570c53df2aac07f559f8c8f7c6517ee181bc9052edbf\",\"scope\":{\"kind\":\"once\"}}",
+    "digest_rows": [
+      {
+        "digest": "dc692518116ebd48a870570c53df2aac07f559f8c8f7c6517ee181bc9052edbf",
+        "normalized": "https://example.com/Docs/Page?q=1",
+        "url": "https://Example.COM:443/Docs/Page?q=1#frag"
+      },
+      {
+        "digest": "2a1b402420ef46577471cdc7409b0fa2c6a204db316e59ade2d805435489a067",
+        "normalized": "http://example.com/",
+        "url": "http://example.com:80/"
+      },
+      {
+        "digest": "79cf60efb22f228935a0b8b139acc9169d7ac5bb17c8816c7ed05cbec3b6959b",
+        "normalized": "https://example.com:8443/a%20b?x=%2F&y=é",
+        "url": "https://example.com:8443/a%20b?x=%2F&y=é"
+      },
+      {
+        "digest": "2a1b402420ef46577471cdc7409b0fa2c6a204db316e59ade2d805435489a067",
+        "normalized": "http://example.com/",
+        "url": "HTTP://Example.com"
+      },
+      {
+        "digest": null,
+        "normalized": null,
+        "url": "ftp://example.com/file"
+      },
+      {
+        "digest": null,
+        "normalized": null,
+        "url": "https://"
+      }
+    ],
+    "grant": {
+      "action": "connector.fetch_result",
+      "approval_id": "approval-golden-0001",
+      "audience": "connector",
+      "boot_id": "sm-boot-golden-0001",
+      "contract_version": 1,
+      "expires_at_ms": 1800000090000,
+      "grant_id": "grant-golden-0001",
+      "issued_at_ms": 1800000000000,
+      "request_digest": "dc692518116ebd48a870570c53df2aac07f559f8c8f7c6517ee181bc9052edbf",
+      "scope": {
+        "kind": "once"
+      }
+    },
+    "note": "A test key: its seed is the bytes 0 to 31, it is public, and no build signs or trusts anything with it.",
+    "public_key": "A6EHv_POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg",
+    "test_only": true,
+    "test_private_key_seed_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+    "token": "eyJhY3Rpb24iOiJjb25uZWN0b3IuZmV0Y2hfcmVzdWx0IiwiYXBwcm92YWxfaWQiOiJhcHByb3ZhbC1nb2xkZW4tMDAwMSIsImF1ZGllbmNlIjoiY29ubmVjdG9yIiwiYm9vdF9pZCI6InNtLWJvb3QtZ29sZGVuLTAwMDEiLCJjb250cmFjdF92ZXJzaW9uIjoxLCJleHBpcmVzX2F0X21zIjoxODAwMDAwMDkwMDAwLCJncmFudF9pZCI6ImdyYW50LWdvbGRlbi0wMDAxIiwiaXNzdWVkX2F0X21zIjoxODAwMDAwMDAwMDAwLCJyZXF1ZXN0X2RpZ2VzdCI6ImRjNjkyNTE4MTE2ZWJkNDhhODcwNTcwYzUzZGYyYWFjMDdmNTU5ZjhjOGY3YzY1MTdlZTE4MWJjOTA1MmVkYmYiLCJzY29wZSI6eyJraW5kIjoib25jZSJ9fQ.-ceQ0hGiTtcAtChyfGlgw-QZ-e8SlzwQWoFoV9o9k_3DmIyF24wM1aKYg0wlXF56p8Rjkdv3ot14WpOzGLyHAQ"
+  }
+}

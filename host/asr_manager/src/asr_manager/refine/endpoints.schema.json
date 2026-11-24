@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://superclaw.intel.com/schemas/asr_manager/refine/endpoints.json",
+  "title": "Dictation refine endpoint preferences",
+  "description": "Measured upstream-endpoint preferences for the dictation clean-up call. OPTIONAL at runtime: when this file is absent, unreadable, or fails to parse, asr_manager falls back to the provider's own endpoint balancing and dictation keeps working. See ENDPOINTS.md for how to produce one.",
+  "type": "object",
+  "required": ["version", "models"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "$ref": "#/$defs/prose" },
+    "version": {
+      "const": 1,
+      "description": "Schema version. A reader that does not recognise the value must ignore the whole file rather than guess, so bump this only for a breaking change."
+    },
+    "measured_on": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date the measurements were taken. Load-bearing, not metadata: an endpoint pool moves under a model id (endpoints appear, start returning 400/404, or change quantisation), so a reader or reviewer needs to know how old this claim is."
+    },
+    "measured_by": {
+      "type": "string",
+      "description": "Who or what produced the numbers, e.g. a script path or an agent name. Lets a reviewer re-run the same thing."
+    },
+    "models": {
+      "type": "object",
+      "description": "One entry per model id, because a measurement is only valid for the model it was taken on: another model's endpoint pool may not even contain these names. Keys are provider-native model ids, e.g. 'minimax/minimax-m3'.",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/modelEntry" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "prose": {
+      "description": "Free prose. An array of lines is accepted so a long rationale can be written without one unreadable string.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "modelEntry": {
+      "type": "object",
+      "required": ["provider", "order"],
+      "properties": {
+        "$comment": { "$ref": "#/$defs/prose" },
+        "provider": {
+          "const": "openrouter",
+          "description": "Only OpenRouter is supported today. It is the one catalog provider that routes a single model id to many upstream endpoints, which is the entire reason this file exists -- every other provider IS its own endpoint and has nothing to order."
+        },
+        "order": {
+          "type": "array",
+          "description": "Preferred endpoints, best first. A PREFERENCE and never a requirement: unknown names are skipped by OpenRouter, which is what lets a stale file degrade instead of fail. MUST contain only endpoints whose measured honours_reasoning_off is true -- an endpoint that ignores the off switch belongs nowhere in this list, whatever its latency.",
+          "items": { "$ref": "#/$defs/endpointName" }
+        },
+        "allow_fallbacks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether OpenRouter may serve the request from an endpoint outside 'order' when every preferred one is unavailable. Leave true: a dead preferred endpoint must degrade to a slower dictation, never to no dictation. Set false only to pin a measurement run.",
+          "$comment": "Setting this false in a shipped file turns every preferred-endpoint outage into a failed dictation."
+        },
+        "measured": {
+          "type": "array",
+          "description": "The evidence behind 'order'. Not consumed by the service -- it exists so the ordering can be reviewed and re-derived rather than trusted. Include EVERY endpoint observed, including the ones excluded, since the exclusions are the most important rows.",
+          "items": { "$ref": "#/$defs/measurement" }
+        },
+        "measurement_limits": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "What these numbers do NOT support. Required reading for anyone tempted to over-read a median: state the machine/network/time scope, any unmeasured axis (e.g. output quality per quantisation), and the model the run was done on."
+        },
+        "naming_caveat": { "$ref": "#/$defs/prose" }
+      },
+      "additionalProperties": false
+    },
+    "endpointName": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The provider_name DISPLAY string as reported by OpenRouter's /endpoints response, e.g. 'CoreWeave'. NOT the slug: a slug is not the lowercased display name ('AtlasCloud' -> 'atlas-cloud/fp8'). Display names are used because those are the values observed working in the routing block."
+    },
+    "measurement": {
+      "type": "object",
+      "required": ["endpoint", "honours_reasoning_off"],
+      "properties": {
+        "endpoint": { "$ref": "#/$defs/endpointName" },
+        "quant": {
+          "type": ["string", "null"],
+          "description": "Quantisation the endpoint serves, e.g. 'fp4'. Null when it does not say. Recorded because preferring a fast endpoint may be buying latency with an output-quality trade that these numbers do not measure."
+        },
+        "wall_s": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Median end-to-end seconds for one clean-up call. A median over repeats, not a single sample."
+        },
+        "wall_s_range": {
+          "type": "array",
+          "description": "[min, max] observed. The RANGE is what decides whether two endpoints are distinguishable: heavily overlapping ranges mean the medians cannot order them and the tie must be broken on cost.",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "ttft_s": { "type": "number", "description": "Median seconds to first token." },
+        "tok_per_s": { "type": "number", "description": "Median output tokens per second." },
+        "completion_tokens": {
+          "type": "integer",
+          "description": "Median completion tokens for a fixed input. The tell for a reasoning violator: a figure several times the visible answer length is hidden reasoning the user pays for and never sees."
+        },
+        "usd_per_1000_dictations": {
+          "type": "number",
+          "description": "List price applied to the tokens REALLY spent, for a stated reference dictation length. Derived from token counts rather than a median, so it is the sturdier axis when latencies are indistinguishable."
+        },
+        "honours_reasoning_off": {
+          "type": "boolean",
+          "description": "Whether the endpoint respected the reasoning off switch. THE MOST IMPORTANT FIELD. False means it spends multiples of the completion budget on hidden reasoning, so it must be excluded from 'order' regardless of speed, and it should also be added to providers.REASONING_VIOLATORS -- which lives in CODE, because that exclusion is a correctness and cost guard that must survive this file being deleted."
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

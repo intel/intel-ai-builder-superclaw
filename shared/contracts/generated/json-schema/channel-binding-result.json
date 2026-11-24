@@ -1,0 +1,30 @@
+{
+  "$id": "https://different.ai/openwork-contracts/channel-binding-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bound": {
+      "type": "boolean"
+    },
+    "channel": {
+      "enum": [
+        "slack",
+        "telegram"
+      ],
+      "type": "string"
+    },
+    "peer_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^[^\\p{Cc}\\p{Cf}\\s]+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel",
+    "peer_id",
+    "bound"
+  ],
+  "title": "ChannelBindingResult",
+  "type": "object"
+}

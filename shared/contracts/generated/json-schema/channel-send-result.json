@@ -1,0 +1,75 @@
+{
+  "$id": "https://different.ai/openwork-contracts/channel-send-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempted": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "channel": {
+      "enum": [
+        "slack",
+        "telegram"
+      ],
+      "type": "string"
+    },
+    "directory": {
+      "maxLength": 1024,
+      "type": "string"
+    },
+    "failures": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "maxLength": 512,
+            "type": "string"
+          },
+          "identity_id": {
+            "maxLength": 48,
+            "type": "string"
+          },
+          "peer_id": {
+            "maxLength": 256,
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity_id",
+          "peer_id",
+          "error"
+        ],
+        "type": "object"
+      },
+      "maxItems": 256,
+      "type": "array"
+    },
+    "identity_id": {
+      "maxLength": 48,
+      "type": "string"
+    },
+    "peer_id": {
+      "maxLength": 256,
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 512,
+      "type": "string"
+    },
+    "sent": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "channel",
+    "directory",
+    "attempted",
+    "sent"
+  ],
+  "title": "ChannelSendResult",
+  "type": "object"
+}

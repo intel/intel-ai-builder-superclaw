@@ -1,0 +1,104 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-server-auth-remove-response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "const": true,
+      "type": "boolean"
+    },
+    "operations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "durationMs": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "httpStatus": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST",
+              "DELETE"
+            ],
+            "type": "string"
+          },
+          "operation": {
+            "enum": [
+              "connect",
+              "remove",
+              "logout"
+            ],
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "result": {
+            "enum": [
+              "success",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "step": {
+            "enum": [
+              "persist",
+              "reload",
+              "connect",
+              "disconnect",
+              "auth-remove"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "enum": [
+              "instance-runtime",
+              "workspace-config"
+            ],
+            "type": "string"
+          },
+          "transport": {
+            "enum": [
+              "local",
+              "remote"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation",
+          "step",
+          "target",
+          "result",
+          "durationMs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "ok",
+    "operations"
+  ],
+  "title": "McpServerAuthRemoveResponse",
+  "type": "object"
+}

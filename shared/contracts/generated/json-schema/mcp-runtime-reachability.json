@@ -1,0 +1,18 @@
+{
+  "$id": "https://different.ai/openwork-contracts/mcp-runtime-reachability.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "errorCode": {
+      "type": "string"
+    },
+    "reachable": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "reachable"
+  ],
+  "title": "McpRuntimeReachability",
+  "type": "object"
+}

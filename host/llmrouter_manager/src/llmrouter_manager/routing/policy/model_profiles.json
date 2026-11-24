@@ -1,0 +1,23 @@
+{
+  "_comment_1": "Per-SERVED-MODEL policy the sidecar applies AFTER _resolve_alias, keyed on cfg.model_id (the concrete active_chat_model_id), NOT the alias. opencode only ever sends the alias, so model-specific prompt tuning cannot live in opencode.jsonc \u2014 it lives here. See routing_service_integration_plan.md \u00a711.",
+  "_comment_2": "Field: system_prompt = filename under routing/policy/prompts/ to REPLACE the request's system message with (weak-local task-hardening). Applies on the LOCAL path only; cloud requests are never transformed. Unknown model_id => no transform (safe default).",
+  "_comment_3": "NOTE: task-tool enable/disable is deliberately NOT here. The `task` tool is load-bearing \u2014 the primary agent (superclaw-default) reaches its subagents (email/local-file/websearch) ONLY via task. Dropping it by MODEL would strip delegation from the default agent on any weak-local turn. Per-agent task permission lives in opencode.jsonc; the sidecar only OVERRIDES it per-agent via the LATENTFACTOR_DISABLE_TASK_AGENTS env var (for benchmarking a single agent without delegation). See prompt_transform.apply_model_policy.",
+  "_schema": "v2",
+  "profiles": {
+    "qwen3.5-4b": {
+      "system_prompt": "local-short.txt"
+    },
+    "qwen3.6-35b-a3b": {
+      "system_prompt": "local-short.txt"
+    },
+    "qwen3.8-27b": {
+      "system_prompt": "local-short.txt"
+    },
+    "gemma-4-26b-a4b-it": {
+      "system_prompt": "local-short.txt"
+    },
+    "gemma4-e4b-it": {
+      "system_prompt": "local-short.txt"
+    }
+  }
+}

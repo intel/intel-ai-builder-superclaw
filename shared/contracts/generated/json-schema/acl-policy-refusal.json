@@ -1,0 +1,160 @@
+{
+  "$id": "https://different.ai/openwork-contracts/acl-policy-refusal.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": 1,
+      "type": "number"
+    },
+    "refusals": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "locator": {
+            "additionalProperties": false,
+            "properties": {
+              "managed_root_scope": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "backend_root",
+                      "payload_container_root",
+                      "temp_container_root",
+                      "config_root",
+                      "data_root",
+                      "logs_root",
+                      "payload_root",
+                      "temp_root",
+                      "protected_root",
+                      "isolation_root"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "policy_class": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "managed_default",
+                      "user_granted_rw",
+                      "user_granted_ro"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "relative_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "root_id": {
+                "anyOf": [
+                  {
+                    "pattern": "^wsr_[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "tier": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "bootstrap",
+                      "file_tool",
+                      "network_connector",
+                      "channel"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "policy_class",
+              "managed_root_scope",
+              "tier",
+              "root_id",
+              "relative_path"
+            ],
+            "type": "object"
+          },
+          "reason": {
+            "enum": [
+              "descriptor_shape_invalid",
+              "policy_class_not_covered",
+              "policy_class_duplicated",
+              "managed_root_scope_not_covered",
+              "managed_root_scope_duplicated",
+              "ace_rights_empty",
+              "ace_rights_not_unique",
+              "duplicate_ace",
+              "deny_ace_not_ordered_before_allow",
+              "dacl_not_protected",
+              "recovery_principal_absent",
+              "recovery_principal_denied",
+              "workspace_root_allow_ace_grants_delete_child",
+              "sandbox_principal_granted_delete_child",
+              "sandbox_principal_granted_dacl_control",
+              "read_only_class_grants_sandbox_write",
+              "payload_root_grants_sandbox_write",
+              "protected_root_grants_sandbox_access",
+              "revocation_record_inconsistent_with_policy_class",
+              "placeholder_declared_outside_managed_default",
+              "placeholder_absent_for_managed_default",
+              "placeholder_path_not_root_relative",
+              "placeholder_path_reserved_device_name",
+              "placeholder_kind_not_directory",
+              "duplicate_placeholder_path",
+              "placeholder_ancestor_not_declared",
+              "placeholder_dacl_missing_deny_ace",
+              "protected_mask_grants_sandbox_access",
+              "duplicate_tier_subtree_dacl",
+              "duplicate_tier_opening",
+              "tier_opening_without_subtree",
+              "profile_ancestor_path_not_profile_relative",
+              "profile_ancestor_chain_invalid",
+              "profile_ancestor_grant_widened",
+              "descriptor_not_the_shipped_policy",
+              "root_set_shape_invalid",
+              "root_set_member_count_above_bound",
+              "root_set_managed_default_not_unique",
+              "root_set_root_id_duplicated",
+              "root_set_policy_class_unknown",
+              "owner_sid_shape_invalid"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "locator"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_version",
+    "refusals"
+  ],
+  "title": "AclPolicyRefusal",
+  "type": "object"
+}

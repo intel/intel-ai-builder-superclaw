@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "SuperClaw",
+  "version": "0.11.169",
+  "identifier": "com.aibuilder.superclaw",
+  "build": {
+    "beforeDevCommand": "node ./scripts/tauri-before-dev.mjs",
+    "beforeBuildCommand": "node ./scripts/tauri-before-build.mjs",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../../ui/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "SuperClaw",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 660,
+        "minHeight": 600,
+        "resizable": true,
+        "decorations": false,
+        "visible": false,
+        "additionalBrowserArgs": "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,msSpeechRecognitionServiceUseCetoService --autoplay-policy=no-user-gesture-required"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:* http://localhost:* ws://127.0.0.1:* ws://localhost:* https: blob: data:; img-src 'self' data: blob: http: https:; font-src 'self' data:; media-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-K2N8pyvlx/RrU5/1RClRVjTaQpa4kKUU33W1XZbdNvA='; frame-src 'self' blob: http://127.0.0.1:* http://localhost:*; child-src 'self' http://127.0.0.1:* http://localhost:*; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+    }
+  },
+  "bundle": {
+    "publisher": "Intel",
+    "macOS": {
+      "entitlements": "./entitlements.plist"
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "externalBin": [
+      "sidecars/opencode",
+      "sidecars/openwork-server",
+      "sidecars/opencode-router",
+      "sidecars/openwork-orchestrator",
+      "sidecars/versions.json"
+    ]
+  },
+  "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": [
+          "openwork"
+        ]
+      }
+    }
+  }
+}

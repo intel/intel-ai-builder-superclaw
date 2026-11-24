@@ -1,0 +1,106 @@
+{
+  "_comment": [
+    "Golden table for the internal address set, which the network connector tier is refused at the",
+    "connect layer, against the Connector's own refusal, egress_guard._is_public. Read by",
+    "shared/contracts/src/__tests__/egress-network-connector.test.ts (egressAddressIsInternal against",
+    "`internal`) and by the Sandbox Manager's tests (_is_public against `public`).",
+    "`public` is _is_public under the Sandbox Manager's Python, 3.12.14, with one target the code does",
+    "not meet yet: fec0::/10, which Python calls global, is refused once egress_guard treats it as",
+    "site-local (#27). The two layers agree that `internal` is the negation of `public` except where",
+    "a case says otherwise: loopback is its own set, blocked by the loopback rule rather than the",
+    "internal one, and a `difference` is a case where the connect layer blocks a whole block that",
+    "Python's table carves an exception out of."
+  ],
+  "cases": [
+    { "address": "0.0.0.1", "internal": true, "public": false },
+    { "address": "10.1.2.3", "internal": true, "public": false },
+    { "address": "100.64.0.1", "internal": true, "public": false },
+    { "address": "169.254.1.1", "internal": true, "public": false },
+    { "address": "172.16.0.1", "internal": true, "public": false },
+    { "address": "172.31.255.255", "internal": true, "public": false },
+    { "address": "192.0.0.1", "internal": true, "public": false },
+    {
+      "address": "192.0.0.9",
+      "internal": true,
+      "public": true,
+      "difference": "an anycast address inside 192.0.0.0/24, which Python's table excepts and the connect layer blocks whole"
+    },
+    {
+      "address": "192.0.0.10",
+      "internal": true,
+      "public": true,
+      "difference": "an anycast address inside 192.0.0.0/24, which Python's table excepts and the connect layer blocks whole"
+    },
+    { "address": "192.0.2.1", "internal": true, "public": false },
+    { "address": "192.168.1.1", "internal": true, "public": false },
+    { "address": "198.18.0.1", "internal": true, "public": false },
+    { "address": "198.51.100.1", "internal": true, "public": false },
+    { "address": "203.0.113.1", "internal": true, "public": false },
+    { "address": "224.0.0.251", "internal": true, "public": false },
+    { "address": "239.255.255.250", "internal": true, "public": false },
+    { "address": "240.0.0.1", "internal": true, "public": false },
+    { "address": "255.255.255.255", "internal": true, "public": false },
+    { "address": "127.0.0.1", "internal": false, "public": false, "loopback": true },
+    { "address": "1.1.1.1", "internal": false, "public": true },
+    { "address": "8.8.8.8", "internal": false, "public": true },
+    { "address": "100.128.0.1", "internal": false, "public": true },
+    { "address": "172.32.0.1", "internal": false, "public": true },
+    { "address": "192.0.3.1", "internal": false, "public": true },
+    { "address": "198.20.0.1", "internal": false, "public": true },
+    { "address": "223.255.255.255", "internal": false, "public": true },
+    { "address": "::", "internal": true, "public": false },
+    { "address": "::1", "internal": false, "public": false, "loopback": true },
+    { "address": "64:ff9b:1::1", "internal": true, "public": false },
+    { "address": "100::1", "internal": true, "public": false },
+    { "address": "2001::1", "internal": true, "public": false },
+    { "address": "2001:0:4136:e378:8000:63bf:3fff:fdd2", "internal": true, "public": false },
+    {
+      "address": "2001:1::1",
+      "internal": true,
+      "public": true,
+      "difference": "inside 2001::/23, which Python's table excepts and the connect layer blocks whole"
+    },
+    {
+      "address": "2001:3::1",
+      "internal": true,
+      "public": true,
+      "difference": "inside 2001::/23, which Python's table excepts and the connect layer blocks whole"
+    },
+    {
+      "address": "2001:4:112::1",
+      "internal": true,
+      "public": true,
+      "difference": "inside 2001::/23, which Python's table excepts and the connect layer blocks whole"
+    },
+    {
+      "address": "2001:20::1",
+      "internal": true,
+      "public": true,
+      "difference": "inside 2001::/23, which Python's table excepts and the connect layer blocks whole"
+    },
+    {
+      "address": "2001:30::1",
+      "internal": true,
+      "public": true,
+      "difference": "inside 2001::/23, which Python's table excepts and the connect layer blocks whole"
+    },
+    { "address": "2001:db8::1", "internal": true, "public": false },
+    { "address": "2002:a00:1::1", "internal": true, "public": false },
+    { "address": "2002:808:808::1", "internal": true, "public": false },
+    { "address": "3fff::1", "internal": true, "public": false },
+    { "address": "fd00::1", "internal": true, "public": false },
+    { "address": "fe80::1", "internal": true, "public": false },
+    { "address": "fec0::1", "internal": true, "public": false },
+    { "address": "fec0:0:0:ffff::1", "internal": true, "public": false },
+    { "address": "ff02::1", "internal": true, "public": false },
+    { "address": "::ffff:10.0.0.1", "internal": true, "public": false },
+    { "address": "::ffff:192.168.0.1", "internal": true, "public": false },
+    { "address": "::ffff:127.0.0.1", "internal": false, "public": false, "loopback": true },
+    { "address": "64:ff9b::a00:1", "internal": true, "public": false },
+    { "address": "64:ff9b::7f00:1", "internal": true, "public": false },
+    { "address": "2001:4860:4860::8888", "internal": false, "public": true },
+    { "address": "2606:4700:4700::1111", "internal": false, "public": true },
+    { "address": "::ffff:8.8.8.8", "internal": false, "public": true },
+    { "address": "64:ff9b::808:808", "internal": false, "public": true }
+  ]
+}

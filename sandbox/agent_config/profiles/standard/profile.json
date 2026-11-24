@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profile": "standard",
+  "display_name": "SuperClaw Standard",
+  "description": "Relies on a local 4B-parameter model or an equivalent capability level.",
+  "required_sidecars": [],
+  "feature_flags": {
+    "intent_classifier": false,
+    "local_tts": false,
+    "local_vision": false,
+    "hybrid_coding_agent": true,
+    "hybrid_deep_research_agent": false,
+    "email_agent": false,
+    "skills_ui": true,
+    "agent_authoring": true,
+    "voice_input": true,
+    "mcp_local_command": true,
+    "mcp_tool_permissions": true,
+    "mcp_host_execution": true,
+    "host_browser": true
+  }
+}

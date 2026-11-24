@@ -1,0 +1,163 @@
+import { createSignal, createRoot } from "solid-js";
+import en from "./locales/en";
+import zh from "./locales/zh";
+
+/**
+ * Where the chosen language is persisted. Declared here rather than in
+ * `shared/util/constants` because this module imports no other source layer — only
+ * npm packages and its own locale shards — and that is what lets `shared/` call
+ * `t()`. Nothing outside reads it, so it stays unexported.
+ */
+const LANGUAGE_PREF_KEY = "openwork.language";
+
+/**
+ * Supported languages
+ */
+export type Language = "en" | "zh";
+export type Locale = Language;
+
+/**
+ * All supported languages - single source of truth
+ */
+export const LANGUAGES: Language[] = ["en", "zh"];
+
+/**
+ * Language options for UI - single source of truth
+ */
+export const LANGUAGE_OPTIONS = [
+  { value: "en" as Language, label: "English", nativeName: "English" },
+  { value: "zh" as Language, label: "简体中文", nativeName: "简体中文" },
+] as const;
+
+/**
+ * Translation maps
+ */
+const TRANSLATIONS: Record<Language, Record<string, string>> = {
+  en,
+  zh,
+};
+
+/**
+ * Type guard to validate if a value is a Language
+ * Replaces long chains like: value === "en" || value === "zh"
+ */
+export const isLanguage = (value: unknown): value is Language => {
+  return typeof value === "string" && LANGUAGES.includes(value as Language);
+};
+
+/**
+ * Detect a supported language from the browser/OS locale.
+ * Used as the first-run default when no preference has been stored yet.
+ * Accepts an explicit candidate list for testing; otherwise reads navigator.
+ */
+export const detectBrowserLanguage = (candidates?: readonly string[]): Language => {
+  const list =
+    candidates ??
+    (typeof navigator !== "undefined"
+      ? [navigator.language, ...(navigator.languages ?? [])]
+      : []);
+  for (const raw of list) {
+    const lower = (raw ?? "").toLowerCase();
+    if (lower.startsWith("zh")) return "zh";
+    if (lower.startsWith("en")) return "en";
+  }
+  return "en";
+};
+
+/**
+ * Create root-level locale signal with persistence
+ */
+const [locale, setLocaleSignal] = createRoot(() => createSignal<Language>("en"));
+
+/**
+ * Get current locale
+ */
+export const currentLocale = (): Language => locale();
+
+/**
+ * Set locale and persist to localStorage
+ */
+export const setLocale = (newLocale: Language) => {
+  if (!isLanguage(newLocale)) {
+    console.warn(`Invalid locale: ${newLocale}, falling back to "en"`);
+    newLocale = "en";
+  }
+
+  setLocaleSignal(newLocale);
+
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("lang", newLocale);
+  }
+
+  // Persist to localStorage
+  if (typeof window !== "undefined") {
+    try {
+      window.localStorage.setItem(LANGUAGE_PREF_KEY, newLocale);
+    } catch (e) {
+      console.warn("Failed to persist language preference:", e);
+    }
+  }
+};
+
+/**
+ * Translation function with fallback behavior
+ * Fallback chain: target language → English → key itself
+ *
+ * @param key - Translation key
+ * @param localeOverride - Optional locale override (defaults to current locale)
+ * @returns Translated string or fallback
+ */
+export const t = (key: string, localeOverride?: Language): string => {
+  const loc = localeOverride ?? locale();
+
+  // Try target language first
+  if (TRANSLATIONS[loc]?.[key]) {
+    return TRANSLATIONS[loc][key];
+  }
+
+  // Fallback to English
+  if (loc !== "en" && TRANSLATIONS.en?.[key]) {
+    return TRANSLATIONS.en[key];
+  }
+
+  // Final fallback to key itself (prevents raw keys from showing in UI)
+  return key;
+};
+
+/**
+ * Initialize locale from localStorage
+ * Call this during app initialization
+ */
+export const initLocale = (): Language => {
+  if (typeof window === "undefined") {
+    return "en";
+  }
+
+  try {
+    const stored = window.localStorage.getItem(LANGUAGE_PREF_KEY);
+    if (isLanguage(stored)) {
+      setLocaleSignal(stored);
+      if (typeof document !== "undefined") {
+        document.documentElement.setAttribute("lang", stored);
+      }
+      return stored;
+    }
+  } catch (e) {
+    console.warn("Failed to read language preference:", e);
+  }
+
+  // No stored preference: fall back to the browser/OS locale on first run and
+  // persist it so the choice is stable across reloads (mirrors setLocale()).
+  const detected = detectBrowserLanguage();
+  setLocaleSignal(detected);
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("lang", detected);
+  }
+  try {
+    window.localStorage.setItem(LANGUAGE_PREF_KEY, detected);
+  } catch (e) {
+    console.warn("Failed to persist detected language preference:", e);
+  }
+
+  return detected;
+};

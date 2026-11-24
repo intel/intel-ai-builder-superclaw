@@ -1,0 +1,64 @@
+{
+  "$id": "https://different.ai/openwork-contracts/slack-install-complete-result.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "app_id": {
+      "pattern": "^A[A-Z0-9]{2,31}$",
+      "type": "string"
+    },
+    "identity": {
+      "additionalProperties": false,
+      "properties": {
+        "applied": {
+          "type": "boolean"
+        },
+        "apply_error": {
+          "enum": [
+            "router_unreachable",
+            "router_rejected"
+          ],
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "slack",
+            "telegram"
+          ],
+          "type": "string"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "identity_id": {
+          "pattern": "^[A-Za-z0-9_.-]{1,48}$",
+          "type": "string"
+        },
+        "persisted": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "channel",
+        "identity_id",
+        "persisted",
+        "applied"
+      ],
+      "type": "object"
+    },
+    "previous_app": {
+      "enum": [
+        "none",
+        "pending"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "app_id",
+    "previous_app"
+  ],
+  "title": "SlackInstallCompleteResult",
+  "type": "object"
+}

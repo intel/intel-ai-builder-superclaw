@@ -1,0 +1,61 @@
+{
+  "model_candidate_revision": 7,
+  "edge_model_selection_fingerprint": "2b86d1c330f8457773f0b7bad9fd8a5b6e2a2e641bf31c8dd0c8a9855c6b4a82",
+  "primary_edge_config_matches": false,
+  "hardware_capability_ceiling": {
+    "bundle_id": "local-35b",
+    "capability_grade": "full"
+  },
+  "supported_bundle_ids": ["local-35b"],
+  "recommended_bundle_id": "local-35b",
+  "supported_bundles": [
+    {
+      "bundle_id": "local-35b",
+      "backend": "llama",
+      "display_name": "Local 35B",
+      "capability_grade": "full",
+      "chat_model_label": "Qwen 35B",
+      "embedding_model_label": "KaLM",
+      "assets": [
+        {
+          "asset_id": "qwen-35b",
+          "label": "Qwen 35B",
+          "role": "chat",
+          "download_bytes": 22000000000,
+          "cached_and_verified": true
+        },
+        {
+          "asset_id": "kalm",
+          "label": "KaLM",
+          "role": "embedding",
+          "download_bytes": 500000000,
+          "cached_and_verified": true
+        }
+      ],
+      "total_download_bytes": 22500000000,
+      "required_free_bytes": 30000000000,
+      "fully_cached_and_verified": true,
+      "download_feasibility": "ready"
+    }
+  ],
+  "primary_bundle": {
+    "backend": "llama",
+    "bundle_id": "local-35b",
+    "chat_model_id": "qwen-35b",
+    "embedding_model_id": "kalm",
+    "capability_grade": "full",
+    "capability_contract_version": 1,
+    "registry_version": 1,
+    "bundle_revision": 4,
+    "state": "ready"
+  },
+  "hardware": {
+    "cpu_brand": "Intel Core Ultra",
+    "gpu_names": ["Intel Arc"],
+    "total_ram_gb": 64,
+    "mem_speed_mts": 8000,
+    "detection_errors": []
+  },
+  "observed_at": "2026-07-17T00:00:00Z",
+  "reasons": []
+}
