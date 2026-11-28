@@ -56,6 +56,7 @@ TRUSTED_LOCAL_ASSET_IDS = frozenset(
         "qwen3.6-35b-a3b",
         "gemma-4-26b-a4b-it",
         "qwen3.8-27b",
+        "bonsai-2.5-27b",
         "qwen3.5-4b",
         "gemma4-e4b-it",
         "KaLM-embedding-v2.5",

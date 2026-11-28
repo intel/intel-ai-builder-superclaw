@@ -947,6 +947,9 @@ class RouterSupervisor:
         self._set_opt(opts, "t", 4)
         self._set_opt(opts, "load-on-startup", True)
         self._apply_cli_args_to_opts(opts, list(entry.extra_args))
+        if "load-mode" in opts:
+            # Newer CUDA runtimes replaced --no-mmap with --load-mode.
+            opts.pop("no-mmap", None)
         self._apply_discrete_gpu_pin(opts, entry)
         self._apply_draft_model(opts, entry)
         if tuned_args is not None:

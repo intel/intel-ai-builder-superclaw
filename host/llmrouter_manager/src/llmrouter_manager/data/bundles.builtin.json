@@ -64,6 +64,17 @@
       "capability_grade": "full-hdr",
       "compatible_product_profiles": ["pro"],
       "priority": 200
+    },
+    {
+      "bundle_id": "local-bonsai-27b",
+      "backend": "llama",
+      "chat_model_id": "bonsai-2.5-27b",
+      "embedding_model_id": "KaLM-embedding-v2.5",
+      "capability_grade": "minimal",
+      "compatible_product_profiles": [
+        "standard"
+      ],
+      "priority": 250
     }
   ]
 }

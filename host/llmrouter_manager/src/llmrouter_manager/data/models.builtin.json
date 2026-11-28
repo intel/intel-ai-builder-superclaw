@@ -170,6 +170,64 @@
         "--main-gpu", "0",
         "-ub", "512", "-b", "512"
       ]
+    },
+    {
+      "id": "bonsai-2.5-27b",
+      "name": "Ternary Bonsai 2.5 27B (PTQ1_0, CUDA)",
+      "role": "chat",
+      "source": "huggingface",
+      "repo": "prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
+      "revision": "28a7093cc25bc151cc2b284c5570f12ce343fdcf",
+      "filename": "Ternary-Bonsai-2.5-27B-PTQ1_0-mtp.gguf",
+      "size_bytes": 6232818944,
+      "sha256": "e0fc5f3d47b9c926d52677d303b19df356a2376614b3e1cb9973865fc04ca431",
+      "default_port": 8080,
+      "default_ctx": 98304,
+      "default_ngl": 99,
+      "default_n_predict": 8192,
+      "extra_args": [
+        "--split-mode",
+        "none",
+        "--main-gpu",
+        "0",
+        "--load-mode",
+        "mmap",
+        "--cache-type-k",
+        "q4_0",
+        "--cache-type-v",
+        "q4_0",
+        "--spec-type",
+        "draft-mtp",
+        "--spec-draft-n-max",
+        "3",
+        "--temp",
+        "1.0",
+        "--top-p",
+        "0.95",
+        "--top-k",
+        "20",
+        "--min-p",
+        "0",
+        "--presence-penalty",
+        "0",
+        "--reasoning",
+        "on",
+        "--reasoning-budget",
+        "4096",
+        "--reasoning-format",
+        "deepseek",
+        "--chat-template-kwargs",
+        "{\"enable_thinking\":true,\"reasoning_effort\":\"medium\"}",
+        "--ctx-checkpoints",
+        "1"
+      ],
+      "requirements": {
+        "min_ram_gb": 16,
+        "min_mem_speed_mts": 1600,
+        "igpu_keywords": [
+          "RTX 3080 Ti"
+        ]
+      }
     }
   ]
 }

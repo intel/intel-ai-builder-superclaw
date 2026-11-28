@@ -1,0 +1,23 @@
+From d436d466f88164059801d3ddd563ceb07fa1c7d3 Mon Sep 17 00:00:00 2001
+From: Codex <codex@localhost>
+Date: Thu, 26 Nov 2026 08:43:21 -0800
+Subject: [PATCH] sycl: fall back when GPU platform selection throws
+ std::exception
+
+---
+ ggml/src/ggml-sycl/ggml-sycl.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ggml/src/ggml-sycl/ggml-sycl.cpp b/ggml/src/ggml-sycl/ggml-sycl.cpp
+index 80c77622f..deb98e0d2 100644
+--- a/ggml/src/ggml-sycl/ggml-sycl.cpp
++++ b/ggml/src/ggml-sycl/ggml-sycl.cpp
+@@ -159,7 +159,7 @@ static ggml_sycl_device_info ggml_sycl_init() {
+     // We want to allow the user to use non-SYCL tools when SYCL is compiled (such as llama-quantize)
+     try {
+         info.device_count = dpct::dev_mgr::instance().device_count();
+-    } catch (sycl::exception const &exc) {
++    } catch (std::exception const &exc) {
+         GGML_LOG_INFO("%s: no SYCL device available: %s\n", __func__, exc.what());
+         info.device_count = 0;
+     }

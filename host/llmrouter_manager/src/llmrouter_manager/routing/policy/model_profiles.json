@@ -18,6 +18,9 @@
     },
     "gemma4-e4b-it": {
       "system_prompt": "local-short.txt"
+    },
+    "bonsai-2.5-27b": {
+      "system_prompt": "local-short.txt"
     }
   }
 }

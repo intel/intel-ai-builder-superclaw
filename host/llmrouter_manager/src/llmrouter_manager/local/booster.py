@@ -274,6 +274,17 @@ class LocalLLMBooster:
                 )
             )
 
+        if entry.id == "bonsai-2.5-27b" and targets_discrete_gpu(entry, hw):
+            # Keep room for KaLM and the desktop on the validated 12 GiB card.
+            return TunedLaunchArgs(
+                ctx_size=entry.default_ctx,
+                parallel=1,
+                kv_unified=False,
+                batch=512,
+                ubatch=256,
+                cache_ram_mib=0,
+            )
+
         if targets_discrete_gpu(entry, hw):
             # A 256K window, which is the point of putting this tier on a discrete
             # board: at the registry's 100000 window, 8 of 116 agent tasks failed on

@@ -5,12 +5,17 @@
     "license": "MIT",
     "upstream_build_number": 10830,
     "ui_archive_sha256": "aeb83f8c5816f66e95f5a9ff80d9b6aebc5b524378391e986ca08ac5aec1425f",
-    "patched_tree": "e4eeb042f43fade61d97cde048d6131954b40427",
+    "patched_tree": "2a6b2ed4da962c1ea4334c2c5db299200e4b33a8",
     "patches": [
       {
         "file": "0001-llamacpp-initial.patch",
         "sha256": "86b41bd6a817c52f1206d926132eeade6689745a93155fe021e17755336b5d48",
         "upstreamable": false
+      },
+      {
+        "file": "0002-no-gpu-fallback.patch",
+        "sha256": "1948f89e5fa8b7e4379ee017d2da29030be9c6e82ff46dbdbbc2982eb2b73d19",
+        "upstreamable": true
       }
     ]
   },

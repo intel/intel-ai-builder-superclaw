@@ -12,6 +12,7 @@ was searched.
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -35,7 +36,19 @@ def _dev_base() -> Path:
 
 
 def candidate_inference_dirs() -> list[Path]:
-    """Every layout where the ``llama-win-sycl`` bundle may live, in priority order."""
+    """Resolve an explicit runtime first, otherwise use bundled SYCL layouts.
+
+    An invalid override fails closed instead of silently launching another runtime.
+    The operator is responsible for choosing a compatible, trusted executable.
+    """
+    override = os.environ.get("LRM_INFERENCE_DIR", "").strip()
+    if override:
+        directory = Path(override)
+        if not directory.is_absolute() or not (directory / _LLAMA_SERVER).is_file():
+            raise FileNotFoundError(
+                "LRM_INFERENCE_DIR must be an absolute directory containing llama-server.exe"
+            )
+        return [directory]
     bases: list[Path] = []
     if getattr(sys, "frozen", False):
         bases.append(_frozen_base())

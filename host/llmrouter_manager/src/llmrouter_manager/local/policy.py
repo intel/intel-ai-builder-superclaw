@@ -33,7 +33,7 @@ from .hardware import VIDEO_CONTROLLER_PROBE_FAILED, HardwareInfo
 from .registry import ROLE_CHAT, ModelEntry, Registry
 
 
-_DISCRETE_GPU_KEYWORDS: Final[frozenset[str]] = frozenset({"b70"})
+_DISCRETE_GPU_KEYWORDS: Final[frozenset[str]] = frozenset({"b70", "rtx 3080 ti"})
 
 
 def discrete_gpu_keywords(entry: ModelEntry) -> frozenset[str]:

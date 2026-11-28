@@ -75,7 +75,7 @@ _ENV_DISABLE_TASK_AGENTS = "LATENTFACTOR_DISABLE_TASK_AGENTS"
 _ENV_SYSTEM_PROMPT_AGENTS = "LATENTFACTOR_SYSTEM_PROMPT_AGENTS"
 _ENV_REPEAT_TOOL_TERMINAL_LOCK = "SUPERCLAW_REPEAT_TOOL_TERMINAL_LOCK"
 _ENV_REPEAT_MAX = "SC_REPEAT_MAX"
-_QWEN_SINGLE_SYSTEM_MODELS = frozenset({"qwen3.8-27b", "Qwen3.8-Flash-Next"})
+_QWEN_SINGLE_SYSTEM_MODELS = frozenset({"qwen3.8-27b", "bonsai-2.5-27b", "Qwen3.8-Flash-Next"})
 _MENTION_BOUNDARY_RE = re.compile(r"[\s,.:;!?)}\]]")
 
 # Local short-prompt override is intended for product-managed built-in agents.
